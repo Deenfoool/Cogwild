@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "cogwild:block/machine_casing"
+    }
+  }
+}
