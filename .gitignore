@@ -1,0 +1,24 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# Runtime
+run/
+logs/
+crash-reports/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Blockbench backups
+*.bbmodel.bak
