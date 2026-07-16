@@ -1,0 +1,11 @@
+# Default owner for the project
+* @Deenfoool
+
+# Game code and build configuration
+/src/main/java/ @Deenfoool
+/build.gradle @Deenfoool
+/gradle.properties @Deenfoool
+
+# Assets and Blockbench sources
+/src/main/resources/assets/ @Deenfoool
+/art_source/ @Deenfoool
