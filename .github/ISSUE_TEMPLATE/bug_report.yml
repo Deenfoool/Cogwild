@@ -1,0 +1,38 @@
+name: Сообщение об ошибке
+description: Сообщить о проблеме в Cogwild
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Описание
+      description: Что произошло и что ожидалось?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Версия мода
+      placeholder: 0.1.0-dev
+    validations:
+      required: true
+  - type: input
+    id: forge
+    attributes:
+      label: Forge и Minecraft
+      placeholder: Minecraft 1.21.1, Forge 52.1.0
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Шаги воспроизведения
+      placeholder: "1. ...\n2. ...\n3. ..."
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Логи
+      description: Приложите latest.log или crash-report без секретных данных.

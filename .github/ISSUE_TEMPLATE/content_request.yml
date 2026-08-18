@@ -1,0 +1,41 @@
+name: Идея контента
+description: Предложить блок, предмет, меха, декор или игровую систему
+title: "[Content]: "
+labels: ["content"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Название
+    validations:
+      required: true
+  - type: input
+    id: registry_id
+    attributes:
+      label: Предлагаемый технический ID
+      placeholder: jar_of_bolts
+  - type: dropdown
+    id: type
+    attributes:
+      label: Тип объекта
+      options:
+        - Предмет
+        - Блок
+        - Одноблочный механизм
+        - Многоблочная постройка
+        - Механическое существо
+        - Декор
+        - Жидкость
+        - Другое
+    validations:
+      required: true
+  - type: textarea
+    id: gameplay
+    attributes:
+      label: Назначение и игровой смысл
+    validations:
+      required: true
+  - type: textarea
+    id: visual
+    attributes:
+      label: Внешний вид и референсы
