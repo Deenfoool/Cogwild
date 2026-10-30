@@ -1,0 +1,12 @@
+{
+  "item.suitcaseglider.glider": "Походный планер",
+  "itemGroup.suitcaseglider": "Чемодан-планер",
+  "enchantment.suitcaseglider.soaring": "Парение",
+  "tooltip.suitcaseglider.auto": "Выбери в хотбаре: раскроется при опасном падении.",
+  "tooltip.suitcaseglider.hands": "В полёте заняты обе руки. Складывается после посадки.",
+  "tooltip.suitcaseglider.dye": "Окрась ткань красителем на верстаке. Починка кожей.",
+  "entity.suitcaseglider.mech_ant": "Мех-муравей",
+  "item.suitcaseglider.mech_ant_spawn_egg": "Яйцо призыва меха-муравья",
+  "block.suitcaseglider.lathe": "Токарный станок",
+  "block.suitcaseglider.crusher": "Дробилка"
+}

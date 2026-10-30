@@ -22,3 +22,9 @@ Thumbs.db
 
 # Blockbench backups
 *.bbmodel.bak
+
+# Local development profiles and generated archives
+run-*/
+*.log
+*.zip
+.codex/

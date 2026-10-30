@@ -1,186 +1,55 @@
-# ⚙️ Cogwild: Mechanical Fauna
+# Cogwild: Mechanical Fauna
 
-**Cogwild** — индустриальный мод для Minecraft о проектировании, производстве и эксплуатации механических существ. Игрок развивает металлургию, нефтепереработку и энергетику, строит многоблочные комплексы и собирает мехов из крупных компонентов по многоразовым чертежам.
+Рабочий прототип для **Minecraft 1.20.1 / Forge 47.4.28 / Java 17**, версия **0.3.0**.
 
-> Репозиторий находится на ранней стадии подготовки. Версия Minecraft, загрузчик модов и окончательный набор зависимостей будут зафиксированы перед началом программного прототипирования.
+## Что уже работает
 
-## Основные направления
+- Мех-муравей: приручение и управление на основе лошади, посадка и высадка, ход вперёд и назад, повороты, заряжаемый прыжок, анимации и отдельные опоры шести лап под рельеф.
+- Чемодан-планер: автоматическое раскрытие при опасном падении, складывание после приземления, рецепт, окраска и износ.
+- Lathe Soft Aged и Crusher Refined Console Aged: устанавливаемые станки два на один блок, состаренные текстуры, анимации, коллизия, поворот при размещении и предметы в творческой вкладке. Редстоун переключает визуальное питание.
 
-- механическая фауна: мехмуравей, робобуйвол и мехпчела;
-- конечные подземные залежи нефти;
-- дизель, бензин, керосин, биодизель и авиационное топливо;
-- дробление руд, металлургия стали, латуни и вольфрама;
-- одноблочные производственные механизмы;
-- многоблочные буровые, печи, перерабатывающие комплексы и строительная верфь;
-- заправка, ремонт и улучшение мехов;
-- модели и анимации GeckoLib.
+Переработка ресурсов, машинные инвентари, приём выброшенных предметов, FE-энергия и трубы пока не реализованы. Анимации обработки сохранены в ресурсах.
 
-## Технические правила
+## Установка
 
-- Mod ID: `cogwild`
-- технические имена пишутся в `snake_case`;
-- только строчные латинские буквы, цифры и `_`;
-- полный игровой ID: `cogwild:machining_station`;
-- имя файла: `machining_station.json`.
+Скачать JAR из [Releases](https://github.com/Deenfoool/Cogwild/releases), положить в `mods` профиля Forge 1.20.1. На сервере и клиентах должна быть одна версия. Дополнительная библиотека анимаций не нужна.
 
-## Иерархия проекта
+Текущий прототип сохраняет Mod ID `suitcaseglider` и имя архива `salum-mech-ant` для совместимости с уже созданными мирами. При обновлении заменять старый JAR. Целевой namespace проекта `cogwild` требует отдельной миграции сохранений и ещё не включён.
 
-```text
-Cogwild/
-├─ build.gradle
-├─ settings.gradle
-├─ gradle.properties
-├─ gradlew
-├─ gradlew.bat
-├─ gradle/
-│  └─ wrapper/
-│
-├─ src/
-│  ├─ main/
-│  │  ├─ java/
-│  │  │  └─ ru/deenfoool/cogwild/
-│  │  │     ├─ Cogwild.java
-│  │  │     ├─ registry/
-│  │  │     ├─ block/
-│  │  │     │  ├─ machine/
-│  │  │     │  ├─ pipe/
-│  │  │     │  └─ multiblock/
-│  │  │     ├─ blockentity/
-│  │  │     │  ├─ machine/
-│  │  │     │  └─ multiblock/
-│  │  │     ├─ item/
-│  │  │     │  ├─ material/
-│  │  │     │  ├─ component/
-│  │  │     │  ├─ blueprint/
-│  │  │     │  └─ armor/
-│  │  │     ├─ entity/
-│  │  │     │  ├─ mech/
-│  │  │     │  └─ ai/
-│  │  │     ├─ fluid/
-│  │  │     ├─ recipe/
-│  │  │     ├─ multiblock/
-│  │  │     ├─ menu/
-│  │  │     ├─ network/
-│  │  │     ├─ config/
-│  │  │     ├─ util/
-│  │  │     └─ client/
-│  │  │        ├─ model/
-│  │  │        ├─ renderer/
-│  │  │        ├─ screen/
-│  │  │        └─ animation/
-│  │  │
-│  │  └─ resources/
-│  │     ├─ META-INF/
-│  │     ├─ assets/cogwild/
-│  │     │  ├─ lang/
-│  │     │  ├─ blockstates/
-│  │     │  ├─ models/block/
-│  │     │  ├─ models/item/
-│  │     │  ├─ geo/block/
-│  │     │  ├─ geo/entity/
-│  │     │  ├─ geo/item/
-│  │     │  ├─ geo/armor/
-│  │     │  ├─ animations/block/
-│  │     │  ├─ animations/entity/
-│  │     │  ├─ animations/item/
-│  │     │  ├─ animations/armor/
-│  │     │  ├─ textures/block/
-│  │     │  ├─ textures/item/
-│  │     │  ├─ textures/entity/
-│  │     │  ├─ textures/armor/
-│  │     │  ├─ textures/gui/
-│  │     │  ├─ textures/fluid/
-│  │     │  ├─ textures/particle/
-│  │     │  ├─ sounds/
-│  │     │  └─ particles/
-│  │     │
-│  │     └─ data/cogwild/
-│  │        ├─ recipe/
-│  │        ├─ loot_table/blocks/
-│  │        ├─ loot_table/entities/
-│  │        ├─ advancement/
-│  │        ├─ tags/block/
-│  │        ├─ tags/item/
-│  │        ├─ tags/fluid/
-│  │        ├─ worldgen/
-│  │        └─ structures/
-│  │
-│  └─ generated/resources/
-│
-├─ art_source/
-│  ├─ blockbench/blocks/
-│  ├─ blockbench/entities/
-│  ├─ blockbench/items/
-│  ├─ blockbench/armor/
-│  ├─ concepts/
-│  ├─ textures_source/
-│  └─ ui_source/
-│
-├─ docs/
-└─ run/
+Игровые ID: `suitcaseglider:mech_ant`, `suitcaseglider:glider`, `suitcaseglider:lathe`, `suitcaseglider:crusher`.
+
+## Сборка
+
+Java 17. Из корня репозитория:
+
+```sh
+./gradlew build
 ```
 
-## Где хранить экспорт GeckoLib
+Windows: `gradlew.bat build`. Результат: `build/libs/salum-mech-ant-0.3.0.jar`.
 
-### Одноблочный механизм
+`./gradlew test` запускает 21 модульный тест. Отдельный серверный прогон прошёл 80 проверок станков: установка во всех направлениях, обе клетки, питание и корректное выпадение одного предмета. Отчёты — в [docs/verification](docs/verification).
 
-```text
-assets/cogwild/geo/block/machining_station.geo.json
-assets/cogwild/animations/block/machining_station.animation.json
-assets/cogwild/textures/block/machining_station.png
+## Исходники моделей и документация
+
+- [Токарный станок](art_source/blockbench/blocks/Lathe-Soft-Aged.bbmodel)
+- [Дробилка](art_source/blockbench/blocks/Crusher-Refined-Console-Aged.bbmodel)
+- [Мех-муравей](art_source/blockbench/entities/Mech-Ant-Three-Section-Solid.bbmodel)
+- [Управление и подробности прототипа](docs/prototype-0.3.0.md)
+- [Концепция и целевая архитектура Cogwild](docs/project-vision.md)
+
+Рабочие модели `.bbmodel` хранятся в `art_source` и не попадают в игровой JAR. Исходные концепты, портфолио и ранние модели сохранены.
+
+Режимы `-PmechDev`, `-PmechQa`, `-PmechMotionQa`, `-PmechTerrainQa` и `-PmachineSmoke` предназначены только для отдельных тестовых профилей; они создают тестовые площадки или управляют игроком. Обычная установка JAR их не запускает. Для ручной проверки можно использовать обычный `./gradlew runClient`.
+
+## Повторный экспорт моделей
+
+Экспортёры используют Python 3 и стандартную библиотеку:
+
+```sh
+python tools/export_machines.py
+python tools/export_mech_ant.py
+./gradlew build
 ```
 
-### Механическое существо
-
-```text
-assets/cogwild/geo/entity/mech_ant.geo.json
-assets/cogwild/animations/entity/mech_ant.animation.json
-assets/cogwild/textures/entity/mech_ant.png
-```
-
-### Анимированный предмет
-
-```text
-assets/cogwild/geo/item/diesel_engine.geo.json
-assets/cogwild/animations/item/diesel_engine.animation.json
-assets/cogwild/textures/item/diesel_engine.png
-```
-
-Для обычных слитков, пластин, пыли и шестерён GeckoLib не требуется:
-
-```text
-assets/cogwild/textures/item/steel_ingot.png
-assets/cogwild/models/item/steel_ingot.json
-```
-
-## Многоблочные постройки
-
-Многоблочная машина состоит из отдельных блоков, а контроллер проверяет конструкцию и управляет её работой.
-
-```text
-block/multiblock/
-├─ BlastFurnaceControllerBlock.java
-├─ BlastFurnaceCasingBlock.java
-├─ BlastFurnaceInputHatchBlock.java
-├─ BlastFurnaceOutputHatchBlock.java
-└─ BlastFurnaceEnergyPortBlock.java
-
-multiblock/
-├─ MultiblockPattern.java
-├─ MultiblockValidator.java
-└─ BlastFurnaceStructure.java
-```
-
-## Рабочие исходники
-
-Файлы `.bbmodel`, концепт-арты, PSD и черновые текстуры хранятся в `art_source/` и не должны попадать в готовый JAR.
-
-```text
-art_source/blockbench/blocks/machining_station.bbmodel
-art_source/blockbench/entities/mech_ant.bbmodel
-art_source/concepts/mech_bee_concept.png
-```
-
-## Статус
-
-Проектирование систем, ресурсов, механизмов и мехов продолжается. Первым программным этапом станет регистрация базовых предметов и блоков, после чего будут добавлены машины, жидкости, многоблочные структуры и механическая фауна.
+Они берут `.bbmodel` из `art_source/blockbench` и обновляют готовые геометрию, анимации и текстуры в `src/main/resources/assets/suitcaseglider`.

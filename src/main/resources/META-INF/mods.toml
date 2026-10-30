@@ -1,0 +1,22 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="All Rights Reserved"
+[[mods]]
+modId="suitcaseglider"
+version="${mod_version}"
+displayName="Suitcase Glider and Mech Ant"
+logoFile="logo.png"
+authors="Salum"
+description='''A dyeable suitcase that unfolds into a wooden hand-held glider during dangerous falls. Keeps armor slots free, occupies both hands in flight, and stows on landing. Includes a silent, tameable horse-like Mech Ant with an animated three-section tank, saddle controls and player anchors.'''
+[[dependencies.suitcaseglider]]
+modId="forge"
+mandatory=true
+versionRange="[47.4.0,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.suitcaseglider]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1]"
+ordering="NONE"
+side="BOTH"
