@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "suitcaseglider:advancement_icon_first_mech"
+    },
+    "title": {
+      "translate": "advancement.cogwild.first_mech.title"
+    },
+    "description": {
+      "translate": "advancement.cogwild.first_mech.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "cogwild:industrial_progress",
+      "conditions": {
+        "action": "mech_assembled",
+        "minimum": 1
+      }
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "parent": "cogwild:construction_yard"
+}

@@ -1,0 +1,51 @@
+{
+  "display": {
+    "icon": {
+      "item": "suitcaseglider:advancement_icon_rare_ores"
+    },
+    "title": {
+      "translate": "advancement.cogwild.rare_ores.title"
+    },
+    "description": {
+      "translate": "advancement.cogwild.rare_ores.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "tungsten": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ores/tungsten"
+          }
+        ]
+      }
+    },
+    "zinc": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ores/zinc"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "tungsten"
+    ],
+    [
+      "zinc"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "parent": "cogwild:steel_ingot"
+}

@@ -1,0 +1,581 @@
+[
+  {
+    "id": "cogwild:crusher",
+    "title": "Всё в пыль",
+    "description": "Дробите руды, чтобы получать гарантированную пыль и шанс на дополнительную.",
+    "condition": "Создать дробилку и переработать в ней любую руду.",
+    "parent": "cogwild:first_machine",
+    "frame": "task",
+    "hidden": false,
+    "experience": 10,
+    "branch": "Металлургия",
+    "triggerType": "Пользовательское событие",
+    "source": "https://app.notion.com/p/39fb8e499d8b819d8c3cf7d79a8d4566",
+    "criteria": {
+      "crusher": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "tag": "cogwild:advancement/crushers"
+            }
+          ]
+        }
+      },
+      "processed_ore": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "ore_crushed",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:compressed_air",
+    "title": "Под давлением",
+    "description": "Начните производство сжатого воздуха для пневматических систем.",
+    "condition": "Создать компрессор и заполнить резервуар сжатым воздухом.",
+    "parent": "cogwild:first_machine",
+    "frame": "task",
+    "hidden": false,
+    "experience": 10,
+    "branch": "Энергетика и машины",
+    "triggerType": "Производство жидкости",
+    "source": "https://app.notion.com/p/39fb8e499d8b81f6bdd2cbd54eb3ab14",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "compressed_air_tank_filled",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:root",
+    "title": "Cogwild: Mechanical Fauna",
+    "description": "Мир механической фауны начинается со стали, топлива и первого чертежа.",
+    "condition": "Получить первый стальной слиток.",
+    "parent": null,
+    "frame": "task",
+    "hidden": false,
+    "experience": 10,
+    "branch": "Корень",
+    "triggerType": "Получение предмета",
+    "source": "https://app.notion.com/p/39eb8e499d8b813a927ccbfa0d3a1855",
+    "criteria": {
+      "steel": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "tag": "forge:ingots/steel"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:steel_ingot",
+    "title": "Горячее железо",
+    "description": "Превратите железо и углерод в настоящий промышленный металл.",
+    "condition": "Создать стальной слиток в многоблочной доменной печи.",
+    "parent": "cogwild:root",
+    "frame": "goal",
+    "hidden": false,
+    "experience": 20,
+    "branch": "Металлургия",
+    "triggerType": "Получение предмета",
+    "source": "https://app.notion.com/p/39eb8e499d8b81c3b5aad51c92497643",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "steel_smelted",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:first_machine",
+    "title": "Механизация",
+    "description": "Первый механизм начинает работать на вас.",
+    "condition": "Создать электрический насос или дробилку.",
+    "parent": "cogwild:root",
+    "frame": "task",
+    "hidden": false,
+    "experience": 10,
+    "branch": "Энергетика и машины",
+    "triggerType": "Получение предмета",
+    "source": "https://app.notion.com/p/39eb8e499d8b81f0b23bef19e283ca2b",
+    "criteria": {
+      "machine": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "tag": "cogwild:advancement/first_machines"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:biodiesel",
+    "title": "Зелёная альтернатива",
+    "description": "Получите возобновляемое топливо из растений.",
+    "condition": "Произвести биодизель из растительного масла и биоэтанола.",
+    "parent": "cogwild:diesel",
+    "frame": "goal",
+    "hidden": false,
+    "experience": 25,
+    "branch": "Нефть и топливо",
+    "triggerType": "Производство жидкости",
+    "source": "https://app.notion.com/p/39fb8e499d8b810394b2dd4d99dea9ee",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "biodiesel_produced",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:nitrogen",
+    "title": "Разделяй и властвуй",
+    "description": "Отделите азот от сжатого воздуха.",
+    "condition": "Произвести азот в воздушном сепараторе.",
+    "parent": "cogwild:compressed_air",
+    "frame": "goal",
+    "hidden": true,
+    "experience": 20,
+    "branch": "Энергетика и машины",
+    "triggerType": "Производство жидкости",
+    "source": "https://app.notion.com/p/39fb8e499d8b813fb8e5ca9917af9034",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "nitrogen_produced",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:first_blueprint",
+    "title": "Бумага всё стерпит",
+    "description": "Подготовьте многоразовый чертёж для строительной верфи.",
+    "condition": "Создать или приобрести у жителя любой чертёж меха.",
+    "parent": "cogwild:construction_yard",
+    "frame": "task",
+    "hidden": false,
+    "experience": 10,
+    "branch": "Мехи",
+    "triggerType": "Получение предмета",
+    "source": "https://app.notion.com/p/39fb8e499d8b81418ba2d10d2b9c3592",
+    "criteria": {
+      "crafted": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "blueprint_crafted",
+          "minimum": 1
+        }
+      },
+      "traded": {
+        "trigger": "minecraft:villager_trade",
+        "conditions": {
+          "item": {
+            "tag": "cogwild:mech_blueprints"
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:brass_ingot",
+    "title": "Латунный век",
+    "description": "Соедините медь и цинк в точный промышленный сплав.",
+    "condition": "Создать латунный слиток в доменной печи.",
+    "parent": "cogwild:rare_ores",
+    "frame": "task",
+    "hidden": false,
+    "experience": 10,
+    "branch": "Металлургия",
+    "triggerType": "Получение предмета",
+    "source": "https://app.notion.com/p/39fb8e499d8b81718a11f06b6b7015cf",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "brass_smelted",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:full_distillation",
+    "title": "Четыре фракции",
+    "description": "Заставьте дистилляционную колонну одновременно выдавать мазут, дизель, бензин и керосин.",
+    "condition": "Завершить полный цикл переработки нефти без заблокированных выходов.",
+    "parent": "cogwild:first_oil",
+    "frame": "goal",
+    "hidden": false,
+    "experience": 30,
+    "branch": "Нефть и топливо",
+    "triggerType": "Пользовательское событие",
+    "source": "https://app.notion.com/p/39fb8e499d8b8187ad88db22af076233",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "distillation_cycle_completed",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:lubricant",
+    "title": "Скользкая тема",
+    "description": "Превратите тяжёлую нефтяную фракцию в техническую жидкость для обслуживания мехов.",
+    "condition": "Произвести машинную смазку в универсальном смесителе.",
+    "parent": "cogwild:full_distillation",
+    "frame": "task",
+    "hidden": false,
+    "experience": 10,
+    "branch": "Нефть и топливо",
+    "triggerType": "Производство жидкости",
+    "source": "https://app.notion.com/p/39fb8e499d8b81d98c7fe6bc7f1ba886",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "lubricant_produced",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:diesel_generator",
+    "title": "Своя электростанция",
+    "description": "Превратите дизель или биодизель в электричество для промышленного комплекса.",
+    "condition": "Запустить дизельный генератор.",
+    "parent": "cogwild:diesel",
+    "frame": "task",
+    "hidden": false,
+    "experience": 10,
+    "branch": "Энергетика и машины",
+    "triggerType": "Пользовательское событие",
+    "source": "https://app.notion.com/p/39fb8e499d8b81dfaf1ef065e5ed8149",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "diesel_generator_started",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:rare_ores",
+    "title": "Тяжёлые металлы",
+    "description": "Доберитесь до редких руд, без которых не собрать продвинутые машины.",
+    "condition": "Получить вольфрамовую и цинковую руду.",
+    "parent": "cogwild:steel_ingot",
+    "frame": "goal",
+    "hidden": false,
+    "experience": 20,
+    "branch": "Металлургия",
+    "triggerType": "Получение предмета",
+    "source": "https://app.notion.com/p/39eb8e499d8b8114b8f2f5a78a025c6e",
+    "criteria": {
+      "tungsten": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "tag": "forge:ores/tungsten"
+            }
+          ]
+        }
+      },
+      "zinc": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "tag": "forge:ores/zinc"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:first_mech",
+    "title": "Оно живое?",
+    "description": "Первое механическое существо покидает строительную верфь.",
+    "condition": "Создать любого меха.",
+    "parent": "cogwild:construction_yard",
+    "frame": "goal",
+    "hidden": false,
+    "experience": 20,
+    "branch": "Мехи",
+    "triggerType": "Создание меха",
+    "source": "https://app.notion.com/p/39eb8e499d8b813faff4c1cc1b48aa1a",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "mech_assembled",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:diesel",
+    "title": "Запах дизеля",
+    "description": "Разделите нефть на полезные фракции.",
+    "condition": "Произвести первое ведро дизеля в дистилляционной колонне.",
+    "parent": "cogwild:first_oil",
+    "frame": "goal",
+    "hidden": false,
+    "experience": 20,
+    "branch": "Нефть и топливо",
+    "triggerType": "Производство жидкости",
+    "source": "https://app.notion.com/p/39eb8e499d8b8145b956e1fa5545e86d",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "diesel_produced",
+          "minimum": 1000
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:first_oil",
+    "title": "Чёрное золото",
+    "description": "Поднимите первую нефть из конечной подземной залежи.",
+    "condition": "Получить нефть через собранную буровую установку и насос.",
+    "parent": "cogwild:first_machine",
+    "frame": "goal",
+    "hidden": false,
+    "experience": 20,
+    "branch": "Нефть и топливо",
+    "triggerType": "Пользовательское событие",
+    "source": "https://app.notion.com/p/39eb8e499d8b81869051cfa7c6ddc2be",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "oil_extracted",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:construction_yard",
+    "title": "Там, где рождаются машины",
+    "description": "Постройте многоблочную верфь для сборки механической фауны.",
+    "condition": "Завершить структуру строительной верфи.",
+    "parent": "cogwild:first_machine",
+    "frame": "goal",
+    "hidden": false,
+    "experience": 30,
+    "branch": "Мехи",
+    "triggerType": "Создание структуры",
+    "source": "https://app.notion.com/p/39eb8e499d8b81e5b120fd2cec170f9d",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "construction_yard_formed",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:mech_ant",
+    "title": "Шесть ног лучше двух",
+    "description": "Соберите рабочего мехмуравья для перевозки и перекачки жидкостей.",
+    "condition": "Создать мехмуравья на строительной верфи.",
+    "parent": "cogwild:first_mech",
+    "frame": "goal",
+    "hidden": false,
+    "experience": 20,
+    "branch": "Мехи",
+    "triggerType": "Создание меха",
+    "source": "https://app.notion.com/p/39eb8e499d8b81e6afcde511afac08bd",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "mech_ant_assembled",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:boost_fuel",
+    "title": "Ещё немного мощности",
+    "description": "Смешайте бензин, азот и сжатый воздух для кратковременного форсажа.",
+    "condition": "Произвести форсажное топливо.",
+    "parent": "cogwild:aviation_fuel",
+    "frame": "challenge",
+    "hidden": false,
+    "experience": 50,
+    "branch": "Нефть и топливо",
+    "triggerType": "Производство жидкости",
+    "source": "https://app.notion.com/p/39fb8e499d8b8136b1b1f3f985abf548",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "boost_fuel_produced",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:aviation_fuel",
+    "title": "Авиационный керосин",
+    "description": "Подготовьте топливо для будущей механической авиации.",
+    "condition": "Произвести авиационное топливо.",
+    "parent": "cogwild:full_distillation",
+    "frame": "goal",
+    "hidden": false,
+    "experience": 20,
+    "branch": "Нефть и топливо",
+    "triggerType": "Производство жидкости",
+    "source": "https://app.notion.com/p/39fb8e499d8b8147be8cced94ae424aa",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "aviation_fuel_produced",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:hardened_steel",
+    "title": "Закалённый характер",
+    "description": "Раскалите сталь и охладите её в машинной смазке.",
+    "condition": "Создать закалённую сталь в установке закалки.",
+    "parent": "cogwild:rare_ores",
+    "frame": "challenge",
+    "hidden": false,
+    "experience": 30,
+    "branch": "Металлургия",
+    "triggerType": "Пользовательское событие",
+    "source": "https://app.notion.com/p/39fb8e499d8b81b7b195dabcab292d7a",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "hardened_steel_produced",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:mechanical_menagerie",
+    "title": "Механический зверинец",
+    "description": "Соберите всю стартовую механическую фауну Cogwild.",
+    "condition": "Создать мехмуравья, робобуйвола и мехпчелу.",
+    "parent": "cogwild:first_mech",
+    "frame": "challenge",
+    "hidden": true,
+    "experience": 50,
+    "branch": "Мехи",
+    "triggerType": "Пользовательское событие",
+    "source": "https://app.notion.com/p/39eb8e499d8b811683b8ee0d618470f9",
+    "criteria": {
+      "mech_ant": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "mech_ant_assembled",
+          "minimum": 1
+        }
+      },
+      "robobuffalo": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "robobuffalo_assembled",
+          "minimum": 1
+        }
+      },
+      "mech_bee": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "mech_bee_assembled",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:mech_bee",
+    "title": "Тяжелее воздуха",
+    "description": "Поднимите в небо механическую пчелу на авиационном топливе.",
+    "condition": "Создать мехпчелу на строительной верфи.",
+    "parent": "cogwild:first_mech",
+    "frame": "challenge",
+    "hidden": false,
+    "experience": 50,
+    "branch": "Мехи",
+    "triggerType": "Создание меха",
+    "source": "https://app.notion.com/p/39eb8e499d8b812bb09cc90e03b8ef94",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "mech_bee_assembled",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "cogwild:robobuffalo",
+    "title": "Двенадцать цилиндров",
+    "description": "Запустите тяжёлого грузового робобуйвола с двигателем V12.",
+    "condition": "Создать робобуйвола на строительной верфи.",
+    "parent": "cogwild:first_mech",
+    "frame": "goal",
+    "hidden": false,
+    "experience": 30,
+    "branch": "Мехи",
+    "triggerType": "Создание меха",
+    "source": "https://app.notion.com/p/39eb8e499d8b819b8992ef4ae3dc01d2",
+    "criteria": {
+      "complete": {
+        "trigger": "cogwild:industrial_progress",
+        "conditions": {
+          "action": "robobuffalo_assembled",
+          "minimum": 1
+        }
+      }
+    }
+  }
+]

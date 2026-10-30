@@ -1,0 +1,38 @@
+{
+  "display": {
+    "icon": {
+      "item": "suitcaseglider:advancement_icon_root"
+    },
+    "title": {
+      "translate": "advancement.cogwild.root.title"
+    },
+    "description": {
+      "translate": "advancement.cogwild.root.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+  },
+  "criteria": {
+    "steel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:ingots/steel"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "steel"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  }
+}

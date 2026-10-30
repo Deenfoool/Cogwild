@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "suitcaseglider:advancement_icon_hardened_steel"
+    },
+    "title": {
+      "translate": "advancement.cogwild.hardened_steel.title"
+    },
+    "description": {
+      "translate": "advancement.cogwild.hardened_steel.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "cogwild:industrial_progress",
+      "conditions": {
+        "action": "hardened_steel_produced",
+        "minimum": 1
+      }
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  },
+  "parent": "cogwild:rare_ores"
+}

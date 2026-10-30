@@ -42,6 +42,7 @@ public final class SuitcaseGlider {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         dev.salum.suitcaseglider.mech.MechContent.register(bus);
         dev.salum.suitcaseglider.machine.MachineContent.register(bus);
+        dev.salum.suitcaseglider.advancement.IndustrialProgress.register(bus);
         ITEMS.register(bus); ENCHANTMENTS.register(bus); TABS.register(bus);
         GliderNetwork.register();
         dev.salum.suitcaseglider.mech.MechNetwork.register();

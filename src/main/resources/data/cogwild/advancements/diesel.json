@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "suitcaseglider:advancement_icon_diesel"
+    },
+    "title": {
+      "translate": "advancement.cogwild.diesel.title"
+    },
+    "description": {
+      "translate": "advancement.cogwild.diesel.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "cogwild:industrial_progress",
+      "conditions": {
+        "action": "diesel_produced",
+        "minimum": 1000
+      }
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "parent": "cogwild:first_oil"
+}

@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "suitcaseglider:advancement_icon_diesel_generator"
+    },
+    "title": {
+      "translate": "advancement.cogwild.diesel_generator.title"
+    },
+    "description": {
+      "translate": "advancement.cogwild.diesel_generator.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "cogwild:industrial_progress",
+      "conditions": {
+        "action": "diesel_generator_started",
+        "minimum": 1
+      }
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  },
+  "parent": "cogwild:diesel"
+}

@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "suitcaseglider:advancement_icon_nitrogen"
+    },
+    "title": {
+      "translate": "advancement.cogwild.nitrogen.title"
+    },
+    "description": {
+      "translate": "advancement.cogwild.nitrogen.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "complete": {
+      "trigger": "cogwild:industrial_progress",
+      "conditions": {
+        "action": "nitrogen_produced",
+        "minimum": 1
+      }
+    }
+  },
+  "requirements": [
+    [
+      "complete"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "parent": "cogwild:compressed_air"
+}

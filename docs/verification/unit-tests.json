@@ -1,5 +1,12 @@
 [
   {
+    "name": "dev.salum.suitcaseglider.advancement.AdvancementCatalogTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
     "name": "dev.salum.suitcaseglider.FlightPolicyTest",
     "tests": "11",
     "failures": "0",

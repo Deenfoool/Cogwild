@@ -1,0 +1,55 @@
+{
+  "display": {
+    "icon": {
+      "item": "suitcaseglider:advancement_icon_mechanical_menagerie"
+    },
+    "title": {
+      "translate": "advancement.cogwild.mechanical_menagerie.title"
+    },
+    "description": {
+      "translate": "advancement.cogwild.mechanical_menagerie.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "mech_ant": {
+      "trigger": "cogwild:industrial_progress",
+      "conditions": {
+        "action": "mech_ant_assembled",
+        "minimum": 1
+      }
+    },
+    "robobuffalo": {
+      "trigger": "cogwild:industrial_progress",
+      "conditions": {
+        "action": "robobuffalo_assembled",
+        "minimum": 1
+      }
+    },
+    "mech_bee": {
+      "trigger": "cogwild:industrial_progress",
+      "conditions": {
+        "action": "mech_bee_assembled",
+        "minimum": 1
+      }
+    }
+  },
+  "requirements": [
+    [
+      "mech_ant"
+    ],
+    [
+      "robobuffalo"
+    ],
+    [
+      "mech_bee"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "parent": "cogwild:first_mech"
+}
