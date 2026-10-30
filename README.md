@@ -36,9 +36,8 @@ Windows: `gradlew.bat build`. Результат: `build/libs/salum-mech-ant-0.3
 - [Дробилка](art_source/blockbench/blocks/Crusher-Refined-Console-Aged.bbmodel)
 - [Мех-муравей](art_source/blockbench/entities/Mech-Ant-Three-Section-Solid.bbmodel)
 - [Управление и подробности прототипа](docs/prototype-0.3.0.md)
-- [Концепция и целевая архитектура Cogwild](docs/project-vision.md)
 
-Рабочие модели `.bbmodel` хранятся в `art_source` и не попадают в игровой JAR. Исходные концепты, портфолио и ранние модели сохранены.
+Рабочие модели `.bbmodel` хранятся в `art_source` и не попадают в игровой JAR.
 
 Режимы `-PmechDev`, `-PmechQa`, `-PmechMotionQa`, `-PmechTerrainQa` и `-PmachineSmoke` предназначены только для отдельных тестовых профилей; они создают тестовые площадки или управляют игроком. Обычная установка JAR их не запускает. Для ручной проверки можно использовать обычный `./gradlew runClient`.
 
