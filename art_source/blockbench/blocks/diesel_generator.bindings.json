@@ -1,0 +1,46 @@
+{
+  "model": "Diesel-Generator",
+  "block_footprint": [
+    2,
+    1,
+    2
+  ],
+  "outputs": [
+    {
+      "id": 1,
+      "voltage": 380,
+      "phase_count": 3,
+      "anchor": "power_output_1_380v",
+      "bone": "output_1_380V",
+      "socket_contacts": 5
+    },
+    {
+      "id": 2,
+      "voltage": 220,
+      "phase_count": 1,
+      "anchor": "power_output_2_220v",
+      "bone": "output_2_220V",
+      "socket_contacts": 3
+    },
+    {
+      "id": 3,
+      "voltage": 220,
+      "phase_count": 1,
+      "anchor": "power_output_3_220v",
+      "bone": "output_3_220V",
+      "socket_contacts": 3
+    },
+    {
+      "id": 4,
+      "voltage": 220,
+      "phase_count": 1,
+      "anchor": "power_output_4_220v",
+      "bone": "output_4_220V",
+      "socket_contacts": 3
+    }
+  ],
+  "exhaust_anchor": "exhaust_origin",
+  "fuel_anchor": "fuel_fill",
+  "integration_status": "source_model_only",
+  "power_note": "Voltages are asset metadata; game energy conversion, ratings and output control are not implemented."
+}
