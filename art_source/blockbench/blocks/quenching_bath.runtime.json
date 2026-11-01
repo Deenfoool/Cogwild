@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "units_per_block": 16,
+  "fluid": {
+    "id": "minecraft:water",
+    "renderer": "Minecraft vanilla fluid sprites and biome water tint; do not place spreading world water blocks",
+    "bounds_min_locator": "fluid_min",
+    "bounds_max_locator": "fluid_max",
+    "animated_bone": "VANILLA_WATER_VOLUME",
+    "empty_scale_y": 0.001,
+    "full_scale_y": 1.0,
+    "world_interaction": "runtime implementation required"
+  },
+  "workpiece": {
+    "bone": "PROCESS_WORKPIECE",
+    "locator": "workpiece_anchor",
+    "render": "actual input ItemStack or BlockState, not a baked substitute",
+    "suggested_block_scale": 0.45
+  },
+  "particles": {
+    "implementation": "runtime particle spawning, not baked geometry",
+    "steam": {
+      "vanilla_particle": "minecraft:cloud",
+      "locators": [
+        "steam_left",
+        "steam_right"
+      ],
+      "processing_seconds": [
+        1.3,
+        4.4
+      ]
+    },
+    "drips": {
+      "vanilla_particle": "minecraft:dripping_water",
+      "locators": [
+        "drip_left",
+        "drip_right"
+      ],
+      "processing_seconds": [
+        4.4,
+        7.0
+      ]
+    },
+    "drain": {
+      "locator": "drain_outlet",
+      "animation": "draining",
+      "seconds": [
+        0.65,
+        4.15
+      ]
+    }
+  },
+  "states": {
+    "idle_empty": {
+      "clip": "animation.quenching_bath.idle_empty",
+      "duration_seconds": 3
+    },
+    "idle_filled": {
+      "clip": "animation.quenching_bath.idle_filled",
+      "duration_seconds": 3
+    },
+    "loading": {
+      "clip": "animation.quenching_bath.loading",
+      "duration_seconds": 2.6
+    },
+    "processing": {
+      "clip": "animation.quenching_bath.processing",
+      "duration_seconds": 7
+    },
+    "ready": {
+      "clip": "animation.quenching_bath.ready",
+      "duration_seconds": 3
+    },
+    "unloading": {
+      "clip": "animation.quenching_bath.unloading",
+      "duration_seconds": 2.6
+    },
+    "draining": {
+      "clip": "animation.quenching_bath.draining",
+      "duration_seconds": 4.6
+    },
+    "filling": {
+      "clip": "animation.quenching_bath.filling",
+      "duration_seconds": 4.6
+    }
+  },
+  "transitions": [
+    "idle_empty -> filling -> idle_filled",
+    "idle_filled -> loading -> processing -> ready",
+    "ready -> unloading -> idle_filled",
+    "idle_filled -> draining -> idle_empty"
+  ]
+}
