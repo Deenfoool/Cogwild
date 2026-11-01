@@ -94,5 +94,11 @@
   "message.suitcaseglider.cable.duplicate": "Нельзя соединить эти точки: повтор, одна точка или уже 8 соединений.",
   "message.suitcaseglider.cable.route": "Нет свободного пути до 32 м. Смените режим или добавьте реле.",
   "message.suitcaseglider.cable.cost": "Для этого соединения нужно %s единиц кабеля.",
-  "message.suitcaseglider.cable.connected": "Соединение готово. Длина: %s м."
+  "message.suitcaseglider.cable.connected": "Соединение готово. Длина: %s м.",
+  "block.suitcaseglider.rolling_mill": "Прокатный стан",
+  "block.suitcaseglider.quenching_bath": "Закалочная ванна",
+  "block.suitcaseglider.air_separator": "Воздушный сепаратор",
+  "block.suitcaseglider.air_compressor": "Воздушный компрессор",
+  "block.suitcaseglider.industrial_press": "Промышленный пресс",
+  "block.suitcaseglider.diesel_generator": "Дизельный генератор"
 }

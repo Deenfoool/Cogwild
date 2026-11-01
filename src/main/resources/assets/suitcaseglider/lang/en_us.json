@@ -94,5 +94,11 @@
   "message.suitcaseglider.cable.duplicate": "Invalid connection: duplicate, same point or 8-connection limit.",
   "message.suitcaseglider.cable.route": "No clear route within 32 m. Change mode or add a relay.",
   "message.suitcaseglider.cable.cost": "This connection needs %s cable units.",
-  "message.suitcaseglider.cable.connected": "Connected. Length: %s m."
+  "message.suitcaseglider.cable.connected": "Connected. Length: %s m.",
+  "block.suitcaseglider.rolling_mill": "Rolling Mill",
+  "block.suitcaseglider.quenching_bath": "Quenching Bath",
+  "block.suitcaseglider.air_separator": "Air Separator",
+  "block.suitcaseglider.air_compressor": "Air Compressor",
+  "block.suitcaseglider.industrial_press": "Industrial Press",
+  "block.suitcaseglider.diesel_generator": "Diesel Generator"
 }

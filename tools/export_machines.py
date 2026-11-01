@@ -1,5 +1,5 @@
-"""Bake the two approved Blockbench projects into textured, animated Forge render data."""
-import base64, json, math
+"""Bake all approved Blockbench projects into textured, animated Forge render data."""
+import base64, json, math, struct, zlib
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parent.parent
@@ -14,7 +14,9 @@ def rotate(v,r):
         else:x,y=x*c-y*s,x*s+y*c
     return [x,y,z]
 
-def convert(kind,filename):
+CATALOG={}
+
+def convert(kind,filename,names,clips):
     m=json.loads((ROOT/'art_source/blockbench/blocks'/filename).read_text(encoding='utf-8'))
     groups={g['uuid']:g for g in m['groups']};elements={e['uuid']:e for e in m['elements']}
     bones=[dict(name='render_root',parent=-1,origin=[0,0,0],rotation=[0,0,0])];faces=[];ids={};anchors={}
@@ -26,11 +28,14 @@ def convert(kind,filename):
 
     def addface(b,vs,uv,texture):
         if len(vs)==3:vs=vs+[vs[-1]];uv=uv+[uv[-1]]
-        if len(vs)!=4:raise ValueError('Non-quad polygon needs triangulation')
+        if len(vs)>4:
+            for i in range(1,len(vs)-1):addface(b,[vs[0],vs[i],vs[i+1]],[uv[0],uv[i],uv[i+1]],texture)
+            return
+        if len(vs)!=4:raise ValueError('Invalid polygon')
         a,c,d=vs[:3];u=[c[i]-a[i] for i in range(3)];v=[d[i]-a[i] for i in range(3)]
         n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]];length=math.sqrt(sum(x*x for x in n))
         if length<1e-10:return
-        parent=b;emissive=False
+        parent=b;emissive=m['textures'][int(texture)].get('render_mode')=='emissive'
         while parent>=0:
             emissive|=bones[parent]['name'].startswith('lamp_');parent=bones[parent]['parent']
         faces.append(dict(bone=b,v=vs,uv=uv,n=[x/length for x in n],emissive=emissive,texture=int(texture)))
@@ -74,22 +79,64 @@ def convert(kind,filename):
             for ch in ['rotation','position','scale']:
                 keys=sorted((k for k in anim.get('keyframes',[]) if k['channel']==ch),key=lambda k:k['time'])
                 if keys:tracks.append(dict(bone=ids[uid],channel=ch,times=[k['time'] for k in keys],values=[[float(k['data_points'][0].get(ax,1 if ch=='scale' else 0)) for ax in 'xyz'] for k in keys]))
-        animations[a['name'].removeprefix(f'animation.{kind}.')]=dict(length=a['length'],loop=a['loop']=='loop',tracks=tracks)
+        animations[a['name'].split('.')[-1]]=dict(length=a['length'],loop=a['loop']=='loop',tracks=tracks)
+    def world(b,p):
+        while b>=0:
+            bone=bones[b];parent=bone['parent'];po=bones[parent]['origin'] if parent>=0 else [0,0,0]
+            p=rotate(p,bone['rotation']);p=[p[i]+bone['origin'][i]-po[i] for i in range(3)];b=parent
+        return p
+    points=[world(f['bone'],[c*16 for c in v]) for f in faces for v in f['v']]
+    lo=[min(p[i] for p in points) for i in range(3)];hi=[max(p[i] for p in points) for i in range(3)]
+    width=max(2,min(3,math.ceil((hi[0]-lo[0]-.01)/16)))
+    offset=[(width-1)/2-(hi[0]+lo[0])/32,-lo[1]/16,-(hi[2]+lo[2])/32]
+    def anchor_world(name):
+        a=anchors[name];o=bones[a['bone']]['origin'];v=world(a['bone'],[a['position'][i]-o[i] for i in range(3)])
+        return [v[i]/16+offset[i] for i in range(3)]
+    power=next((n for n in ['power_input','PORT_POWER_Z_POS','power_output_1_380v'] if n in anchors),None)
+    if power:port=anchor_world(power)
+    else:
+        power_bone=next((i for i,b in enumerate(bones) if b['name']=='PORT_POWER_Z_POS'),None)
+        port=[(width-1)/2,.5,(hi[2]-lo[2])/32+.08] if power_bone is None else [v/16+offset[i] for i,v in enumerate(world(power_bone,[0,0,0]))]
+    if kind=='lathe':port=[15.9/16,8.25/16,.59]
+    if kind=='crusher':port=[1.15625,.46875,.59]
+    if kind=='rolling_mill':port=[.5,.65,(hi[2]-lo[2])/32+.08]
+    CATALOG[kind]=dict(width=width,height=round(hi[1]-lo[1],5),offset=offset,power=port,off=clips[0],on=clips[1],start=clips[2],stop=clips[3])
     data=dict(bones=bones,faces=faces,animations=animations,anchors=anchors,textures=textures)
     (OUT/'rigs'/f'{kind}.json').write_text(json.dumps(data,separators=(',',':')),encoding='utf-8')
-    model={'parent':'minecraft:block/block','textures':{'particle':f'suitcaseglider:machine/{kind}_0'}}
+    color=(100,112,50) if kind=='diesel_generator' else (70,96,116) if kind in ('quenching_bath','air_separator') else (112,119,123)
+    raw=b''.join(b'\x00'+bytes(max(0,min(255,c+(y//4-2)*3)) for x in range(16) for c in color) for y in range(16))
+    def chunk(tag,data):return struct.pack('>I',len(data))+tag+data+struct.pack('>I',zlib.crc32(tag+data)&0xffffffff)
+    particle=OUT/'textures/block'/f'{kind}_particle.png';particle.parent.mkdir(parents=True,exist_ok=True)
+    particle.write_bytes(b'\x89PNG\r\n\x1a\n'+chunk(b'IHDR',struct.pack('>IIBBBBB',16,16,8,2,0,0,0))+chunk(b'IDAT',zlib.compress(raw))+chunk(b'IEND',b''))
+    model={'parent':'minecraft:block/block','textures':{'particle':f'suitcaseglider:block/{kind}_particle'}}
     (OUT/'models/block').mkdir(parents=True,exist_ok=True);(OUT/'models/block'/f'{kind}.json').write_text(json.dumps(model))
     (OUT/'blockstates').mkdir(exist_ok=True);(OUT/'blockstates'/f'{kind}.json').write_text(json.dumps({'variants':{'':{'model':f'suitcaseglider:block/{kind}'}}}))
     item={'parent':'builtin/entity','display':{'gui':{'rotation':[20,45,0],'scale':[.75,.75,.75]},'ground':{'translation':[0,2,0],'scale':[.5,.5,.5]},'firstperson_righthand':{'rotation':[0,45,0],'scale':[.5,.5,.5]},'thirdperson_righthand':{'rotation':[60,45,0],'scale':[.5,.5,.5]}}}
     (OUT/'models/item'/f'{kind}.json').write_text(json.dumps(item))
     data_dir=OUT.parents[1]/'data/suitcaseglider/loot_tables/blocks';data_dir.mkdir(parents=True,exist_ok=True)
-    (data_dir/f'{kind}.json').write_text(json.dumps({'type':'minecraft:block','pools':[{'rolls':1,'conditions':[{'condition':'minecraft:survives_explosion'},{'condition':'minecraft:block_state_property','block':f'suitcaseglider:{kind}','properties':{'secondary':'false'}}],'entries':[{'type':'minecraft:item','name':f'suitcaseglider:{kind}'}]}]}))
+    (data_dir/f'{kind}.json').write_text(json.dumps({'type':'minecraft:block','pools':[{'rolls':1,'conditions':[{'condition':'minecraft:survives_explosion'},{'condition':'minecraft:block_state_property','block':f'suitcaseglider:{kind}','properties':{'secondary':'false','layer':'0'}}],'entries':[{'type':'minecraft:item','name':f'suitcaseglider:{kind}'}]}]}))
     print(kind, 'bones',len(bones),'faces',len(faces),'animations',list(animations))
 
-convert('lathe','Lathe-Soft-Aged.bbmodel')
-convert('crusher','Crusher-Refined-Console-Aged.bbmodel')
+
+MODELS=[
+ ('lathe','Lathe-Soft-Aged.bbmodel',('Lathe','Токарный станок'),('unpowered','powered_idle','power_on','power_off')),
+ ('crusher','Crusher-Refined-Console-Aged.bbmodel',('Crusher','Дробилка'),('unpowered','powered_idle','','')),
+ ('rolling_mill','Two-High-Rolling-Mill.bbmodel',('Rolling Mill','Прокатный стан'),('unpowered','processing','','')),
+ ('quenching_bath','Quenching-Bath.bbmodel',('Quenching Bath','Закалочная ванна'),('idle_empty','idle_filled','filling','draining')),
+ ('air_separator','Air-Separator.bbmodel',('Air Separator','Воздушный сепаратор'),('unpowered','processing','starting','stopping')),
+ ('air_compressor','Air-Compressor.bbmodel',('Air Compressor','Воздушный компрессор'),('idle','running','starting','stopping')),
+ ('industrial_press','Industrial-Press.bbmodel',('Industrial Press','Промышленный пресс'),('idle','processing','starting','stopping')),
+ ('diesel_generator','Diesel-Generator.bbmodel',('Diesel Generator','Дизельный генератор'),('shutdown','running','starting','stopping')),
+]
+for kind,filename,names,clips in MODELS:convert(kind,filename,names,clips)
+(OUT/'rigs/machines.json').write_text(json.dumps(CATALOG,indent=2),encoding='utf-8')
 for p in (OUT/'lang').glob('*.json'):
     lang=json.loads(p.read_text(encoding='utf-8-sig'));ru=p.stem=='ru_ru'
-    lang['block.suitcaseglider.lathe']='Токарный станок' if ru else 'Lathe'
-    lang['block.suitcaseglider.crusher']='Дробилка' if ru else 'Crusher'
+    for kind,_,names,_ in MODELS:lang['block.suitcaseglider.'+kind]=names[1 if ru else 0]
     p.write_text(json.dumps(lang,ensure_ascii=False,indent=2),encoding='utf-8')
+for kind,_,_,_ in MODELS:
+    if kind in ('lathe','crusher'):continue
+    recipe={'type':'minecraft:crafting_shaped','pattern':['III','CRC','IPI'],'key':{'I':{'item':'minecraft:iron_ingot'},'C':{'item':'minecraft:copper_ingot'},'R':{'item':'minecraft:water_bucket' if kind=='quenching_bath' else 'minecraft:furnace' if kind=='diesel_generator' else 'minecraft:piston'},'P':{'item':'minecraft:redstone'}},'result':{'item':'suitcaseglider:'+kind}}
+    folder=ROOT/'src/main/resources/data/suitcaseglider/recipes';folder.mkdir(parents=True,exist_ok=True)
+    (folder/(kind+'.json')).write_text(json.dumps(recipe,indent=2),encoding='utf-8')
+print(json.dumps(CATALOG,indent=2))

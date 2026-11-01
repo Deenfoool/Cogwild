@@ -1,6 +1,13 @@
 {
   "replace": false,
   "values": [
-    "suitcaseglider:crusher"
+    "suitcaseglider:lathe",
+    "suitcaseglider:crusher",
+    "suitcaseglider:rolling_mill",
+    "suitcaseglider:quenching_bath",
+    "suitcaseglider:air_separator",
+    "suitcaseglider:air_compressor",
+    "suitcaseglider:industrial_press",
+    "suitcaseglider:diesel_generator"
   ]
 }

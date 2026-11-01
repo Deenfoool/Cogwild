@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "CRC",
+    "IPI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "R": {
+      "item": "minecraft:piston"
+    },
+    "P": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "suitcaseglider:air_separator"
+  }
+}

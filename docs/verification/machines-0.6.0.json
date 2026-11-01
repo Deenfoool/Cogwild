@@ -1,0 +1,12 @@
+{
+  "version": "0.6.0",
+  "minecraft": "1.20.1",
+  "forge": "47.4.28",
+  "unit_tests": 31,
+  "machine_server_checks": 522,
+  "cable_server_checks": 26,
+  "client_world_models": 8,
+  "client_item_models": 8,
+  "missing_texture_warnings": 0,
+  "jar_sha256": "1f6eafea1a300bbee6fa5a64468b0f9be7c63aa8d415d9ce7b46c5565613dc6e"
+}

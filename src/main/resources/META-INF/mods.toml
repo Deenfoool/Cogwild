@@ -4,10 +4,10 @@ license="All Rights Reserved"
 [[mods]]
 modId="suitcaseglider"
 version="${mod_version}"
-displayName="Suitcase Glider and Mech Ant"
+displayName="Cogwild"
 logoFile="logo.png"
 authors="Salum"
-description='''A dyeable suitcase that unfolds into a wooden hand-held glider during dangerous falls. Keeps armor slots free, occupies both hands in flight, and stows on landing. Includes a silent, tameable horse-like Mech Ant with an animated three-section tank, saddle controls and player anchors.'''
+description='''Industrial machines, a dyeable suitcase glider, a rideable mechanical ant, point-to-point power cables and advancements. Includes eight animated machine models: lathe, crusher, rolling mill, quenching bath, air separator, compressor, press and diesel generator.'''
 [[dependencies.suitcaseglider]]
 modId="forge"
 mandatory=true

@@ -1,1 +1,1 @@
-{"parent": "minecraft:block/block", "textures": {"particle": "suitcaseglider:machine/crusher_0"}}
+{"parent": "minecraft:block/block", "textures": {"particle": "suitcaseglider:block/crusher_particle"}}

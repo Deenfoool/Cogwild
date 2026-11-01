@@ -34,8 +34,7 @@ public final class SuitcaseGlider {
             .displayItems((parameters, output) -> {
                 output.accept(GLIDER.get());
                 output.accept(dev.salum.suitcaseglider.mech.MechContent.EGG.get());
-                output.accept(dev.salum.suitcaseglider.machine.MachineContent.LATHE_ITEM.get());
-                output.accept(dev.salum.suitcaseglider.machine.MachineContent.CRUSHER_ITEM.get());
+                dev.salum.suitcaseglider.machine.MachineContent.MACHINE_ITEMS.values().forEach(item -> output.accept(item.get()));
                 output.accept(dev.salum.suitcaseglider.cable.CableContent.CABLE.get());
                 output.accept(dev.salum.suitcaseglider.cable.CableContent.RELAY_ITEM.get());
                 output.accept(dev.salum.suitcaseglider.cable.CableContent.GENERATOR_ITEM.get());

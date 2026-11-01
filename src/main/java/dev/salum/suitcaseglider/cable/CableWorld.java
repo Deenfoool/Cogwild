@@ -32,7 +32,7 @@ public final class CableWorld extends SavedData {
     public static Vec3 anchor(Level level,BlockPos p){
         var s=level.getBlockState(p);
         if(s.getBlock() instanceof MachineBlock machine){
-            double x=machine.kind.equals("lathe")?15.9/16:1.15625,y=machine.kind.equals("lathe")?8.25/16:.46875,z=.59;
+            var port=machine.spec().power();double x=port[0],y=port[1],z=port[2];
             double r=Math.toRadians(180-s.getValue(MachineBlock.FACING).toYRot());
             return new Vec3(p.getX()+.5+x*Math.cos(r)+z*Math.sin(r),p.getY()+y,p.getZ()+.5-x*Math.sin(r)+z*Math.cos(r));
         }
@@ -42,7 +42,7 @@ public final class CableWorld extends SavedData {
     }
     public static CableRoutes.Terrain terrain(Level l,BlockPos a,BlockPos b){
         Set<BlockPos> ignore=new HashSet<>(List.of(a,b));
-        for(BlockPos p:List.of(a,b)){var s=l.getBlockState(p);if(s.getBlock() instanceof MachineBlock)ignore.add(MachineBlock.other(p,s));}
+        for(BlockPos p:List.of(a,b)){var s=l.getBlockState(p);if(s.getBlock() instanceof MachineBlock machine)ignore.addAll(machine.cells(MachineBlock.base(p,s),s));}
         return new CableRoutes.Terrain(){
             public CableRoutes.Surface surface(int x,int z,double nearY){
                 for(int y=(int)Math.floor(nearY);y>=Math.floor(nearY)-8;y--){
@@ -62,6 +62,7 @@ public final class CableWorld extends SavedData {
                     Vec3 point=from.lerp(to,(double)i/n);BlockPos pos=BlockPos.containing(point);
                     if(!l.hasChunkAt(pos)||!l.isInWorldBounds(pos))return false;
                     if(ignore.contains(pos)){
+                        if(l.getBlockState(pos).getBlock() instanceof MachineBlock)continue;
                         var block=l.getBlockState(pos).getBlock();
                         if(block instanceof EnergyNodeBlock node&&!node.generator)continue;
                         if(point.distanceToSqr(anchor(l,a))<.25*.25||point.distanceToSqr(anchor(l,b))<.25*.25)continue;

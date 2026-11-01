@@ -20,44 +20,59 @@ public final class MachineBlock extends BaseEntityBlock {
     private static final ThreadLocal<Boolean> REMOVING_PAIR=ThreadLocal.withInitial(()->false);
     public static final DirectionProperty FACING=HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty SECONDARY=BooleanProperty.create("secondary"),POWERED=BlockStateProperties.POWERED;
+    public static final IntegerProperty SEGMENT=IntegerProperty.create("segment",0,2),LAYER=IntegerProperty.create("layer",0,2);
     public final String kind;
-    public MachineBlock(String kind){super(Properties.of().strength(3,6).sound(SoundType.METAL).noOcclusion());this.kind=kind;registerDefaultState(stateDefinition.any().setValue(FACING,Direction.NORTH).setValue(SECONDARY,false).setValue(POWERED,false));}
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b){b.add(FACING,SECONDARY,POWERED);}
-    public static BlockPos other(BlockPos pos,BlockState state){Direction right=state.getValue(FACING).getClockWise();return pos.relative(state.getValue(SECONDARY)?right.getOpposite():right);}
-    public static BlockPos base(BlockPos pos,BlockState state){return state.getValue(SECONDARY)?other(pos,state):pos;}
+    public MachineCatalog.Spec spec(){return MachineCatalog.get(kind);}
+    public static boolean primary(BlockState s){return !s.getValue(SECONDARY)&&s.getValue(LAYER)==0;}
+    private static int segment(BlockState s){return s.getValue(SECONDARY)&&s.getValue(SEGMENT)==0&&s.getValue(LAYER)==0?1:s.getValue(SEGMENT);}
+    public MachineBlock(String kind){super(Properties.of().strength(3,6).sound(SoundType.METAL).noOcclusion());this.kind=kind;registerDefaultState(stateDefinition.any().setValue(FACING,Direction.NORTH).setValue(SECONDARY,false).setValue(POWERED,false).setValue(SEGMENT,0).setValue(LAYER,0));}
+    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b){b.add(FACING,SECONDARY,POWERED,SEGMENT,LAYER);}
+    public static BlockPos other(BlockPos pos,BlockState state){return primary(state)?pos.relative(state.getValue(FACING).getClockWise()):base(pos,state);}
+    public static BlockPos base(BlockPos pos,BlockState state){return pos.below(state.getValue(LAYER)).relative(state.getValue(FACING).getCounterClockWise(),segment(state));}
+    public java.util.List<BlockPos> cells(BlockPos base,BlockState state){
+        var cells=new java.util.ArrayList<BlockPos>();
+        for(int y=0;y<spec().layers();y++)for(int x=0;x<spec().width();x++)cells.add(base.relative(state.getValue(FACING).getClockWise(),x).above(y));
+        return cells;
+    }
     @Override public BlockState getStateForPlacement(BlockPlaceContext c){
-        var state=defaultBlockState().setValue(FACING,c.getHorizontalDirection().getOpposite());var second=other(c.getClickedPos(),state);
-        if(!c.getLevel().getBlockState(second).canBeReplaced(c)||!c.getLevel().getWorldBorder().isWithinBounds(second))return null;
-        if(!c.getLevel().getBlockState(c.getClickedPos().above()).canBeReplaced(c)||!c.getLevel().getBlockState(second.above()).canBeReplaced(c))return null;
+        var state=defaultBlockState().setValue(FACING,c.getHorizontalDirection().getOpposite());
+        for(var p:cells(c.getClickedPos(),state))if(!c.getLevel().isInWorldBounds(p)||!c.getLevel().getWorldBorder().isWithinBounds(p)||!c.getLevel().getBlockState(p).canBeReplaced(c))return null;
         return state;
     }
-    @Override public void setPlacedBy(Level level,BlockPos pos,BlockState state,LivingEntity placer,ItemStack stack){if(!level.isClientSide){level.setBlock(other(pos,state),state.setValue(SECONDARY,true),3);updatePower(level,pos,state);}}
-    @Override public BlockEntity newBlockEntity(BlockPos pos,BlockState state){return state.getValue(SECONDARY)?null:new MachineBlockEntity(pos,state);}
-    @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l,BlockState s,BlockEntityType<T> type){return l.isClientSide||s.getValue(SECONDARY)?null:createTickerHelper(type,MachineContent.TYPE.get(),(world,p,state,machine)->machine.tickEnergy());}
+    @Override public void setPlacedBy(Level level,BlockPos pos,BlockState state,LivingEntity placer,ItemStack stack){
+        if(level.isClientSide)return;
+        for(int y=0;y<spec().layers();y++)for(int x=0;x<spec().width();x++)if(x!=0||y!=0){
+            var part=state.setValue(SEGMENT,x).setValue(LAYER,y).setValue(SECONDARY,true);
+            level.setBlock(pos.relative(state.getValue(FACING).getClockWise(),x).above(y),part,3);
+        }updatePower(level,pos,state);
+    }
+    @Override public BlockEntity newBlockEntity(BlockPos pos,BlockState state){return primary(state)?new MachineBlockEntity(pos,state):null;}
+    @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l,BlockState s,BlockEntityType<T> type){return l.isClientSide||!primary(s)?null:createTickerHelper(type,MachineContent.TYPE.get(),(world,p,state,machine)->machine.tickEnergy());}
     @Override public RenderShape getRenderShape(BlockState state){return RenderShape.ENTITYBLOCK_ANIMATED;}
-    @Override public VoxelShape getShape(BlockState state,BlockGetter level,BlockPos pos,CollisionContext context){return Block.box(0,0,0,16,kind.equals("crusher")&&state.getValue(SECONDARY)?26:kind.equals("lathe")?22:18,16);}
+    @Override public VoxelShape getShape(BlockState state,BlockGetter level,BlockPos pos,CollisionContext context){return Block.box(0,0,0,16,Math.min(16,Math.max(.1,spec().height()-16*state.getValue(LAYER))),16);}
     @Override public BlockState rotate(BlockState state,Rotation r){return state.setValue(FACING,r.rotate(state.getValue(FACING)));}
     @Override public BlockState mirror(BlockState state,Mirror m){return state.rotate(m.getRotation(state.getValue(FACING)));}
-    private boolean matching(Level level,BlockPos pos,BlockState state){var other=level.getBlockState(pos);return other.is(this)&&other.getValue(FACING)==state.getValue(FACING)&&other.getValue(SECONDARY)!=state.getValue(SECONDARY);}
+    private boolean matching(Level level,BlockPos p,BlockPos origin,BlockState state){var part=level.getBlockState(p);return part.is(this)&&part.getValue(FACING)==state.getValue(FACING)&&base(p,part).equals(origin);}
+    private void removeParts(Level level,BlockPos pos,BlockState state,boolean drop){
+        BlockPos origin=base(pos,state);REMOVING_PAIR.set(true);
+        try{for(var p:cells(origin,state))if(!p.equals(pos)&&matching(level,p,origin,state))level.destroyBlock(p,drop&&primary(level.getBlockState(p)));}
+        finally{REMOVING_PAIR.set(false);}
+    }
     @Override public void playerWillDestroy(Level level,BlockPos pos,BlockState state,Player player){
-        if(!level.isClientSide&&player.isCreative()&&matching(level,other(pos,state),state)){
-            REMOVING_PAIR.set(true);try{level.destroyBlock(other(pos,state),false);}finally{REMOVING_PAIR.set(false);}
-        }
+        if(!level.isClientSide&&player.isCreative()&&!REMOVING_PAIR.get())removeParts(level,pos,state,false);
         super.playerWillDestroy(level,pos,state,player);
     }
     @Override public void onRemove(BlockState state,Level level,BlockPos pos,BlockState next,boolean moved){
-        if(!state.is(next.getBlock())&&!level.isClientSide&&!REMOVING_PAIR.get()&&matching(level,other(pos,state),state)){
-            REMOVING_PAIR.set(true);try{level.destroyBlock(other(pos,state),state.getValue(SECONDARY));}finally{REMOVING_PAIR.set(false);}
-        }
+        if(!state.is(next.getBlock())&&!level.isClientSide&&!REMOVING_PAIR.get())removeParts(level,pos,state,!primary(state));
         super.onRemove(state,level,pos,next,moved);
     }
     @Override public void neighborChanged(BlockState state,Level level,BlockPos pos,Block source,BlockPos from,boolean moving){if(!level.isClientSide)updatePower(level,base(pos,state),level.getBlockState(base(pos,state)));}
     public void updatePower(Level level,BlockPos pos,BlockState state){
-        if(!state.is(this)||state.getValue(SECONDARY))return;
-        BlockPos second=other(pos,state);boolean powered=level.hasNeighborSignal(pos)||level.hasNeighborSignal(second)||(level.getBlockEntity(pos) instanceof MachineBlockEntity machine&&machine.cableEnergy()>=8);
+        if(!state.is(this)||!primary(state))return;
+        boolean powered=cells(pos,state).stream().anyMatch(level::hasNeighborSignal)||(level.getBlockEntity(pos) instanceof MachineBlockEntity machine&&machine.cableEnergy()>=8);
         if(state.getValue(POWERED)==powered)return;
         if(level.getBlockEntity(pos) instanceof MachineBlockEntity machine)machine.powerChanged(powered);
         level.setBlock(pos,state.setValue(POWERED,powered),3);
-        if(matching(level,second,state))level.setBlock(second,level.getBlockState(second).setValue(POWERED,powered),3);
+        for(var p:cells(pos,state))if(!p.equals(pos)&&matching(level,p,pos,state))level.setBlock(p,level.getBlockState(p).setValue(POWERED,powered),3);
     }
 }
