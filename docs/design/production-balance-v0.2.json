@@ -1,0 +1,375 @@
+{
+  "schema_version": 1,
+  "status": "design_baseline_not_implemented",
+  "engine": {
+    "minecraft": "1.20.1",
+    "forge": "47.4.28",
+    "ticks_per_second": 20,
+    "existing_runtime_modid": "suitcaseglider",
+    "note": "Symbols prefixed draft: below are design placeholders, not registered resources."
+  },
+  "existing_runtime": {
+    "fuel_generator_fe_per_tick": 40,
+    "machine_buffer_fe": 4000,
+    "network_component_max_fe_per_tick": 256,
+    "machine_visual_fe_per_tick": 8
+  },
+  "proposed_energy_policy": {
+    "empty_machine_processing_fe_per_tick": 0,
+    "processing_fe_charged_only_when_progress_advances": true,
+    "redstone_signal": "disable_processing_not_supply_energy",
+    "no_energy_during_blocked_output": true,
+    "pause_retains_progress": true,
+    "fuel_consume_only_when_storage_can_accept_energy": true
+  },
+  "registered_machine_kinds": [
+    "lathe",
+    "crusher",
+    "rolling_mill",
+    "quenching_bath",
+    "air_separator",
+    "air_compressor",
+    "industrial_press",
+    "diesel_generator"
+  ],
+  "process_recipes": [
+    {
+      "id": "crusher_iron",
+      "machine": "crusher",
+      "stage": "early",
+      "duration_ticks": 160,
+      "fe_per_tick": 50,
+      "inputs": [
+        {
+          "item": "minecraft:raw_iron",
+          "count": 1
+        }
+      ],
+      "outputs": [
+        {
+          "item": "draft:iron_dust",
+          "count": 1
+        }
+      ],
+      "chance_outputs": [
+        {
+          "item": "draft:iron_dust",
+          "count": 1,
+          "probability": 0.5
+        }
+      ],
+      "origin": "notion_crusher_rule"
+    },
+    {
+      "id": "crusher_copper",
+      "machine": "crusher",
+      "stage": "early",
+      "duration_ticks": 160,
+      "fe_per_tick": 50,
+      "inputs": [
+        {
+          "item": "minecraft:raw_copper",
+          "count": 1
+        }
+      ],
+      "outputs": [
+        {
+          "item": "draft:copper_dust",
+          "count": 1
+        }
+      ],
+      "chance_outputs": [
+        {
+          "item": "draft:copper_dust",
+          "count": 1,
+          "probability": 0.5
+        }
+      ],
+      "origin": "notion_crusher_rule"
+    },
+    {
+      "id": "crusher_gold",
+      "machine": "crusher",
+      "stage": "early",
+      "duration_ticks": 160,
+      "fe_per_tick": 50,
+      "inputs": [
+        {
+          "item": "minecraft:raw_gold",
+          "count": 1
+        }
+      ],
+      "outputs": [
+        {
+          "item": "draft:gold_dust",
+          "count": 1
+        }
+      ],
+      "chance_outputs": [
+        {
+          "item": "draft:gold_dust",
+          "count": 1,
+          "probability": 0.5
+        }
+      ],
+      "origin": "notion_crusher_rule"
+    },
+    {
+      "id": "roll_iron",
+      "machine": "rolling_mill",
+      "stage": "early",
+      "duration_ticks": 160,
+      "fe_per_tick": 50,
+      "inputs": [
+        {
+          "item": "minecraft:iron_ingot",
+          "count": 1
+        }
+      ],
+      "outputs": [
+        {
+          "item": "draft:iron_plate",
+          "count": 2
+        }
+      ],
+      "origin": "design"
+    },
+    {
+      "id": "roll_copper",
+      "machine": "rolling_mill",
+      "stage": "early",
+      "duration_ticks": 160,
+      "fe_per_tick": 50,
+      "inputs": [
+        {
+          "item": "minecraft:copper_ingot",
+          "count": 1
+        }
+      ],
+      "outputs": [
+        {
+          "item": "draft:copper_plate",
+          "count": 2
+        }
+      ],
+      "origin": "design"
+    },
+    {
+      "id": "roll_steel",
+      "machine": "rolling_mill",
+      "stage": "industrial",
+      "duration_ticks": 160,
+      "fe_per_tick": 50,
+      "inputs": [
+        {
+          "item": "draft:steel_ingot",
+          "count": 1
+        }
+      ],
+      "outputs": [
+        {
+          "item": "draft:steel_plate",
+          "count": 2
+        }
+      ],
+      "requires_future": [
+        "blast_furnace_steel"
+      ],
+      "origin": "design"
+    },
+    {
+      "id": "lathe_iron_rod",
+      "machine": "lathe",
+      "stage": "early",
+      "duration_ticks": 120,
+      "fe_per_tick": 45,
+      "inputs": [
+        {
+          "item": "minecraft:iron_ingot",
+          "count": 1
+        }
+      ],
+      "outputs": [
+        {
+          "item": "draft:iron_rod",
+          "count": 2
+        }
+      ],
+      "origin": "design"
+    },
+    {
+      "id": "lathe_gear",
+      "machine": "lathe",
+      "stage": "early",
+      "duration_ticks": 200,
+      "fe_per_tick": 45,
+      "inputs": [
+        {
+          "item": "draft:gear_blank",
+          "count": 1
+        },
+        {
+          "item": "draft:iron_rod",
+          "count": 1
+        }
+      ],
+      "outputs": [
+        {
+          "item": "draft:gear",
+          "count": 1
+        }
+      ],
+      "origin": "design"
+    },
+    {
+      "id": "press_gear_blank",
+      "machine": "industrial_press",
+      "stage": "early",
+      "duration_ticks": 160,
+      "fe_per_tick": 55,
+      "inputs": [
+        {
+          "item": "draft:iron_plate",
+          "count": 2
+        }
+      ],
+      "outputs": [
+        {
+          "item": "draft:gear_blank",
+          "count": 1
+        }
+      ],
+      "origin": "design"
+    },
+    {
+      "id": "press_vegetable_oil",
+      "machine": "industrial_press",
+      "stage": "industrial",
+      "duration_ticks": 200,
+      "fe_per_tick": 55,
+      "inputs": [
+        {
+          "item": "minecraft:wheat_seeds",
+          "count": 8
+        }
+      ],
+      "fluid_outputs": [
+        {
+          "fluid": "draft:vegetable_oil",
+          "mb": 250
+        }
+      ],
+      "origin": "notion_press_ratio_design_time"
+    },
+    {
+      "id": "quench_steel",
+      "machine": "quenching_bath",
+      "stage": "advanced",
+      "duration_ticks": 300,
+      "fe_per_tick": 80,
+      "inputs": [
+        {
+          "item": "draft:steel_ingot",
+          "count": 1
+        }
+      ],
+      "fluid_inputs": [
+        {
+          "fluid": "draft:machine_lubricant",
+          "mb": 100
+        }
+      ],
+      "outputs": [
+        {
+          "item": "draft:hardened_steel_ingot",
+          "count": 1
+        }
+      ],
+      "requires_future": [
+        "blast_furnace_steel",
+        "oil_refining",
+        "universal_mixer"
+      ],
+      "origin": "notion_15s_design_consumption"
+    },
+    {
+      "id": "compress_air",
+      "machine": "air_compressor",
+      "stage": "industrial",
+      "duration_ticks": 20,
+      "fe_per_tick": 60,
+      "fluid_outputs": [
+        {
+          "fluid": "draft:compressed_air",
+          "mb": 1000
+        }
+      ],
+      "conditions": [
+        "at_least_one_air_exposed_face",
+        "not_submerged",
+        "output_tank_has_1000_mb_space"
+      ],
+      "origin": "notion_50_mb_per_tick_60fe"
+    },
+    {
+      "id": "separate_nitrogen",
+      "machine": "air_separator",
+      "stage": "advanced",
+      "duration_ticks": 200,
+      "fe_per_tick": 40,
+      "fluid_inputs": [
+        {
+          "fluid": "draft:compressed_air",
+          "mb": 1000
+        }
+      ],
+      "fluid_outputs": [
+        {
+          "fluid": "draft:nitrogen",
+          "mb": 400
+        }
+      ],
+      "vented_fluid_mb": 600,
+      "origin": "notion_1000_air_to_400_nitrogen_design_time"
+    }
+  ],
+  "generator": {
+    "machine": "diesel_generator",
+    "stage": "industrial",
+    "status": "design_only_no_runtime_generation",
+    "input_fluids": [
+      "draft:diesel",
+      "draft:biodiesel"
+    ],
+    "consumption_mb_every_ticks": {
+      "mb": 1,
+      "ticks": 2
+    },
+    "production_fe_per_tick": 240,
+    "generated_fe_per_mb": 480,
+    "proposed_energy_buffer_fe": 32000,
+    "conditions": [
+      "fuel_present",
+      "output_energy_has_capacity",
+      "generator_enabled"
+    ],
+    "note": "420? no: 240 FE/t * 2 ticks = 480 FE per mB. Four decorative sockets do NOT provide independent real voltages."
+  },
+  "future_process_gates": {
+    "bioethanol": "fermenter (not part of current 8 machines)",
+    "biodiesel": "500 mB vegetable_oil + 500 mB bioethanol -> 1000 mB biodiesel in universal mixer (future)",
+    "lubricant": "750 mB heavy_oil + 250 mB vegetable_oil -> 1000 mB machine_lubricant in universal mixer (future)",
+    "steel": "blast furnace / steelmaking (future)",
+    "diesel": "finite oil deposit -> drill and pump -> distillation (future)",
+    "boost_fuel": "700 mB petrol + 150 mB nitrogen + 150 mB compressed air -> 1000 mB boost fuel in universal mixer (future)"
+  },
+  "cross_checks": {
+    "iron_gear_chain": "1 raw iron -> ore processing; for 1 gear blank use 2 iron plates from 1 iron ingot, and 1 iron rod from half an ingot operation; no reverse recipes",
+    "one_bucket_biodiesel_requires_seed_items": 16,
+    "one_bucket_biodiesel_requires_bioethanol_mb": 500,
+    "one_bucket_biodiesel_requires_vegetable_oil_mb": 500,
+    "one_batch_nitrogen_needs_compressed_air_mb": 1000,
+    "one_batch_nitrogen_yields_mb": 400,
+    "one_batch_nitrogen_fe_including_compression": 9200
+  }
+}
