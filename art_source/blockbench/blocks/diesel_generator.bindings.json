@@ -3,7 +3,7 @@
   "block_footprint": [
     2,
     1,
-    2
+    1.25
   ],
   "outputs": [
     {
@@ -42,5 +42,7 @@
   "exhaust_anchor": "exhaust_origin",
   "fuel_anchor": "fuel_fill",
   "integration_status": "source_model_only",
-  "power_note": "Voltages are asset metadata; game energy conversion, ratings and output control are not implemented."
+  "power_note": "Voltages are asset metadata; game energy conversion, ratings and output control are not implemented.",
+  "height_units": 20,
+  "socket_scale": 0.8
 }
