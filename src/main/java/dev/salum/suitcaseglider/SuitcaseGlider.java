@@ -36,16 +36,21 @@ public final class SuitcaseGlider {
                 output.accept(dev.salum.suitcaseglider.mech.MechContent.EGG.get());
                 output.accept(dev.salum.suitcaseglider.machine.MachineContent.LATHE_ITEM.get());
                 output.accept(dev.salum.suitcaseglider.machine.MachineContent.CRUSHER_ITEM.get());
+                output.accept(dev.salum.suitcaseglider.cable.CableContent.CABLE.get());
+                output.accept(dev.salum.suitcaseglider.cable.CableContent.RELAY_ITEM.get());
+                output.accept(dev.salum.suitcaseglider.cable.CableContent.GENERATOR_ITEM.get());
                 for (int level = 1; level <= 3; level++) output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(SOARING.get(), level)));
             }).build());
     public SuitcaseGlider() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         dev.salum.suitcaseglider.mech.MechContent.register(bus);
         dev.salum.suitcaseglider.machine.MachineContent.register(bus);
+        dev.salum.suitcaseglider.cable.CableContent.init();
         dev.salum.suitcaseglider.advancement.IndustrialProgress.register(bus);
         ITEMS.register(bus); ENCHANTMENTS.register(bus); TABS.register(bus);
         GliderNetwork.register();
         dev.salum.suitcaseglider.mech.MechNetwork.register();
+        dev.salum.suitcaseglider.cable.CableNetwork.register();
         MinecraftForge.EVENT_BUS.register(new GliderController());
         MinecraftForge.EVENT_BUS.register(new SmokeChecks());
     }

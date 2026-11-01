@@ -80,5 +80,19 @@
   "item.suitcaseglider.advancement_icon_mech_bee": "Тяжелее воздуха",
   "advancement.cogwild.robobuffalo.title": "Двенадцать цилиндров",
   "advancement.cogwild.robobuffalo.description": "Запустите тяжёлого грузового робобуйвола с двигателем V12.\nСоздать робобуйвола на строительной верфи.",
-  "item.suitcaseglider.advancement_icon_robobuffalo": "Двенадцать цилиндров"
+  "item.suitcaseglider.advancement_icon_robobuffalo": "Двенадцать цилиндров",
+  "item.suitcaseglider.power_cable": "Силовой кабель",
+  "block.suitcaseglider.cable_relay": "Кабельное реле / энергоконнектор",
+  "block.suitcaseglider.fuel_generator": "Топливный генератор",
+  "message.suitcaseglider.energy": "Энергия: %s / 32000 FE; запас топлива: %s тиков",
+  "message.suitcaseglider.cable.air": "Режим: воздушный кабель",
+  "message.suitcaseglider.cable.floor": "Режим: кабель по полу",
+  "message.suitcaseglider.cable.help": "ПКМ: точка А → точка Б. Shift + ПКМ: сменить режим / сбросить точку. Ножницы по разъёму: снять кабель. До 32 м, 256 FE/такт на сеть.",
+  "message.suitcaseglider.cable.endpoint": "Выберите станок, генератор или реле.",
+  "message.suitcaseglider.cable.start": "Точка А: %s, %s, %s. Выберите точку Б.",
+  "message.suitcaseglider.cable.lost": "Начальная точка недоступна. Выберите её заново.",
+  "message.suitcaseglider.cable.duplicate": "Нельзя соединить эти точки: повтор, одна точка или уже 8 соединений.",
+  "message.suitcaseglider.cable.route": "Нет свободного пути до 32 м. Смените режим или добавьте реле.",
+  "message.suitcaseglider.cable.cost": "Для этого соединения нужно %s единиц кабеля.",
+  "message.suitcaseglider.cable.connected": "Соединение готово. Длина: %s м."
 }

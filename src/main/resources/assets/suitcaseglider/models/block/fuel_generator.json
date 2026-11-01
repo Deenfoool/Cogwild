@@ -1,0 +1,76 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "suitcaseglider:block/generator_front",
+    "side": "suitcaseglider:block/generator_side",
+    "top": "suitcaseglider:block/generator_top",
+    "contact": "minecraft:block/copper_block",
+    "particle": "suitcaseglider:block/generator_side"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#top"
+        },
+        "down": {
+          "texture": "#top"
+        },
+        "north": {
+          "texture": "#front"
+        },
+        "south": {
+          "texture": "#side"
+        },
+        "east": {
+          "texture": "#side"
+        },
+        "west": {
+          "texture": "#side"
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        6,
+        -1.5
+      ],
+      "to": [
+        10,
+        10,
+        0
+      ],
+      "faces": {
+        "up": {
+          "texture": "#contact"
+        },
+        "down": {
+          "texture": "#contact"
+        },
+        "north": {
+          "texture": "#contact"
+        },
+        "south": {
+          "texture": "#contact"
+        },
+        "east": {
+          "texture": "#contact"
+        },
+        "west": {
+          "texture": "#contact"
+        }
+      }
+    }
+  ]
+}

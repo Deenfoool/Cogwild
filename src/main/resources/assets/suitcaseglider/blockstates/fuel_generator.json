@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "suitcaseglider:block/fuel_generator",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "suitcaseglider:block/fuel_generator",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "suitcaseglider:block/fuel_generator",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "suitcaseglider:block/fuel_generator",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "suitcaseglider:block/fuel_generator",
+      "y": 0
+    },
+    "facing=down": {
+      "model": "suitcaseglider:block/fuel_generator",
+      "y": 0
+    }
+  }
+}

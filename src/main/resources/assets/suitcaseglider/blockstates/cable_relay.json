@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=up": {
+      "model": "suitcaseglider:block/cable_relay"
+    },
+    "facing=down": {
+      "model": "suitcaseglider:block/cable_relay",
+      "x": 180
+    },
+    "facing=north": {
+      "model": "suitcaseglider:block/cable_relay",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "suitcaseglider:block/cable_relay",
+      "x": 90,
+      "y": 180
+    },
+    "facing=east": {
+      "model": "suitcaseglider:block/cable_relay",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west": {
+      "model": "suitcaseglider:block/cable_relay",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

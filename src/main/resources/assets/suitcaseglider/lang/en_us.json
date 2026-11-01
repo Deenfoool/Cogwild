@@ -80,5 +80,19 @@
   "item.suitcaseglider.advancement_icon_mech_bee": "Тяжелее воздуха",
   "advancement.cogwild.robobuffalo.title": "Двенадцать цилиндров",
   "advancement.cogwild.robobuffalo.description": "Запустите тяжёлого грузового робобуйвола с двигателем V12.\nСоздать робобуйвола на строительной верфи.",
-  "item.suitcaseglider.advancement_icon_robobuffalo": "Двенадцать цилиндров"
+  "item.suitcaseglider.advancement_icon_robobuffalo": "Двенадцать цилиндров",
+  "item.suitcaseglider.power_cable": "Power Cable",
+  "block.suitcaseglider.cable_relay": "Cable Relay / Energy Connector",
+  "block.suitcaseglider.fuel_generator": "Fuel Generator",
+  "message.suitcaseglider.energy": "Energy: %s / 32000 FE; fuel reserve: %s ticks",
+  "message.suitcaseglider.cable.air": "Mode: overhead cable",
+  "message.suitcaseglider.cable.floor": "Mode: floor cable",
+  "message.suitcaseglider.cable.help": "Right-click: A → B. Sneak + right-click: change mode / reset selection. Shears on a connector: remove cable. Up to 32 m; 256 FE/t per network.",
+  "message.suitcaseglider.cable.endpoint": "Select a machine, generator or relay.",
+  "message.suitcaseglider.cable.start": "Point A: %s, %s, %s. Select point B.",
+  "message.suitcaseglider.cable.lost": "Starting point unavailable. Select it again.",
+  "message.suitcaseglider.cable.duplicate": "Invalid connection: duplicate, same point or 8-connection limit.",
+  "message.suitcaseglider.cable.route": "No clear route within 32 m. Change mode or add a relay.",
+  "message.suitcaseglider.cable.cost": "This connection needs %s cable units.",
+  "message.suitcaseglider.cable.connected": "Connected. Length: %s m."
 }

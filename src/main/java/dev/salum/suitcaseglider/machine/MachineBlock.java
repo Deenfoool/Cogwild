@@ -8,6 +8,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.phys.*;
@@ -31,6 +33,7 @@ public final class MachineBlock extends BaseEntityBlock {
     }
     @Override public void setPlacedBy(Level level,BlockPos pos,BlockState state,LivingEntity placer,ItemStack stack){if(!level.isClientSide){level.setBlock(other(pos,state),state.setValue(SECONDARY,true),3);updatePower(level,pos,state);}}
     @Override public BlockEntity newBlockEntity(BlockPos pos,BlockState state){return state.getValue(SECONDARY)?null:new MachineBlockEntity(pos,state);}
+    @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l,BlockState s,BlockEntityType<T> type){return l.isClientSide||s.getValue(SECONDARY)?null:createTickerHelper(type,MachineContent.TYPE.get(),(world,p,state,machine)->machine.tickEnergy());}
     @Override public RenderShape getRenderShape(BlockState state){return RenderShape.ENTITYBLOCK_ANIMATED;}
     @Override public VoxelShape getShape(BlockState state,BlockGetter level,BlockPos pos,CollisionContext context){return Block.box(0,0,0,16,kind.equals("crusher")&&state.getValue(SECONDARY)?26:kind.equals("lathe")?22:18,16);}
     @Override public BlockState rotate(BlockState state,Rotation r){return state.setValue(FACING,r.rotate(state.getValue(FACING)));}
@@ -49,9 +52,9 @@ public final class MachineBlock extends BaseEntityBlock {
         super.onRemove(state,level,pos,next,moved);
     }
     @Override public void neighborChanged(BlockState state,Level level,BlockPos pos,Block source,BlockPos from,boolean moving){if(!level.isClientSide)updatePower(level,base(pos,state),level.getBlockState(base(pos,state)));}
-    private void updatePower(Level level,BlockPos pos,BlockState state){
+    public void updatePower(Level level,BlockPos pos,BlockState state){
         if(!state.is(this)||state.getValue(SECONDARY))return;
-        BlockPos second=other(pos,state);boolean powered=level.hasNeighborSignal(pos)||level.hasNeighborSignal(second);
+        BlockPos second=other(pos,state);boolean powered=level.hasNeighborSignal(pos)||level.hasNeighborSignal(second)||(level.getBlockEntity(pos) instanceof MachineBlockEntity machine&&machine.cableEnergy()>=8);
         if(state.getValue(POWERED)==powered)return;
         if(level.getBlockEntity(pos) instanceof MachineBlockEntity machine)machine.powerChanged(powered);
         level.setBlock(pos,state.setValue(POWERED,powered),3);

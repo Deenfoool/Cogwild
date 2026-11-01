@@ -261,3 +261,12 @@ if(project.hasProperty('advancementSmoke')) {
     minecraft.runs.server.property 'cogwild.advancementSmoke','true'
     minecraft.runs.server.workingDirectory project.file('run-advancement-smoke')
 }
+if(project.hasProperty('cableSmoke')) {
+    minecraft.runs.server.property 'cogwild.cableSmoke','true'
+    minecraft.runs.server.workingDirectory project.file('run-cable-smoke')
+}
+if(project.hasProperty('cableQa')) {
+    minecraft.runs.client.property 'cogwild.cableQa','true'
+    minecraft.runs.client.workingDirectory project.file('run-cable-client')
+    minecraft.runs.client.args '--username','CableChecks','--width','1280','--height','800'
+}
