@@ -100,5 +100,7 @@
   "block.suitcaseglider.air_separator": "Воздушный сепаратор",
   "block.suitcaseglider.air_compressor": "Воздушный компрессор",
   "block.suitcaseglider.industrial_press": "Промышленный пресс",
-  "block.suitcaseglider.diesel_generator": "Дизельный генератор"
+  "block.suitcaseglider.diesel_generator": "Дизельный генератор",
+  "block.suitcaseglider.fermenter": "Ферментер",
+  "block.suitcaseglider.universal_mixer": "Универсальный смеситель"
 }

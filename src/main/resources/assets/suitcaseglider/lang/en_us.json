@@ -100,5 +100,7 @@
   "block.suitcaseglider.air_separator": "Air Separator",
   "block.suitcaseglider.air_compressor": "Air Compressor",
   "block.suitcaseglider.industrial_press": "Industrial Press",
-  "block.suitcaseglider.diesel_generator": "Diesel Generator"
+  "block.suitcaseglider.diesel_generator": "Diesel Generator",
+  "block.suitcaseglider.fermenter": "Fermenter",
+  "block.suitcaseglider.universal_mixer": "Universal Mixer"
 }

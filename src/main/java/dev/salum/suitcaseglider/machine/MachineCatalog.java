@@ -7,7 +7,7 @@ import java.util.*;
 
 /** Small, server-safe layout manifest baked from the same models as the client rigs. */
 public final class MachineCatalog {
-    public record Spec(int width,float height,float[] offset,float[] power,String off,String on,String start,String stop) {
+    public record Spec(int width,int depth,float height,float[] offset,float[] power,String off,String on,String start,String stop) {
         public int layers(){return (int)Math.ceil(height/16);}
     }
     public static final Map<String,Spec> ALL=load();
@@ -16,7 +16,7 @@ public final class MachineCatalog {
         try(var in=MachineCatalog.class.getResourceAsStream("/assets/suitcaseglider/rigs/machines.json");var reader=new InputStreamReader(Objects.requireNonNull(in),StandardCharsets.UTF_8)){
             Map<String,Spec> result=new LinkedHashMap<>();
             for(var e:JsonParser.parseReader(reader).getAsJsonObject().entrySet()){
-                var j=e.getValue().getAsJsonObject();result.put(e.getKey(),new Spec(j.get("width").getAsInt(),j.get("height").getAsFloat(),vector(j.getAsJsonArray("offset")),vector(j.getAsJsonArray("power")),j.get("off").getAsString(),j.get("on").getAsString(),j.get("start").getAsString(),j.get("stop").getAsString()));
+                var j=e.getValue().getAsJsonObject();result.put(e.getKey(),new Spec(j.get("width").getAsInt(),j.has("depth")?j.get("depth").getAsInt():1,j.get("height").getAsFloat(),vector(j.getAsJsonArray("offset")),vector(j.getAsJsonArray("power")),j.get("off").getAsString(),j.get("on").getAsString(),j.get("start").getAsString(),j.get("stop").getAsString()));
             }return Collections.unmodifiableMap(result);
         }catch(Exception e){throw new IllegalStateException("Cannot load machine layouts",e);}
     }

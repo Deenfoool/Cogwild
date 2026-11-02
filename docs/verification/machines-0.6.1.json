@@ -1,0 +1,16 @@
+{
+  "version": "0.6.1",
+  "minecraft": "1.20.1",
+  "forge": "47.4.28",
+  "added": [
+    "fermenter",
+    "universal_mixer"
+  ],
+  "unit_tests": 32,
+  "failures": 0,
+  "machine_checks": 680,
+  "cable_checks": 26,
+  "client": "world=[air_compressor, lathe, air_separator, universal_mixer, quenching_bath, fermenter, diesel_generator, industrial_press, crusher, rolling_mill]\nitems=[air_compressor, lathe, air_separator, universal_mixer, quenching_bath, fermenter, diesel_generator, industrial_press, crusher, rolling_mill]\nCLIENT_OK",
+  "sha256": "040580e54c7ca83e5683a4dc848b11fe9f0b5c23a107d078d224f9613ca6f791",
+  "limitations": "Visual powered machines with crafting and placement. Inventory/resource-processing gameplay is not implemented."
+}

@@ -15,23 +15,23 @@ import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.*;
 
-/** Two-cell footprint, one render origin and one item drop. */
+/** Model-sized footprint, one render origin and one item drop. */
 public final class MachineBlock extends BaseEntityBlock {
     private static final ThreadLocal<Boolean> REMOVING_PAIR=ThreadLocal.withInitial(()->false);
     public static final DirectionProperty FACING=HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty SECONDARY=BooleanProperty.create("secondary"),POWERED=BlockStateProperties.POWERED;
-    public static final IntegerProperty SEGMENT=IntegerProperty.create("segment",0,2),LAYER=IntegerProperty.create("layer",0,2);
+    public static final IntegerProperty SEGMENT=IntegerProperty.create("segment",0,2),LAYER=IntegerProperty.create("layer",0,2),DEPTH=IntegerProperty.create("depth",0,1);
     public final String kind;
     public MachineCatalog.Spec spec(){return MachineCatalog.get(kind);}
     public static boolean primary(BlockState s){return !s.getValue(SECONDARY)&&s.getValue(LAYER)==0;}
-    private static int segment(BlockState s){return s.getValue(SECONDARY)&&s.getValue(SEGMENT)==0&&s.getValue(LAYER)==0?1:s.getValue(SEGMENT);}
-    public MachineBlock(String kind){super(Properties.of().strength(3,6).sound(SoundType.METAL).noOcclusion());this.kind=kind;registerDefaultState(stateDefinition.any().setValue(FACING,Direction.NORTH).setValue(SECONDARY,false).setValue(POWERED,false).setValue(SEGMENT,0).setValue(LAYER,0));}
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b){b.add(FACING,SECONDARY,POWERED,SEGMENT,LAYER);}
+    private static int segment(BlockState s){return s.getValue(SECONDARY)&&s.getValue(SEGMENT)==0&&s.getValue(LAYER)==0&&s.getValue(DEPTH)==0?1:s.getValue(SEGMENT);}
+    public MachineBlock(String kind){super(Properties.of().strength(3,6).sound(SoundType.METAL).noOcclusion());this.kind=kind;registerDefaultState(stateDefinition.any().setValue(FACING,Direction.NORTH).setValue(SECONDARY,false).setValue(POWERED,false).setValue(SEGMENT,0).setValue(LAYER,0).setValue(DEPTH,0));}
+    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b){b.add(FACING,SECONDARY,POWERED,SEGMENT,LAYER,DEPTH);}
     public static BlockPos other(BlockPos pos,BlockState state){return primary(state)?pos.relative(state.getValue(FACING).getClockWise()):base(pos,state);}
-    public static BlockPos base(BlockPos pos,BlockState state){return pos.below(state.getValue(LAYER)).relative(state.getValue(FACING).getCounterClockWise(),segment(state));}
+    public static BlockPos base(BlockPos pos,BlockState state){return pos.below(state.getValue(LAYER)).relative(state.getValue(FACING).getCounterClockWise(),segment(state)).relative(state.getValue(FACING),state.getValue(DEPTH));}
     public java.util.List<BlockPos> cells(BlockPos base,BlockState state){
         var cells=new java.util.ArrayList<BlockPos>();
-        for(int y=0;y<spec().layers();y++)for(int x=0;x<spec().width();x++)cells.add(base.relative(state.getValue(FACING).getClockWise(),x).above(y));
+        for(int y=0;y<spec().layers();y++)for(int x=0;x<spec().width();x++)for(int z=0;z<spec().depth();z++)cells.add(base.relative(state.getValue(FACING).getClockWise(),x).relative(state.getValue(FACING).getOpposite(),z).above(y));
         return cells;
     }
     @Override public BlockState getStateForPlacement(BlockPlaceContext c){
@@ -41,9 +41,9 @@ public final class MachineBlock extends BaseEntityBlock {
     }
     @Override public void setPlacedBy(Level level,BlockPos pos,BlockState state,LivingEntity placer,ItemStack stack){
         if(level.isClientSide)return;
-        for(int y=0;y<spec().layers();y++)for(int x=0;x<spec().width();x++)if(x!=0||y!=0){
-            var part=state.setValue(SEGMENT,x).setValue(LAYER,y).setValue(SECONDARY,true);
-            level.setBlock(pos.relative(state.getValue(FACING).getClockWise(),x).above(y),part,3);
+        for(int y=0;y<spec().layers();y++)for(int x=0;x<spec().width();x++)for(int z=0;z<spec().depth();z++)if(x!=0||y!=0||z!=0){
+            var part=state.setValue(SEGMENT,x).setValue(LAYER,y).setValue(DEPTH,z).setValue(SECONDARY,true);
+            level.setBlock(pos.relative(state.getValue(FACING).getClockWise(),x).relative(state.getValue(FACING).getOpposite(),z).above(y),part,3);
         }updatePower(level,pos,state);
     }
     @Override public BlockEntity newBlockEntity(BlockPos pos,BlockState state){return primary(state)?new MachineBlockEntity(pos,state):null;}

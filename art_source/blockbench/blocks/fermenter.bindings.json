@@ -46,5 +46,6 @@
     "power_lamp",
     "fault_lamp"
   ],
-  "integration_status": "blockbench_source_only"
+  "integration_status": "blockbench_source_only",
+  "integration": "Cogwild 0.6.1: registered block, item, crafting recipe and power-driven animation. Resource processing not implemented."
 }

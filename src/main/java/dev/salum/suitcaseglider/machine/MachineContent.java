@@ -20,7 +20,7 @@ public final class MachineContent {
     static {
         MACHINES.put("lathe",LATHE);MACHINES.put("crusher",CRUSHER);
         MACHINE_ITEMS.put("lathe",LATHE_ITEM);MACHINE_ITEMS.put("crusher",CRUSHER_ITEM);
-        for(String kind:List.of("rolling_mill","quenching_bath","air_separator","air_compressor","industrial_press","diesel_generator")){
+        for(String kind:List.of("rolling_mill","quenching_bath","air_separator","air_compressor","industrial_press","diesel_generator","fermenter","universal_mixer")){
             var block=BLOCKS.register(kind,()->new MachineBlock(kind));MACHINES.put(kind,block);
             MACHINE_ITEMS.put(kind,SuitcaseGlider.ITEMS.register(kind,()->new MachineItem(block.get())));
         }

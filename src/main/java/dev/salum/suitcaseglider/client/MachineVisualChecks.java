@@ -22,8 +22,8 @@ public final class MachineVisualChecks {
     public static final Set<String> WORLD=new HashSet<>(),ITEMS=new HashSet<>();
     private static final List<String> kinds=new ArrayList<>(MachineCatalog.ALL.keySet());
     private static BlockPos position(int i){return new BlockPos((i%4)*6,80,(i/4)*7);}
-    private static void camera(Minecraft mc,int i){mc.getSingleplayerServer().execute(()->{
-        var p=mc.getSingleplayerServer().getPlayerList().getPlayer(mc.player.getUUID());var at=position(i);double center=at.getX()+MachineCatalog.get(kinds.get(i)).width()/2.0;
+    private static void camera(Minecraft mc,int i){mc.player.getInventory().selected=0;mc.getSingleplayerServer().execute(()->{
+        var p=mc.getSingleplayerServer().getPlayerList().getPlayer(mc.player.getUUID());var at=position(i);p.getInventory().setItem(0,new ItemStack(MachineContent.MACHINE_ITEMS.get(kinds.get(i)).get()));p.getInventory().selected=0;p.inventoryMenu.broadcastChanges();double center=at.getX()+MachineCatalog.get(kinds.get(i)).width()/2.0;
         if(kinds.get(i).equals("quenching_bath"))p.teleportTo(p.serverLevel(),center-2.3,83.0,at.getZ()-3.8,-31,31);
         else p.teleportTo(p.serverLevel(),center-3,82.0,at.getZ()-5,-31,13);
     });}
@@ -53,7 +53,7 @@ public final class MachineVisualChecks {
         if(ticks>=140&&(ticks-140)%50==0){
             if(failure!=null)throw new IllegalStateException(failure);
             Screenshot.grab(mc.gameDirectory,"machine-"+kinds.get(index)+".png",mc.getMainRenderTarget(),c->{});
-            if(++index<kinds.size()){mc.options.hideGui=true;camera(mc,index);}
+            if(++index<kinds.size()){mc.options.hideGui=false;camera(mc,index);}
             else{
                 if(!WORLD.containsAll(kinds)||!ITEMS.containsAll(kinds))throw new IllegalStateException("Missing machine rendering: "+WORLD+" / "+ITEMS);
                 try{Files.writeString(mc.gameDirectory.toPath().resolve("machine-client-report.txt"),"world="+WORLD+"\nitems="+ITEMS+"\nCLIENT_OK\n");}catch(Exception e){throw new RuntimeException(e);}

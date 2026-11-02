@@ -88,7 +88,8 @@ def convert(kind,filename,names,clips):
     points=[world(f['bone'],[c*16 for c in v]) for f in faces for v in f['v']]
     lo=[min(p[i] for p in points) for i in range(3)];hi=[max(p[i] for p in points) for i in range(3)]
     width=max(2,min(3,math.ceil((hi[0]-lo[0]-.01)/16)))
-    offset=[(width-1)/2-(hi[0]+lo[0])/32,-lo[1]/16,-(hi[2]+lo[2])/32]
+    depth=2 if kind=='fermenter' else 1
+    offset=[(width-1)/2-(hi[0]+lo[0])/32,-lo[1]/16,(depth-1)/2-(hi[2]+lo[2])/32]
     def anchor_world(name):
         a=anchors[name];o=bones[a['bone']]['origin'];v=world(a['bone'],[a['position'][i]-o[i] for i in range(3)])
         return [v[i]/16+offset[i] for i in range(3)]
@@ -100,7 +101,7 @@ def convert(kind,filename,names,clips):
     if kind=='lathe':port=[15.9/16,8.25/16,.59]
     if kind=='crusher':port=[1.15625,.46875,.59]
     if kind=='rolling_mill':port=[.5,.65,(hi[2]-lo[2])/32+.08]
-    CATALOG[kind]=dict(width=width,height=round(hi[1]-lo[1],5),offset=offset,power=port,off=clips[0],on=clips[1],start=clips[2],stop=clips[3])
+    CATALOG[kind]=dict(width=width,depth=depth,height=round(hi[1]-lo[1],5),offset=offset,power=port,off=clips[0],on=clips[1],start=clips[2],stop=clips[3])
     data=dict(bones=bones,faces=faces,animations=animations,anchors=anchors,textures=textures)
     (OUT/'rigs'/f'{kind}.json').write_text(json.dumps(data,separators=(',',':')),encoding='utf-8')
     color=(100,112,50) if kind=='diesel_generator' else (70,96,116) if kind in ('quenching_bath','air_separator') else (112,119,123)
@@ -126,6 +127,8 @@ MODELS=[
  ('air_separator','Air-Separator.bbmodel',('Air Separator','Воздушный сепаратор'),('unpowered','processing','starting','stopping')),
  ('air_compressor','Air-Compressor.bbmodel',('Air Compressor','Воздушный компрессор'),('idle','running','starting','stopping')),
  ('industrial_press','Industrial-Press.bbmodel',('Industrial Press','Промышленный пресс'),('idle','processing','starting','stopping')),
+ ('fermenter','Fermenter.bbmodel',('Fermenter','Ферментер'),('shutdown','processing','','')),
+ ('universal_mixer','Universal-Mixer.bbmodel',('Universal Mixer','Универсальный смеситель'),('shutdown','processing','start','stop')),
  ('diesel_generator','Diesel-Generator.bbmodel',('Diesel Generator','Дизельный генератор'),('shutdown','running','starting','stopping')),
 ]
 for kind,filename,names,clips in MODELS:convert(kind,filename,names,clips)

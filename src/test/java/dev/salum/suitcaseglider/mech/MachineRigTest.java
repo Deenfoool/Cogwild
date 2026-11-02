@@ -20,7 +20,7 @@ class MachineRigTest {
         }
     }
     @Test void everyMachineHasResourcesValidClipsAndFiniteAnimatedBounds(){
-        assertEquals(8,dev.salum.suitcaseglider.machine.MachineCatalog.ALL.size());
+        assertEquals(10,dev.salum.suitcaseglider.machine.MachineCatalog.ALL.size());
         for(var entry:dev.salum.suitcaseglider.machine.MachineCatalog.ALL.entrySet()){
             var spec=entry.getValue();var rig=MechRig.load("/assets/suitcaseglider/rigs/"+entry.getKey()+".json");
             assertTrue(spec.width()>=2&&spec.width()<=3);assertTrue(spec.layers()>=1&&spec.layers()<=3);
@@ -33,6 +33,19 @@ class MachineRigTest {
                 for(var matrix:pose.bones){float[] m=new float[16];matrix.get(m);for(float v:m)assertTrue(Float.isFinite(v),entry.getKey()+clip.getKey());}
             }
         }
+    }
+    @Test void fermenterAndMixerPreserveTheirFullLayoutsAndOperatingRig(){
+        var catalog=dev.salum.suitcaseglider.machine.MachineCatalog.ALL;
+        assertEquals(2,catalog.get("fermenter").depth());assertEquals(3,catalog.get("fermenter").layers());
+        assertEquals(1,catalog.get("universal_mixer").depth());assertEquals(2,catalog.get("universal_mixer").layers());
+        var fermenter=MechRig.load("/assets/suitcaseglider/rigs/fermenter.json");
+        assertTrue(fermenter.anchors.keySet().containsAll(java.util.List.of("fluid_min","fluid_max","power_input")));
+        assertTrue(fermenter.faces.stream().noneMatch(f->fermenter.bones.get(f.bone()).name().equals("EDITOR_FLUID_PREVIEW")));
+        var pose=fermenter.pose("processing",1,"processing",0,1);assertTrue(pose.anchor("fluid_max").y-pose.anchor("fluid_min").y>1);
+        var mixer=MechRig.load("/assets/suitcaseglider/rigs/universal_mixer.json");
+        assertTrue(mixer.clips.keySet().containsAll(java.util.List.of("loading","processing","unloading","start","stop")));
+        var closed=mixer.pose("loading",0,"loading",0,1);var open=mixer.pose("loading",1.5,"loading",0,1);
+        assertTrue(open.anchor("item_input").y>closed.anchor("item_input").y);
     }
     @Test void compactGeneratorKeepsFourOutputsAndTwentyUnitHeight(){
         var spec=dev.salum.suitcaseglider.machine.MachineCatalog.get("diesel_generator");assertEquals(20,spec.height(),.001);

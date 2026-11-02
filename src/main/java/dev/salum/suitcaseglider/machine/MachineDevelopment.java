@@ -35,12 +35,17 @@ public final class MachineDevelopment {
             var stack=new ItemStack(block,2);player.setItemInHand(InteractionHand.MAIN_HAND,stack);
             var hit=new BlockHitResult(Vec3.atCenterOf(pos.below()).add(0,.5,0),Direction.UP,pos.below(),false);
             var context=new BlockPlaceContext(new UseOnContext(player,InteractionHand.MAIN_HAND,hit));
+            if(block.spec().depth()>1){
+                BlockPos back=pos.relative(facing.getOpposite());level.setBlockAndUpdate(back,Blocks.STONE.defaultBlockState());
+                check(block.getStateForPlacement(context)==null,"occupied back row rejects placement "+facing);
+                level.setBlockAndUpdate(back,Blocks.AIR.defaultBlockState());
+            }
             check(((BlockItem)stack.getItem()).place(context).consumesAction(),block.kind+" placement "+facing);
             var state=level.getBlockState(pos);var second=MachineBlock.other(pos,state);
             check(state.is(block)&&state.getValue(MachineBlock.FACING)==facing&&!state.getValue(MachineBlock.SECONDARY),"primary orientation "+index);
             check(level.getBlockState(second).is(block)&&level.getBlockState(second).getValue(MachineBlock.SECONDARY),"second occupied cell "+index);
             check(block.cells(pos,state).stream().filter(p->level.getBlockEntity(p)!=null).count()==1&&level.getBlockEntity(pos) instanceof MachineBlockEntity,"single renderer entity "+index);
-            check(block.cells(pos,state).size()==block.spec().width()*block.spec().layers(),"all occupied cells "+index);
+            check(block.cells(pos,state).size()==block.spec().width()*block.spec().depth()*block.spec().layers(),"all occupied cells "+index);
             for(var p:block.cells(pos,state))check(MachineBlock.base(p,level.getBlockState(p)).equals(pos),"part resolves origin "+index+" "+p);
             check(stack.getCount()==1,"one placement consumes one item "+index);
             BlockPos power=pos.below();level.setBlockAndUpdate(power,Blocks.REDSTONE_BLOCK.defaultBlockState());
