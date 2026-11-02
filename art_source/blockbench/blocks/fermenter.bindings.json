@@ -1,0 +1,50 @@
+{
+  "model": "Fermenter",
+  "footprint": [
+    2,
+    2,
+    3
+  ],
+  "bounds_units": [
+    30.2,
+    48,
+    30.2
+  ],
+  "ports": {
+    "feed": "feed_input",
+    "product": "product_output",
+    "byproduct": "byproduct_drain",
+    "power": "power_input",
+    "gas": "gas_outlet"
+  },
+  "controls": {
+    "start": "start_interact",
+    "stop": "stop_interact"
+  },
+  "fluid": {
+    "shape": "cylinder",
+    "radius": 11.2,
+    "bottom_y": 6.35,
+    "full_y": 26.0,
+    "bone": "FLUID_VOLUME",
+    "anchors": [
+      "fluid_min",
+      "fluid_max"
+    ],
+    "preview_group": "EDITOR_FLUID_PREVIEW",
+    "preview_export": false
+  },
+  "particles": {
+    "type": "minecraft_runtime_only",
+    "origin": "bubble_origin"
+  },
+  "animated_bones": [
+    "agitator",
+    "fluid_surface",
+    "pressure_needle",
+    "product_valve_handle",
+    "power_lamp",
+    "fault_lamp"
+  ],
+  "integration_status": "blockbench_source_only"
+}
