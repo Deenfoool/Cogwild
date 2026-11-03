@@ -34,6 +34,8 @@ public final class SuitcaseGlider {
             .displayItems((parameters, output) -> {
                 output.accept(GLIDER.get());
                 output.accept(dev.salum.suitcaseglider.kiln.KilnContent.KEY.get());
+                output.accept(dev.salum.suitcaseglider.kiln.KilnContent.CHARCOAL_ITEM.get());
+                output.accept(dev.salum.suitcaseglider.kiln.KilnFluids.BUCKET.get());
                 dev.salum.suitcaseglider.resource.ResourceContent.ALL.forEach(item -> output.accept(item.get()));
                 output.accept(dev.salum.suitcaseglider.mech.MechContent.EGG.get());
                 dev.salum.suitcaseglider.machine.MachineContent.MACHINE_ITEMS.values().forEach(item -> output.accept(item.get()));

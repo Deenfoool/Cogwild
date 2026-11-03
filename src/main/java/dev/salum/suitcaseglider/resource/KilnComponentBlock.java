@@ -30,6 +30,10 @@ public final class KilnComponentBlock extends HorizontalDirectionalBlock impleme
     @Override public BlockEntity newBlockEntity(BlockPos p,BlockState s){return new KilnBlockEntity(p,s);}
     @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l,BlockState s,BlockEntityType<T> type){return l.isClientSide||type!=KilnContent.TYPE.get()?null:(world,p,state,be)->((KilnBlockEntity)be).tick();}
     @Override public InteractionResult use(BlockState s,Level l,BlockPos p,Player player,InteractionHand hand,BlockHitResult hit){
+        if(s.is(ResourceContent.OUTPUT.get())&&player.getItemInHand(hand).is(net.minecraft.world.item.Items.BUCKET)){
+            if(l.isClientSide)return InteractionResult.SUCCESS;
+            if(l.getBlockEntity(p) instanceof KilnBlockEntity k&&net.minecraftforge.fluids.FluidUtil.interactWithFluidHandler(player,hand,k.fluidHandler()))return InteractionResult.CONSUME;
+        }
         if(!s.is(ResourceContent.CONTROLLER.get()))return InteractionResult.PASS;
         if(l.isClientSide)return InteractionResult.SUCCESS;
         if(l.getBlockEntity(p) instanceof KilnBlockEntity kiln){
@@ -37,6 +41,12 @@ public final class KilnComponentBlock extends HorizontalDirectionalBlock impleme
             else if(player instanceof ServerPlayer server)NetworkHooks.openScreen(server,kiln,p);
         }
         return InteractionResult.CONSUME;
+    }
+    @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState s,net.minecraft.world.level.storage.loot.LootParams.Builder builder){
+        var drops=super.getDrops(s,builder);var be=builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY);
+        if(be instanceof KilnBlockEntity k&&k.controller()){
+            var stored=k.carriedContents();if(!stored.isEmpty())for(var stack:drops)if(stack.is(ResourceContent.CONTROLLER_ITEM.get()))stack.getOrCreateTag().put("BlockEntityTag",stored.copy());
+        }return drops;
     }
     @Override public void onRemove(BlockState s,Level l,BlockPos p,BlockState next,boolean moved){if(!s.is(next.getBlock())&&l.getBlockEntity(p) instanceof KilnBlockEntity kiln)kiln.dropContents();super.onRemove(s,l,p,next,moved);}
 }

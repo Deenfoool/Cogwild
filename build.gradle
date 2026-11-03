@@ -297,3 +297,8 @@ if(project.hasProperty('kilnPersistence')) {
     minecraft.runs.server.property 'cogwild.kilnPersistence','true'
     minecraft.runs.server.workingDirectory project.file('run-resource-smoke')
 }
+
+if(project.hasProperty('creosoteSmoke')) {
+    minecraft.runs.server.property 'cogwild.creosoteSmoke','true'
+    minecraft.runs.server.workingDirectory project.file('run-resource-smoke')
+}

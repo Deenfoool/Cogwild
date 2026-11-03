@@ -1,0 +1,17 @@
+{
+  "version": "0.8.0",
+  "minecraft": "1.20.1",
+  "forge": "47.4.28",
+  "unit_tests": 32,
+  "unit_failures": 0,
+  "creosote_checks": 40,
+  "kiln_regression_checks": 139,
+  "real_restart_checks": 6,
+  "client": "KILN_CLIENT_OK\nVanilla layout, three slots, fuel heat and 16000 mB creosote gauge; automatic processing and live synchronization verified.",
+  "fuel_slot": true,
+  "tank_capacity_mb": 16000,
+  "creosote_per_coke_mb": 250,
+  "charcoal_block_heat_ticks": 14400,
+  "coal_block_heat_ticks": 16000,
+  "sha256": "585ba773fe044ad65b996de6fc363c62a17f65020a5423576d63e6b3043a43c5"
+}

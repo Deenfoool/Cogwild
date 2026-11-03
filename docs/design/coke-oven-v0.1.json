@@ -349,7 +349,14 @@
         "count": 1
       },
       "duration_ticks": 1200,
-      "fe_per_tick": 0
+      "fe_per_tick": 0,
+      "heat_ticks": 1200,
+      "fluid_outputs": [
+        {
+          "fluid": "suitcaseglider:creosote",
+          "mb": 250
+        }
+      ]
     },
     {
       "id": "coking_coal_block",
@@ -362,7 +369,14 @@
         "count": 9
       },
       "duration_ticks": 10800,
-      "fe_per_tick": 0
+      "fe_per_tick": 0,
+      "heat_ticks": 10800,
+      "fluid_outputs": [
+        {
+          "fluid": "suitcaseglider:creosote",
+          "mb": 2250
+        }
+      ]
     }
   ],
   "coke_burn_ticks": 3200,
@@ -380,7 +394,7 @@
   },
   "source": "https://app.notion.com/p/39fb8e499d8b81478778f0770acfc3ae",
   "implementation": {
-    "version": "0.7.1",
+    "version": "0.8.0",
     "items": [
       "unfired_refractory_brick",
       "refractory_brick",
@@ -411,6 +425,14 @@
       176,
       166
     ],
-    "creosote_implemented": false
+    "creosote_implemented": true,
+    "fuel_slot": true,
+    "tank_capacity_mb": 16000,
+    "creosote_mb_per_coke": 250,
+    "fuel_heat_ticks": {
+      "minecraft:coal_block": 16000,
+      "suitcaseglider:charcoal_block": 14400
+    },
+    "charcoal_block_reversible": true
   }
 }

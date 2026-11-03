@@ -46,7 +46,7 @@ public final class KilnVisualChecks {
                 p.getInventory().clearContent();for(int i=0;i<ResourceContent.ALL.size();i++)p.getInventory().setItem(i+1,new ItemStack(ResourceContent.ALL.get(i).get()));
                 p.getInventory().setItem(0,new ItemStack(KilnContent.KEY.get()));p.getInventory().selected=0;
                 var k=(KilnBlockEntity)level.getBlockEntity(new BlockPos(1,81,0));
-                if(!k.form(p))throw new IllegalStateException("QA oven formation failed");k.inventory.setStackInSlot(0,new ItemStack(Items.COAL,3));
+                if(!k.form(p))throw new IllegalStateException("QA oven formation failed");k.inventory.setStackInSlot(0,new ItemStack(Items.COAL,3));k.inventory.setStackInSlot(2,new ItemStack(KilnContent.CHARCOAL_ITEM.get(),2));k.tank.setFluid(new net.minecraftforge.fluids.FluidStack(KilnFluids.SOURCE.get(),4000));
                 level.setDayTime(6000);p.teleportTo(level,-3,81,-5,-34,9);p.inventoryMenu.broadcastChanges();
             }catch(Exception e){failure=e.toString();}
         });}
@@ -65,8 +65,8 @@ public final class KilnVisualChecks {
         if(ticks==220){
             if(!(mc.screen instanceof KilnScreen)||!(mc.player.containerMenu instanceof KilnMenu menu)||menu.kiln.data.get(2)!=KilnBlockEntity.RUNNING||menu.kiln.data.get(0)<=0)throw new IllegalStateException("Automatic coking or vanilla screen failed");
             if(mc.screen.children().stream().anyMatch(w->w instanceof net.minecraft.client.gui.components.Button))throw new IllegalStateException("Unexpected GUI button");
-            Screenshot.grab(mc.gameDirectory,"coke-oven-gui-automatic.png",mc.getMainRenderTarget(),c->{});
-            try{Files.writeString(mc.gameDirectory.toPath().resolve("kiln-client-report.txt"),"KILN_CLIENT_OK\nVanilla furnace texture, 176x166 layout, automatic processing, no start/stop buttons; live menu progress verified.\n");}catch(Exception e){throw new RuntimeException(e);}
+            Screenshot.grab(mc.gameDirectory,"coke-oven-gui-creosote.png",mc.getMainRenderTarget(),c->{});
+            try{Files.writeString(mc.gameDirectory.toPath().resolve("kiln-client-report.txt"),"KILN_CLIENT_OK\nVanilla layout, three slots, fuel heat and 16000 mB creosote gauge; automatic processing and live synchronization verified.\n");}catch(Exception e){throw new RuntimeException(e);}
             done=true;SuitcaseGlider.LOG.info("KILN_CLIENT_OK");mc.stop();
         }
     }

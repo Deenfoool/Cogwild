@@ -45,6 +45,7 @@ public final class KilnDevelopment {
             for(int x=0;x<3;x++)for(int y=0;y<3;y++)for(int z=0;z<3;z++)level.getChunkAt(k.cell(x,y,z));
             check(k.formed&&k.inspect().valid(),"formed structure restored");
             check(k.data.get(0)==61&&k.inventory.getStackInSlot(0).getCount()==6&&k.inventory.getStackInSlot(1).getCount()==64,"progress and both slots restored");
+            check(k.tank.getFluidAmount()==750&&k.data.get(6)==15939,"creosote and remaining heat restored");
             check(k.saveWithoutMetadata().getCompound("Reserved").getByte("Count")==1,"reserved coal restored once");
             k.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),3));for(int i=61;i<1200;i++)k.tick();check(k.inventory.getStackInSlot(1).getCount()==4&&k.inventory.getStackInSlot(0).getCount()==6,"restarted cycle finishes without consuming input twice");
             k.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),64));Files.write(Path.of("kiln-persistence-report.txt"),report);SuitcaseGlider.LOG.info("KILN_PERSISTENCE_OK {} checks",report.size());stop=event.getServer();countdown=5;return;
@@ -70,15 +71,16 @@ public final class KilnDevelopment {
             }
             p.getInventory().clearContent();var menu=new KilnMenu(5,p.getInventory(),k);
             check(!menu.slots.get(1).mayPlace(new ItemStack(Items.COAL)),"menu output rejects insertion "+facing);
-            p.getInventory().setItem(9,new ItemStack(Items.COAL,5));menu.quickMoveStack(p,2);
+            p.getInventory().setItem(9,new ItemStack(Items.COAL,5));menu.quickMoveStack(p,3);
             check(k.inventory.getStackInSlot(0).getCount()==5&&p.getInventory().getItem(9).isEmpty(),"shift-click loads coal "+facing);
             menu.quickMoveStack(p,0);check(k.inventory.getStackInSlot(0).isEmpty(),"shift-click returns unreserved input "+facing);
-            p.getInventory().clearContent();k.inventory.setStackInSlot(0,new ItemStack(Items.COAL,63));p.getInventory().setItem(9,new ItemStack(Items.COAL,5));menu.quickMoveStack(p,2);
+            p.getInventory().clearContent();k.inventory.setStackInSlot(0,new ItemStack(Items.COAL,63));p.getInventory().setItem(9,new ItemStack(Items.COAL,5));menu.quickMoveStack(p,3);
             check(k.inventory.getStackInSlot(0).getCount()==64&&p.getInventory().getItem(9).getCount()==4,"partial shift-click conserves item count "+facing);
             k.inventory.setStackInSlot(0,ItemStack.EMPTY);p.getInventory().clearContent();
             k.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),5));menu.quickMoveStack(p,1);
             check(k.inventory.getStackInSlot(1).isEmpty()&&p.getInventory().items.stream().filter(s->s.is(ResourceContent.COKE.get())).mapToInt(ItemStack::getCount).sum()==5,"shift-click extracts coke exactly once "+facing);
             check(!menu.clickMenuButton(p,9) ,"unknown menu button rejected "+facing);p.getInventory().clearContent();
+            k.inventory.setStackInSlot(2,new ItemStack(Items.COAL_BLOCK));
             check(!k.getCapability(ForgeCapabilities.ENERGY).isPresent(),"no electrical requirement "+facing);
             var input=level.getBlockEntity(hatch).getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(()->new IllegalStateException("Missing item port"));
             var output=level.getBlockEntity(pos.below()).getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(()->new IllegalStateException("Missing item port"));
@@ -107,7 +109,7 @@ public final class KilnDevelopment {
             int coal=level.getEntitiesOfClass(ItemEntity.class,new AABB(pos).inflate(4)).stream().filter(e->e.getItem().is(Items.COAL)).mapToInt(e->e.getItem().getCount()).sum();
             check(coal==3,"controller destruction returns pending and unreserved input exactly once "+facing);
         }
-        var fixture=build(level,new BlockPos(64,80,0),Direction.NORTH);var fixturePlayer=player(level,"KilnPersist");fixture.form(fixturePlayer);fixture.inventory.setStackInSlot(0,new ItemStack(Items.COAL,7));for(int i=0;i<61;i++)fixture.tick();fixture.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),64));
+        var fixture=build(level,new BlockPos(64,80,0),Direction.NORTH);var fixturePlayer=player(level,"KilnPersist");fixture.form(fixturePlayer);fixture.inventory.setStackInSlot(0,new ItemStack(Items.COAL,7));fixture.inventory.setStackInSlot(2,new ItemStack(Items.COAL_BLOCK));for(int i=0;i<61;i++)fixture.tick();fixture.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),64));fixture.tank.setFluid(new net.minecraftforge.fluids.FluidStack(KilnFluids.SOURCE.get(),750));
         check(fixture.data.get(0)==61,"blocked fixture prepared for real server restart");
         Files.write(Path.of("kiln-smoke-report.txt"),report);SuitcaseGlider.LOG.info("KILN_SMOKE_OK {} checks",report.size());stop=server;countdown=5;
     }

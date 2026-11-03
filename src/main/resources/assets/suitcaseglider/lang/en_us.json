@@ -116,7 +116,7 @@
   "block.suitcaseglider.coke_oven_input": "Coke Oven Charging Hatch",
   "tooltip.suitcaseglider.coke_oven_input": "Construction part: above the controller.",
   "block.suitcaseglider.coke_oven_output": "Coke Oven Discharge Hatch",
-  "tooltip.suitcaseglider.coke_oven_output": "Construction part: below the controller.",
+  "tooltip.suitcaseglider.coke_oven_output": "Coke output, fuel-block input and creosote drain. Use an empty bucket.",
   "item.suitcaseglider.guild_assembly_key": "Guild Assembly Key",
   "tooltip.suitcaseglider.guild_assembly_key": "Use on a multiblock controller to check and form its structure.",
   "container.suitcaseglider.coke_oven": "Coke Oven",
@@ -133,5 +133,11 @@
   "gui.suitcaseglider.kiln.state.3": "Coking",
   "gui.suitcaseglider.kiln.state.4": "Output full",
   "gui.suitcaseglider.kiln.state.5": "Paused",
-  "gui.suitcaseglider.kiln.state.6": "Waiting for chunks"
+  "gui.suitcaseglider.kiln.state.6": "Waiting for chunks",
+  "block.suitcaseglider.charcoal_block": "Block of Charcoal",
+  "block.suitcaseglider.creosote": "Creosote",
+  "fluid_type.suitcaseglider.creosote": "Creosote",
+  "item.suitcaseglider.creosote_bucket": "Creosote Bucket",
+  "gui.suitcaseglider.kiln.creosote": "Creosote: %s / %s mB. Click with an empty bucket.",
+  "gui.suitcaseglider.kiln.state.7": "Not enough fuel for the cycle"
 }

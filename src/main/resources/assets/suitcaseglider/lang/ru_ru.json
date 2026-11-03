@@ -116,7 +116,7 @@
   "block.suitcaseglider.coke_oven_input": "Загрузочный люк коксовой печи",
   "tooltip.suitcaseglider.coke_oven_input": "Деталь конструкции: над контроллером.",
   "block.suitcaseglider.coke_oven_output": "Выгрузной люк коксовой печи",
-  "tooltip.suitcaseglider.coke_oven_output": "Деталь конструкции: под контроллером.",
+  "tooltip.suitcaseglider.coke_oven_output": "Выход кокса, загрузка топливных блоков и слив креозота. ПКМ пустым ведром — набрать.",
   "item.suitcaseglider.guild_assembly_key": "Монтажный ключ Гильдии",
   "tooltip.suitcaseglider.guild_assembly_key": "ПКМ по контроллеру: проверить и сформировать постройку.",
   "container.suitcaseglider.coke_oven": "Коксовая печь",
@@ -133,5 +133,11 @@
   "gui.suitcaseglider.kiln.state.3": "Коксование",
   "gui.suitcaseglider.kiln.state.4": "Выход заполнен",
   "gui.suitcaseglider.kiln.state.5": "Приостановлено",
-  "gui.suitcaseglider.kiln.state.6": "Ожидание чанков"
+  "gui.suitcaseglider.kiln.state.6": "Ожидание чанков",
+  "block.suitcaseglider.charcoal_block": "Блок древесного угля",
+  "block.suitcaseglider.creosote": "Креозот",
+  "fluid_type.suitcaseglider.creosote": "Креозот",
+  "item.suitcaseglider.creosote_bucket": "Ведро креозота",
+  "gui.suitcaseglider.kiln.creosote": "Креозот: %s / %s мБ. Нажмите с пустым ведром на курсоре.",
+  "gui.suitcaseglider.kiln.state.7": "Недостаточно топлива на цикл"
 }
