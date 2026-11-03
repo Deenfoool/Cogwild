@@ -380,7 +380,7 @@
   },
   "source": "https://app.notion.com/p/39fb8e499d8b81478778f0770acfc3ae",
   "implementation": {
-    "version": "0.7.0",
+    "version": "0.7.1",
     "items": [
       "unfired_refractory_brick",
       "refractory_brick",
@@ -404,7 +404,13 @@
     ],
     "formation_tool": "suitcaseglider:guild_assembly_key",
     "redstone_control": false,
-    "manual_start_stop": true,
-    "door_animation_implemented": false
+    "manual_start_stop": false,
+    "door_animation_implemented": false,
+    "automatic_processing": true,
+    "screen_size": [
+      176,
+      166
+    ],
+    "creosote_implemented": false
   }
 }

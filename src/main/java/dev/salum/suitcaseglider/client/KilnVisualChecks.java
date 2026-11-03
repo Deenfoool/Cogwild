@@ -17,7 +17,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-/** Opt-in client check of real key formation, menu synchronization and start/stop. */
+/** Opt-in client check of real key formation, menu synchronization and automatic processing. */
 @Mod.EventBusSubscriber(modid=SuitcaseGlider.ID,value=Dist.CLIENT)
 public final class KilnVisualChecks {
     private static int startup,ticks;private static boolean loading,done;private static volatile String failure;
@@ -62,19 +62,11 @@ public final class KilnVisualChecks {
             var p=mc.getSingleplayerServer().getPlayerList().getPlayer(mc.player.getUUID());var at=new BlockPos(1,81,0);
             mc.getSingleplayerServer().overworld().getBlockState(at).use(p.serverLevel(),p,InteractionHand.MAIN_HAND,new BlockHitResult(Vec3.atCenterOf(at),Direction.NORTH,at,false));
         });
-        if(ticks==200){
-            if(!(mc.screen instanceof KilnScreen)||!(mc.player.containerMenu instanceof KilnMenu))throw new IllegalStateException("Kiln screen failed to open");
-            mc.gameMode.handleInventoryButtonClick(mc.player.containerMenu.containerId,0);
-        }
-        if(ticks==240){
-            if(!(mc.player.containerMenu instanceof KilnMenu menu)||menu.kiln.data.get(2)!=KilnBlockEntity.RUNNING||menu.kiln.data.get(0)<=0)throw new IllegalStateException("Start button or progress synchronization failed");
-            Screenshot.grab(mc.gameDirectory,"coke-oven-gui-running.png",mc.getMainRenderTarget(),c->{});
-            mc.gameMode.handleInventoryButtonClick(mc.player.containerMenu.containerId,0);
-        }
-        if(ticks==280){
-            if(!(mc.player.containerMenu instanceof KilnMenu menu)||menu.kiln.data.get(2)!=KilnBlockEntity.PAUSED)throw new IllegalStateException("Stop button failed");
-            Screenshot.grab(mc.gameDirectory,"coke-oven-gui-paused.png",mc.getMainRenderTarget(),c->{});
-            try{Files.writeString(mc.gameDirectory.toPath().resolve("kiln-client-report.txt"),"KILN_CLIENT_OK\nReal oven formed; menu opened with held key; start/stop packets and progress/status synchronization verified.\n");}catch(Exception e){throw new RuntimeException(e);}
+        if(ticks==220){
+            if(!(mc.screen instanceof KilnScreen)||!(mc.player.containerMenu instanceof KilnMenu menu)||menu.kiln.data.get(2)!=KilnBlockEntity.RUNNING||menu.kiln.data.get(0)<=0)throw new IllegalStateException("Automatic coking or vanilla screen failed");
+            if(mc.screen.children().stream().anyMatch(w->w instanceof net.minecraft.client.gui.components.Button))throw new IllegalStateException("Unexpected GUI button");
+            Screenshot.grab(mc.gameDirectory,"coke-oven-gui-automatic.png",mc.getMainRenderTarget(),c->{});
+            try{Files.writeString(mc.gameDirectory.toPath().resolve("kiln-client-report.txt"),"KILN_CLIENT_OK\nVanilla furnace texture, 176x166 layout, automatic processing, no start/stop buttons; live menu progress verified.\n");}catch(Exception e){throw new RuntimeException(e);}
             done=true;SuitcaseGlider.LOG.info("KILN_CLIENT_OK");mc.stop();
         }
     }

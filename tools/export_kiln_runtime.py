@@ -17,17 +17,6 @@ write(ASSETS/'models/item/guild_assembly_key.json',{'parent':'minecraft:item/han
 write(RES/'data/suitcaseglider/recipes/guild_assembly_key.json',{'type':'minecraft:crafting_shaped','pattern':[' II','CCI',' L '],'key':{'I':{'item':'minecraft:iron_ingot'},'C':{'item':'minecraft:copper_ingot'},'L':{'item':'minecraft:leather'}},'result':{'item':'suitcaseglider:guild_assembly_key'}})
 write(RES/'data/suitcaseglider/advancements/recipes/guild_assembly_key.json',{'parent':'minecraft:recipes/root','criteria':{'iron':{'trigger':'minecraft:inventory_changed','conditions':{'items':[{'items':['minecraft:iron_ingot']} ]}}},'rewards':{'recipes':['suitcaseglider:guild_assembly_key']}})
 
-im=Image.new('RGBA',(256,256),(0,0,0,0));d=ImageDraw.Draw(im)
-d.rectangle((0,0,175,189),fill='#373c3d');d.rectangle((1,1,173,187),fill='#f2eee2');d.rectangle((4,4,171,186),fill='#8e9390');d.rectangle((4,4,170,185),fill='#c4c5ba')
-d.rectangle((6,18,169,33),fill='#b4b6ab')
-def slot(x,y):
- d.rectangle((x-1,y-1,x+16,y+16),fill='#f1eee3');d.rectangle((x-1,y-1,x+15,y+15),fill='#565c5b');d.rectangle((x,y,x+15,y+15),fill='#8c928d')
-slot(44,40);slot(116,40)
-for row in range(3):
- for col in range(9):slot(8+col*18,108+row*18)
-for col in range(9):slot(8+col*18,166)
-p=ASSETS/'textures/gui/coke_oven.png';p.parent.mkdir(parents=True,exist_ok=True);im.save(p)
-
 strings={
  'item.suitcaseglider.guild_assembly_key':('Guild Assembly Key','Монтажный ключ Гильдии'),
  'tooltip.suitcaseglider.guild_assembly_key':('Use on a multiblock controller to check and form its structure.','ПКМ по контроллеру: проверить и сформировать постройку.'),
@@ -64,4 +53,4 @@ for kind in ['coke_oven_controller','coke_oven_input','coke_oven_output']:
   if e['name'] in ['Sealed inspection slit']:e['faces']['north']['texture']='#heat'
  write(ASSETS/'models/block'/f'{kind}_lit.json',j)
  write(ASSETS/'blockstates'/f'{kind}.json',{'variants':{f'facing={face},lit={str(lit).lower()}':{'model':'suitcaseglider:block/'+kind+('_lit' if lit else ''),'y':angle} for face,angle in [('north',0),('east',90),('south',180),('west',270)] for lit in [False,True]}})
-print('Exported reusable assembly key, recipe, GUI, runtime translations and active block models.')
+print('Exported reusable assembly key, recipe, runtime translations and active block models.')

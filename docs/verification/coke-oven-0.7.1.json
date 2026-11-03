@@ -1,0 +1,17 @@
+{
+  "version": "0.7.1",
+  "unit_tests": 32,
+  "unit_failures": 0,
+  "server_checks": 139,
+  "restart_checks": 5,
+  "client": "KILN_CLIENT_OK\nVanilla furnace texture, 176x166 layout, automatic processing, no start/stop buttons; live menu progress verified.",
+  "screen": [
+    176,
+    166
+  ],
+  "vanilla_texture": "minecraft:textures/gui/container/furnace.png",
+  "automatic_processing": true,
+  "manual_buttons": false,
+  "creosote": false,
+  "sha256": "cec693892934f6d513209c5e4d6c4fee583f6b5c764c73157e26055f830d3acd"
+}

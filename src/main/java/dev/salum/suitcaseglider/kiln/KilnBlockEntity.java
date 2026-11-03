@@ -20,7 +20,7 @@ import net.minecraftforge.items.*;
 
 public final class KilnBlockEntity extends BlockEntity implements MenuProvider {
     public static final int UNFORMED=0,STOPPED=1,WAITING=2,RUNNING=3,BLOCKED=4,PAUSED=5,UNLOADED=6;
-    public boolean formed,enabled;
+    public boolean formed;
     private int progress,duration=1200,state=UNFORMED;
     private ItemStack reserved=ItemStack.EMPTY;
     public final ItemStackHandler inventory=new ItemStackHandler(2){
@@ -28,8 +28,8 @@ public final class KilnBlockEntity extends BlockEntity implements MenuProvider {
         @Override protected void onContentsChanged(int slot){setChanged();}
     };
     public final ContainerData data=new ContainerData(){
-        public int get(int i){return switch(i){case 0->progress;case 1->duration;case 2->state;case 3->enabled?1:0;case 4->formed?1:0;default->0;};}
-        public void set(int i,int v){switch(i){case 0->progress=v;case 1->duration=v;case 2->state=v;case 3->enabled=v!=0;case 4->formed=v!=0;default->{}}}
+        public int get(int i){return switch(i){case 0->progress;case 1->duration;case 2->state;case 3->1;case 4->formed?1:0;default->0;};}
+        public void set(int i,int v){switch(i){case 0->progress=v;case 1->duration=v;case 2->state=v;case 3->{} case 4->formed=v!=0;default->{}}}
         public int getCount(){return 5;}
     };
     public KilnBlockEntity(BlockPos p,BlockState s){super(KilnContent.TYPE.get(),p,s);}
@@ -64,13 +64,12 @@ public final class KilnBlockEntity extends BlockEntity implements MenuProvider {
     }
     public boolean outputFits(int count){var out=inventory.getStackInSlot(1);return (out.isEmpty()||out.is(ResourceContent.COKE.get())&&!out.hasTag())&&out.getCount()+count<=64;}
     private int batchCount(){return reserved.is(Items.COAL_BLOCK)?9:1;}
-    public void toggle(){if(formed&&inspect().valid()){enabled=!enabled;refreshState();setChanged();}}
-    private void refreshState(){state=!formed?UNFORMED:!enabled?(reserved.isEmpty()?STOPPED:PAUSED):reserved.isEmpty()?(inventory.getStackInSlot(0).isEmpty()?WAITING:STOPPED):RUNNING;}
+    private void refreshState(){state=!formed?UNFORMED:reserved.isEmpty()?WAITING:RUNNING;}
     public void tick(){
         if(!controller()||level==null||level.isClientSide)return;
         if(formed){var check=inspect();if(!check.loaded()){state=UNLOADED;light(false);return;}if(!check.valid()){formed=false;setChanged();}}
         refreshState();
-        if(!formed||!enabled){light(false);return;}
+        if(!formed){light(false);return;}
         if(reserved.isEmpty()){
             var input=inventory.getStackInSlot(0);if(!accepts(input)){state=WAITING;light(false);return;}
             int count=input.is(Items.COAL_BLOCK)?9:1;
@@ -114,8 +113,8 @@ public final class KilnBlockEntity extends BlockEntity implements MenuProvider {
     @Override public <T> LazyOptional<T> getCapability(Capability<T> cap,Direction side){return cap==ForgeCapabilities.ITEM_HANDLER&&!controller()?portCap.cast():super.getCapability(cap,side);}
     @Override public void invalidateCaps(){super.invalidateCaps();portCap.invalidate();}
     @Override public void reviveCaps(){super.reviveCaps();portCap=LazyOptional.of(()->port);}
-    @Override protected void saveAdditional(CompoundTag t){super.saveAdditional(t);t.put("Inventory",inventory.serializeNBT());t.put("Reserved",reserved.save(new CompoundTag()));t.putBoolean("Formed",formed);t.putBoolean("Enabled",enabled);t.putInt("Progress",progress);}
-    @Override public void load(CompoundTag t){super.load(t);inventory.deserializeNBT(t.getCompound("Inventory"));reserved=ItemStack.of(t.getCompound("Reserved"));if(!reserved.isEmpty()&&!accepts(reserved))reserved=ItemStack.EMPTY;duration=reserved.is(Items.COAL_BLOCK)?10800:1200;progress=Math.max(0,Math.min(duration-1,t.getInt("Progress")));formed=t.getBoolean("Formed");enabled=t.getBoolean("Enabled");refreshState();}
+    @Override protected void saveAdditional(CompoundTag t){super.saveAdditional(t);t.put("Inventory",inventory.serializeNBT());t.put("Reserved",reserved.save(new CompoundTag()));t.putBoolean("Formed",formed);t.putInt("Progress",progress);}
+    @Override public void load(CompoundTag t){super.load(t);inventory.deserializeNBT(t.getCompound("Inventory"));reserved=ItemStack.of(t.getCompound("Reserved"));if(!reserved.isEmpty()&&!accepts(reserved))reserved=ItemStack.EMPTY;duration=reserved.is(Items.COAL_BLOCK)?10800:1200;progress=Math.max(0,Math.min(duration-1,t.getInt("Progress")));formed=t.getBoolean("Formed");refreshState();}
     @Override public Component getDisplayName(){return Component.translatable("container.suitcaseglider.coke_oven");}
     @Override public AbstractContainerMenu createMenu(int id,Inventory inv,Player player){return new KilnMenu(id,inv,this);}
 }

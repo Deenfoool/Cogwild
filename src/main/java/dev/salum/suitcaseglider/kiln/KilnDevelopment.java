@@ -27,6 +27,7 @@ public final class KilnDevelopment {
     private static MinecraftServer stop;private static int countdown;private static final List<String> report=new ArrayList<>();
     private static void check(boolean pass,String name){if(!pass)throw new IllegalStateException("KILN_SMOKE_FAILED "+name);report.add(name+"=true");}
     public static KilnBlockEntity build(ServerLevel level,BlockPos controller,Direction facing){
+        level.setBlockAndUpdate(controller,Blocks.AIR.defaultBlockState());
         level.setBlockAndUpdate(controller,ResourceContent.CONTROLLER.get().defaultBlockState().setValue(KilnComponentBlock.FACING,facing));
         var k=(KilnBlockEntity)level.getBlockEntity(controller);
         for(int x=0;x<3;x++)for(int y=0;y<3;y++)for(int z=0;z<3;z++){
@@ -42,11 +43,11 @@ public final class KilnDevelopment {
             var level=event.getServer().overworld();var at=new BlockPos(64,80,0);level.getChunkAt(at);
             var k=(KilnBlockEntity)level.getBlockEntity(at);check(k!=null,"controller restored after real server restart");
             for(int x=0;x<3;x++)for(int y=0;y<3;y++)for(int z=0;z<3;z++)level.getChunkAt(k.cell(x,y,z));
-            check(k.formed&&!k.enabled&&k.inspect().valid(),"formed structure and manual pause restored");
-            check(k.data.get(0)==61&&k.inventory.getStackInSlot(0).getCount()==6&&k.inventory.getStackInSlot(1).getCount()==3,"progress and both slots restored");
+            check(k.formed&&k.inspect().valid(),"formed structure restored");
+            check(k.data.get(0)==61&&k.inventory.getStackInSlot(0).getCount()==6&&k.inventory.getStackInSlot(1).getCount()==64,"progress and both slots restored");
             check(k.saveWithoutMetadata().getCompound("Reserved").getByte("Count")==1,"reserved coal restored once");
-            k.toggle();for(int i=61;i<1200;i++)k.tick();check(k.inventory.getStackInSlot(1).getCount()==4&&k.inventory.getStackInSlot(0).getCount()==6,"restarted cycle finishes without consuming input twice");
-            k.toggle();Files.write(Path.of("kiln-persistence-report.txt"),report);SuitcaseGlider.LOG.info("KILN_PERSISTENCE_OK {} checks",report.size());stop=event.getServer();countdown=5;return;
+            k.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),3));for(int i=61;i<1200;i++)k.tick();check(k.inventory.getStackInSlot(1).getCount()==4&&k.inventory.getStackInSlot(0).getCount()==6,"restarted cycle finishes without consuming input twice");
+            k.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),64));Files.write(Path.of("kiln-persistence-report.txt"),report);SuitcaseGlider.LOG.info("KILN_PERSISTENCE_OK {} checks",report.size());stop=event.getServer();countdown=5;return;
         }
         if(!Boolean.getBoolean("cogwild.kilnSmoke"))return;
         var server=event.getServer();var level=server.overworld();int index=0;
@@ -77,27 +78,26 @@ public final class KilnDevelopment {
             k.inventory.setStackInSlot(0,ItemStack.EMPTY);p.getInventory().clearContent();
             k.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),5));menu.quickMoveStack(p,1);
             check(k.inventory.getStackInSlot(1).isEmpty()&&p.getInventory().items.stream().filter(s->s.is(ResourceContent.COKE.get())).mapToInt(ItemStack::getCount).sum()==5,"shift-click extracts coke exactly once "+facing);
-            check(!menu.clickMenuButton(p,9)&&!k.enabled,"unknown menu button rejected "+facing);p.getInventory().clearContent();
+            check(!menu.clickMenuButton(p,9) ,"unknown menu button rejected "+facing);p.getInventory().clearContent();
             check(!k.getCapability(ForgeCapabilities.ENERGY).isPresent(),"no electrical requirement "+facing);
             var input=level.getBlockEntity(hatch).getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(()->new IllegalStateException("Missing item port"));
             var output=level.getBlockEntity(pos.below()).getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(()->new IllegalStateException("Missing item port"));
             check(input.insertItem(0,new ItemStack(Items.COAL,2),false).isEmpty(),"input port accepts coal "+facing);
             check(!input.insertItem(0,new ItemStack(Items.DIRT),false).isEmpty(),"input rejects unrelated item "+facing);
             check(input.extractItem(0,1,false).isEmpty()&&!output.insertItem(0,new ItemStack(ResourceContent.COKE.get()),false).isEmpty(),"port directions enforced "+facing);
-            k.tick();check(k.inventory.getStackInSlot(0).getCount()==2&&k.data.get(0)==0,"manual start required "+facing);
-            k.toggle();k.tick();check(k.data.get(0)==1&&k.inventory.getStackInSlot(0).getCount()==1,"coal reserved once "+facing);
+            k.tick();check(k.data.get(0)==1&&k.inventory.getStackInSlot(0).getCount()==1,"automatic start reserves coal once "+facing);
             check(k.getBlockState().getValue(KilnComponentBlock.LIT),"working light "+facing);
-            for(int i=0;i<49;i++)k.tick();int progress=k.data.get(0);k.toggle();for(int i=0;i<10;i++)k.tick();check(k.data.get(0)==progress,"manual pause preserves progress "+facing);
-            k.toggle();var redstone=k.cell(0,0,0).below();level.setBlockAndUpdate(redstone,Blocks.REDSTONE_BLOCK.defaultBlockState());k.tick();check(k.data.get(0)==progress+1,"redstone does not control the oven "+facing);
-            var tag=k.saveWithoutMetadata();var reloaded=new KilnBlockEntity(pos,k.getBlockState());reloaded.load(tag);level.setBlockEntity(reloaded);k=reloaded;
-            check(k.formed&&k.enabled&&k.data.get(0)==progress+1&&k.inventory.getStackInSlot(0).getCount()==1,"NBT restores reserved operation "+facing);
+            for(int i=0;i<49;i++)k.tick();int progress=k.data.get(0);k.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),64));for(int i=0;i<10;i++)k.tick();check(k.data.get(0)==progress,"blocked output preserves progress "+facing);k.inventory.setStackInSlot(1,ItemStack.EMPTY);
+            var redstone=k.cell(0,0,0).below();level.setBlockAndUpdate(redstone,Blocks.REDSTONE_BLOCK.defaultBlockState());k.tick();check(k.data.get(0)==progress+1,"redstone does not control the oven "+facing);
+            var tag=k.saveWithoutMetadata();tag.putBoolean("Enabled",false);var reloaded=new KilnBlockEntity(pos,k.getBlockState());reloaded.load(tag);level.setBlockEntity(reloaded);k=reloaded;
+            check(k.formed&&k.data.get(0)==progress+1&&k.inventory.getStackInSlot(0).getCount()==1,"NBT restores reserved operation and ignores obsolete manual switch "+facing);
             var wall=k.cell(0,1,1);level.setBlockAndUpdate(wall,Blocks.AIR.defaultBlockState());int frozen=k.data.get(0);k.tick();check(!k.formed&&k.data.get(0)==frozen,"broken shell pauses without loss "+facing);
             level.setBlockAndUpdate(wall,ResourceContent.BRICKS.get().defaultBlockState());check(k.form(p),"key reforms repaired shell "+facing);
             k.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),64));k.tick();check(k.data.get(0)==frozen,"full output freezes active cycle "+facing);
             k.inventory.setStackInSlot(1,ItemStack.EMPTY);for(int i=k.data.get(0);i<1200;i++)k.tick();
             check(k.inventory.getStackInSlot(1).getCount()==1&&k.inventory.getStackInSlot(0).getCount()==1,"one reserved coal yields exactly one coke "+facing);
             check(output.extractItem(0,64,false).getCount()==1,"output port extracts result "+facing);
-            k.toggle();k.inventory.setStackInSlot(0,new ItemStack(Items.COAL_BLOCK));k.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),56));k.toggle();k.tick();
+            k.inventory.setStackInSlot(0,new ItemStack(Items.COAL_BLOCK));k.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),56));k.tick();
             check(k.inventory.getStackInSlot(0).is(Items.COAL_BLOCK)&&k.data.get(0)==0,"nine coke capacity required before reserving block "+facing);
             k.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),55));k.tick();check(k.data.get(1)==10800,"coal block takes nine normal cycle times "+facing);
             for(int i=1;i<10800;i++)k.tick();check(k.inventory.getStackInSlot(1).getCount()==64&&k.inventory.getStackInSlot(0).isEmpty(),"coal block produces nine coke "+facing);
@@ -107,8 +107,8 @@ public final class KilnDevelopment {
             int coal=level.getEntitiesOfClass(ItemEntity.class,new AABB(pos).inflate(4)).stream().filter(e->e.getItem().is(Items.COAL)).mapToInt(e->e.getItem().getCount()).sum();
             check(coal==3,"controller destruction returns pending and unreserved input exactly once "+facing);
         }
-        var fixture=build(level,new BlockPos(64,80,0),Direction.NORTH);var fixturePlayer=player(level,"KilnPersist");fixture.form(fixturePlayer);fixture.inventory.setStackInSlot(0,new ItemStack(Items.COAL,7));fixture.toggle();for(int i=0;i<61;i++)fixture.tick();fixture.toggle();fixture.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),3));
-        check(fixture.data.get(0)==61&&!fixture.enabled,"paused fixture prepared for real server restart");
+        var fixture=build(level,new BlockPos(64,80,0),Direction.NORTH);var fixturePlayer=player(level,"KilnPersist");fixture.form(fixturePlayer);fixture.inventory.setStackInSlot(0,new ItemStack(Items.COAL,7));for(int i=0;i<61;i++)fixture.tick();fixture.inventory.setStackInSlot(1,new ItemStack(ResourceContent.COKE.get(),64));
+        check(fixture.data.get(0)==61,"blocked fixture prepared for real server restart");
         Files.write(Path.of("kiln-smoke-report.txt"),report);SuitcaseGlider.LOG.info("KILN_SMOKE_OK {} checks",report.size());stop=server;countdown=5;
     }
     @SubscribeEvent public static void tick(TickEvent.ServerTickEvent e){if(stop!=null&&e.phase==TickEvent.Phase.END&&--countdown<=0){var server=stop;stop=null;server.halt(false);}}
