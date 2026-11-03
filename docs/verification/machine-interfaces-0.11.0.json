@@ -1,0 +1,30 @@
+{
+  "version": "0.11.0",
+  "unit_tests": 34,
+  "unit_failures": 0,
+  "machine_geometry_server_checks": 680,
+  "machine_gui_server_checks": 111,
+  "client_gui_checks": [
+    "lathe: slots=38, state=0, energy=4000, progress=0",
+    "crusher: slots=38, state=1, energy=3024, progress=22",
+    "rolling_mill: slots=38, state=0, energy=4000, progress=0",
+    "quenching_bath: slots=39, state=0, energy=4000, progress=0",
+    "air_separator: slots=39, state=1, energy=1824, progress=132",
+    "air_compressor: slots=36, state=5, energy=4000, progress=0",
+    "industrial_press: slots=38, state=0, energy=4000, progress=0",
+    "fermenter: slots=41, state=0, energy=4000, progress=0",
+    "universal_mixer: slots=40, state=0, energy=4000, progress=0",
+    "diesel_generator: slots=36, state=5, energy=4000, progress=0"
+  ],
+  "success_markers": [
+    "MACHINE_SMOKE_OK",
+    "MACHINE_GUI_OK",
+    "MACHINE_GUI_CLIENT_OK"
+  ],
+  "limits": "Automatic initial processing recipes: crusher and air separator only. Six other material machines expose persistent inventories but await recipes. Compressor/generator expose actual energy buffer; fuel and pneumatic systems remain separate unfinished work. Existing coke/blast screens unchanged.",
+  "unchanged_art": [
+    "glider_frame",
+    "glider_fabric",
+    "guild_assembly_key"
+  ]
+}

@@ -26,5 +26,11 @@ public final class MachineContent {
         }
     }
     public static final RegistryObject<BlockEntityType<MachineBlockEntity>> TYPE=ENTITIES.register("machine",()->BlockEntityType.Builder.of(MachineBlockEntity::new,MACHINES.values().stream().map(RegistryObject::get).toArray(Block[]::new)).build(null));
-    public static void register(IEventBus bus){BLOCKS.register(bus);ENTITIES.register(bus);}
+    private static final DeferredRegister<net.minecraft.world.inventory.MenuType<?>> MENUS=DeferredRegister.create(ForgeRegistries.MENU_TYPES,SuitcaseGlider.ID);
+    private static final DeferredRegister<net.minecraft.world.item.crafting.RecipeSerializer<?>> SERIALIZERS=DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS,SuitcaseGlider.ID);
+    private static final DeferredRegister<net.minecraft.world.item.crafting.RecipeType<?>> RECIPES=DeferredRegister.create(ForgeRegistries.RECIPE_TYPES,SuitcaseGlider.ID);
+    public static final RegistryObject<net.minecraft.world.inventory.MenuType<MachineMenu>> MENU=MENUS.register("machine",()->net.minecraftforge.common.extensions.IForgeMenuType.create(MachineMenu::new));
+    public static final RegistryObject<net.minecraft.world.item.crafting.RecipeType<MachineRecipe>> PROCESSING_TYPE=RECIPES.register("machine_processing",()->new net.minecraft.world.item.crafting.RecipeType<>(){});
+    public static final RegistryObject<net.minecraft.world.item.crafting.RecipeSerializer<MachineRecipe>> PROCESSING_SERIALIZER=SERIALIZERS.register("machine_processing",MachineRecipe.Serializer::new);
+    public static void register(IEventBus bus){BLOCKS.register(bus);ENTITIES.register(bus);MENUS.register(bus);SERIALIZERS.register(bus);RECIPES.register(bus);}
 }

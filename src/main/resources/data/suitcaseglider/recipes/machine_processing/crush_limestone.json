@@ -1,0 +1,17 @@
+{
+  "type": "suitcaseglider:machine_processing",
+  "machine": "crusher",
+  "ingredients": [
+    {
+      "item": "suitcaseglider:limestone"
+    }
+  ],
+  "results": [
+    {
+      "item": "suitcaseglider:limestone_flux",
+      "count": 4
+    }
+  ],
+  "duration": 100,
+  "energy": 8
+}

@@ -1,0 +1,17 @@
+{
+  "type": "suitcaseglider:machine_processing",
+  "machine": "crusher",
+  "ingredients": [
+    {
+      "item": "minecraft:gravel"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:sand",
+      "count": 1
+    }
+  ],
+  "duration": 100,
+  "energy": 8
+}

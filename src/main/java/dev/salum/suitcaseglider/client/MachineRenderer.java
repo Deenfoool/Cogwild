@@ -28,7 +28,7 @@ public final class MachineRenderer implements BlockEntityRenderer<MachineBlockEn
     public static MechRig rig(String kind){return RIGS.computeIfAbsent(kind,k->MechRig.load("/assets/suitcaseglider/rigs/"+k+".json"));}
     @SubscribeEvent public static void register(EntityRenderersEvent.RegisterRenderers event){event.registerBlockEntityRenderer(MachineContent.TYPE.get(),MachineRenderer::new);}
     @Override public void render(MachineBlockEntity machine,float partial,PoseStack stack,MultiBufferSource buffers,int light,int overlay){
-        String kind=machine.kind();if(Boolean.getBoolean("cogwild.machineQa"))MachineVisualChecks.WORLD.add(kind);var rig=rig(kind);var spec=MachineCatalog.get(kind);String clip=machine.powered()?spec.on():spec.off();double time=machine.seconds(partial);
+        String kind=machine.kind();if(Boolean.getBoolean("cogwild.machineQa"))MachineVisualChecks.WORLD.add(kind);var rig=rig(kind);var spec=MachineCatalog.get(kind);String clip=machine.powered()?spec.on():spec.off();if(machine.processing()&&rig.clips.containsKey("processing"))clip="processing";else if(machine.data.get(2)==MachineBlockEntity.BLOCKED&&rig.clips.containsKey("output_blocked"))clip="output_blocked";else if(machine.powered()&&!machine.processing()){if(rig.clips.containsKey("powered_idle"))clip="powered_idle";else if(rig.clips.containsKey("idle"))clip="idle";else clip=spec.off();}double time=machine.seconds(partial);
         String transition=machine.powered()?spec.start():spec.stop();
         if(rig.clips.containsKey(transition)&&machine.transitionTime(partial)<rig.duration(transition)){clip=transition;time=machine.transitionTime(partial);}
         stack.pushPose();stack.translate(.5,0,.5);

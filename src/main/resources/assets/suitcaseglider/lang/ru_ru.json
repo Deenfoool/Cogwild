@@ -179,5 +179,19 @@
   "gui.suitcaseglider.blast.slot.iron": "Выход стали",
   "gui.suitcaseglider.blast.slot.slag": "Выход шлака",
   "item.suitcaseglider.steel_ingot": "Стальной слиток",
-  "block.suitcaseglider.steel_block": "Стальной блок"
+  "block.suitcaseglider.steel_block": "Стальной блок",
+  "gui.suitcaseglider.machine.buffer": "Буфер энергии",
+  "gui.suitcaseglider.machine.state.0": "Ожидание ресурса",
+  "gui.suitcaseglider.machine.state.1": "Обработка",
+  "gui.suitcaseglider.machine.state.2": "Нет питания",
+  "gui.suitcaseglider.machine.state.3": "Выход заполнен",
+  "gui.suitcaseglider.machine.state.4": "Нет рецепта",
+  "gui.suitcaseglider.machine.state.5": "Энергобуфер",
+  "gui.suitcaseglider.machine.energy": "Энергия: %s / %s FE",
+  "gui.suitcaseglider.machine.progress": "%s / %s с · %s FE/т",
+  "gui.suitcaseglider.machine.slot.input": "Загрузка ресурса",
+  "gui.suitcaseglider.machine.slot.output": "Готовый продукт",
+  "gui.suitcaseglider.machine.slot.heavy": "Тяжёлая фракция",
+  "gui.suitcaseglider.machine.slot.light": "Лёгкая фракция",
+  "gui.suitcaseglider.machine.utility_hint": "Накопленная энергия, доступная механизму."
 }

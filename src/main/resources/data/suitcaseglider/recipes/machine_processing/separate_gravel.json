@@ -1,0 +1,21 @@
+{
+  "type": "suitcaseglider:machine_processing",
+  "machine": "air_separator",
+  "ingredients": [
+    {
+      "item": "minecraft:gravel"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:flint",
+      "count": 1
+    },
+    {
+      "item": "minecraft:sand",
+      "count": 1
+    }
+  ],
+  "duration": 140,
+  "energy": 8
+}

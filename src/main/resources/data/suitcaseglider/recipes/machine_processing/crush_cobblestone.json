@@ -1,0 +1,17 @@
+{
+  "type": "suitcaseglider:machine_processing",
+  "machine": "crusher",
+  "ingredients": [
+    {
+      "item": "minecraft:cobblestone"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:gravel",
+      "count": 1
+    }
+  ],
+  "duration": 100,
+  "energy": 8
+}

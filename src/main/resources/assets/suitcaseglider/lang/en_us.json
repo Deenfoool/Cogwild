@@ -179,5 +179,19 @@
   "gui.suitcaseglider.blast.slot.iron": "Steel output",
   "gui.suitcaseglider.blast.slot.slag": "Slag output",
   "item.suitcaseglider.steel_ingot": "Steel Ingot",
-  "block.suitcaseglider.steel_block": "Block of Steel"
+  "block.suitcaseglider.steel_block": "Block of Steel",
+  "gui.suitcaseglider.machine.buffer": "Energy buffer",
+  "gui.suitcaseglider.machine.state.0": "Waiting for input",
+  "gui.suitcaseglider.machine.state.1": "Processing",
+  "gui.suitcaseglider.machine.state.2": "No power",
+  "gui.suitcaseglider.machine.state.3": "Output full",
+  "gui.suitcaseglider.machine.state.4": "No recipe",
+  "gui.suitcaseglider.machine.state.5": "Energy buffer",
+  "gui.suitcaseglider.machine.energy": "Energy: %s / %s FE",
+  "gui.suitcaseglider.machine.progress": "%s / %s s · %s FE/t",
+  "gui.suitcaseglider.machine.slot.input": "Material input",
+  "gui.suitcaseglider.machine.slot.output": "Product output",
+  "gui.suitcaseglider.machine.slot.heavy": "Heavy fraction",
+  "gui.suitcaseglider.machine.slot.light": "Light fraction",
+  "gui.suitcaseglider.machine.utility_hint": "Stored energy available to the machine."
 }

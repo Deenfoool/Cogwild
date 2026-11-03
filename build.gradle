@@ -327,3 +327,14 @@ if(project.hasProperty('itemIconsQa')) {
     minecraft.runs.client.workingDirectory project.file('run-machine-client')
     minecraft.runs.client.args '--username','ItemArtChecks','--width','1280','--height','800'
 }
+
+if(project.hasProperty('machineGuiSmoke')) {
+    minecraft.runs.server.property 'machines.smoke','true'
+    minecraft.runs.server.property 'machines.guiSmoke','true'
+    minecraft.runs.server.workingDirectory project.file('run-machine-smoke')
+}
+if(project.hasProperty('machineGuiQa')) {
+    minecraft.runs.client.property 'cogwild.machineGuiQa','true'
+    minecraft.runs.client.workingDirectory project.file('run-machine-client')
+    minecraft.runs.client.args '--username','MachineGuiChecks','--width','1280','--height','800'
+}

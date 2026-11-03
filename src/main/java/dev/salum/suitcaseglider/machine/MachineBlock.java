@@ -62,7 +62,14 @@ public final class MachineBlock extends BaseEntityBlock {
         if(!level.isClientSide&&player.isCreative()&&!REMOVING_PAIR.get())removeParts(level,pos,state,false);
         super.playerWillDestroy(level,pos,state,player);
     }
+    @Override public net.minecraft.world.InteractionResult use(BlockState state,Level level,BlockPos pos,Player player,net.minecraft.world.InteractionHand hand,BlockHitResult hit){
+        var item=player.getItemInHand(hand);if(item.getItem() instanceof dev.salum.suitcaseglider.cable.CableItem||item.is(Items.SHEARS))return net.minecraft.world.InteractionResult.PASS;
+        var root=base(pos,state);
+        if(!level.isClientSide&&player instanceof net.minecraft.server.level.ServerPlayer sp&&level.getBlockEntity(root) instanceof MachineBlockEntity machine)net.minecraftforge.network.NetworkHooks.openScreen(sp,machine,root);
+        return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
+    }
     @Override public void onRemove(BlockState state,Level level,BlockPos pos,BlockState next,boolean moved){
+        if(!state.is(next.getBlock())&&!level.isClientSide&&primary(state)&&level.getBlockEntity(pos) instanceof MachineBlockEntity machine)machine.dropContents();
         if(!state.is(next.getBlock())&&!level.isClientSide&&!REMOVING_PAIR.get())removeParts(level,pos,state,!primary(state));
         super.onRemove(state,level,pos,next,moved);
     }
