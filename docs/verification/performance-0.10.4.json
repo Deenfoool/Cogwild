@@ -1,0 +1,23 @@
+{
+  "version": "0.10.4",
+  "scope": "Client rendering; no world, recipe, item artwork or animation assets changed",
+  "benchmark": {
+    "method": "Opt-in machineQa, same isolated Machines-Test scene/camera sequence, 10 rigs and item renders. Aggregated CPU time inside drawPose including material buffer acquisition. Not an FPS benchmark; pose evaluation, cable rendering and other game work excluded. Calls/weights vary with frame rate.",
+    "before_calls": 5959,
+    "before_nanos": 22645716200,
+    "before_mean_ms": 3.800254438664205,
+    "after_calls": 14848,
+    "after_nanos": 17703961800,
+    "after_mean_ms": 1.1923465651939655,
+    "mean_reduction_percent": 68.62455963308928
+  },
+  "tests": {
+    "count": 32,
+    "failures": 0
+  },
+  "client_checks": {
+    "machines": "MACHINE_CLIENT_OK, all 10 rigs in world and as items",
+    "cables": "links=4\nrenderedSegments=301\nCLIENT_OK\n",
+    "glider": "GLIDER_GEOMETRY_OK carry=192 flight=1080 withLimbs=480; finite positions/UVs/normals and distinct animated geometry"
+  }
+}

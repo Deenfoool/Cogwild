@@ -56,8 +56,8 @@ public final class MachineVisualChecks {
             if(++index<kinds.size()){mc.options.hideGui=false;camera(mc,index);}
             else{
                 if(!WORLD.containsAll(kinds)||!ITEMS.containsAll(kinds))throw new IllegalStateException("Missing machine rendering: "+WORLD+" / "+ITEMS);
-                try{Files.writeString(mc.gameDirectory.toPath().resolve("machine-client-report.txt"),"world="+WORLD+"\nitems="+ITEMS+"\nCLIENT_OK\n");}catch(Exception e){throw new RuntimeException(e);}
-                done=true;SuitcaseGlider.LOG.info("MACHINE_CLIENT_OK");mc.stop();
+                try{Files.writeString(mc.gameDirectory.toPath().resolve("machine-client-report.txt"),"world="+WORLD+"\nitems="+ITEMS+"\nrenderCalls="+MachineRenderer.renderCalls+"\nrenderNanos="+MachineRenderer.renderNanos+"\nCLIENT_OK\n");}catch(Exception e){throw new RuntimeException(e);}
+                done=true;SuitcaseGlider.LOG.info("MACHINE_CLIENT_OK");mc.level.disconnect();mc.clearLevel(new TitleScreen());mc.stop();
             }
         }
     }

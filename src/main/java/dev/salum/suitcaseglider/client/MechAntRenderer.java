@@ -22,10 +22,11 @@ public final class MechAntRenderer extends EntityRenderer<MechAntEntity> {
         if(ant.isInvisible()){super.render(ant,yaw,partial,stack,buffers,light);return;}
         stack.pushPose();stack.mulPose(Axis.YP.rotationDegrees(180-Mth.rotLerp(partial,ant.yRotO,ant.getYRot())));if(ant.isBaby())stack.scale(.5f,.5f,.5f);
         var rig=MechRig.get();var pose=ant.rigPose(partial);Matrix4f[] matrices=new Matrix4f[rig.bones.size()];Matrix3f[] normals=new Matrix3f[matrices.length];
-        for(int i=0;i<matrices.length;i++){matrices[i]=new Matrix4f(stack.last().pose()).mul(pose.bones[i]);normals[i]=new Matrix3f(matrices[i]).invert().transpose();}
+        for(int i=0;i<matrices.length;i++){matrices[i]=new Matrix4f(stack.last().pose()).mul(pose.bones[i]);if(Math.abs(matrices[i].determinant())>=1e-8)normals[i]=new Matrix3f(matrices[i]).invert().transpose();}
         VertexConsumer out=buffers.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
-        for(var face:rig.faces){var matrix=matrices[face.bone()];if(Math.abs(matrix.determinant())<1e-8)continue;int packed=face.emissive()?LightTexture.FULL_BRIGHT:light;
-            for(int i=0;i<4;i++){float[] v=face.vertices()[i],uv=face.uv()[i],n=face.normal();out.vertex(matrix,v[0],v[1],v[2]).color(1f,1f,1f,1f).uv(uv[0]/1024,uv[1]/2048).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(packed).normal(normals[face.bone()],n[0],n[1],n[2]).endVertex();}}
+        var normal=new org.joml.Vector3f();var vertex=new org.joml.Vector3f();
+        for(var face:rig.faces){var matrix=matrices[face.bone()];if(normals[face.bone()]==null)continue;int packed=face.emissive()?LightTexture.FULL_BRIGHT:light;float[] n=face.normal();normal.set(n[0],n[1],n[2]);normals[face.bone()].transform(normal);
+            for(int i=0;i<4;i++){float[] v=face.vertices()[i],uv=face.uv()[i];vertex.set(v[0],v[1],v[2]).mulPosition(matrix);out.vertex(vertex.x,vertex.y,vertex.z,1f,1f,1f,1f,uv[0]/1024,uv[1]/2048,OverlayTexture.NO_OVERLAY,packed,normal.x,normal.y,normal.z);}}
         stack.popPose();super.render(ant,yaw,partial,stack,buffers,light);
     }
 }

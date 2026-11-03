@@ -30,6 +30,6 @@ public final class BlastRenderer implements BlockEntityRenderer<BlastBlockEntity
         }
         MachineRenderer.drawPose("blast_furnace",pose,b.hot(),stack,out,light,overlay);stack.popPose();
     }
-    @Override public boolean shouldRenderOffScreen(BlastBlockEntity b){return true;}
+    @Override public boolean shouldRenderOffScreen(BlastBlockEntity b){return false;}
     @Override public int getViewDistance(){return 128;}
 }

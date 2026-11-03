@@ -39,11 +39,12 @@ public final class CableVisualChecks {
             }catch(Exception ex){failure=ex.toString();SuitcaseGlider.LOG.error("Cable visual setup",ex);}
         });}
         if(ticks==160){
+            RenderGeometryChecks.glider();
             if(failure!=null)throw new IllegalStateException(failure);
             if(CableRenderer.linksReceived()!=4||CableRenderer.renderedSegments<50)throw new IllegalStateException("Cable client snapshot/render failed: "+CableRenderer.linksReceived()+" / "+CableRenderer.renderedSegments);
             Screenshot.grab(mc.gameDirectory,"cables-front.png",mc.getMainRenderTarget(),c->{});
             mc.getSingleplayerServer().execute(()->{var p=mc.getSingleplayerServer().getPlayerList().getPlayer(mc.player.getUUID());p.teleportTo(p.serverLevel(),-7,84,10,-128,19);});
         }
-        if(ticks==200){Screenshot.grab(mc.gameDirectory,"cables-rear.png",mc.getMainRenderTarget(),c->{});try{Files.writeString(mc.gameDirectory.toPath().resolve("cable-client-report.txt"),"links="+CableRenderer.linksReceived()+"\nrenderedSegments="+CableRenderer.renderedSegments+"\nCLIENT_OK\n");}catch(Exception ex){throw new RuntimeException(ex);}done=true;SuitcaseGlider.LOG.info("CABLE_CLIENT_OK");mc.stop();}
+        if(ticks==200){Screenshot.grab(mc.gameDirectory,"cables-rear.png",mc.getMainRenderTarget(),c->{});try{Files.writeString(mc.gameDirectory.toPath().resolve("cable-client-report.txt"),"links="+CableRenderer.linksReceived()+"\nrenderedSegments="+CableRenderer.renderedSegments+"\nCLIENT_OK\n");}catch(Exception ex){throw new RuntimeException(ex);}done=true;SuitcaseGlider.LOG.info("CABLE_CLIENT_OK");mc.level.disconnect();mc.clearLevel(new TitleScreen());mc.stop();}
     }
 }

@@ -18,23 +18,31 @@ import net.minecraftforge.fml.common.Mod;
 public final class CableRenderer {
     private static CableNetwork.Snapshot snapshot=new CableNetwork.Snapshot("",List.of());
     private static final RenderType TYPE=RenderType.entityCutoutNoCull(SuitcaseGlider.id("textures/misc/cable_white.png"));
-    public static void accept(CableNetwork.Snapshot s){snapshot=s;}
+    private static Map<CableNetwork.Picture,CableMesh> meshes=Map.of();
+    public static void accept(CableNetwork.Snapshot s){
+        if(s.equals(snapshot))return;
+        var next=new LinkedHashMap<CableNetwork.Picture,CableMesh>();
+        boolean sameDimension=s.dimension().equals(snapshot.dimension());
+        for(var link:s.links()){var cached=sameDimension?meshes.get(link):null;next.put(link,cached==null?new CableMesh(link.points()):cached);}
+        meshes=next;snapshot=s;
+    }
     static int linksReceived(){return snapshot.links().size();}
     static int renderedSegments;
-    @SubscribeEvent public static void logout(ClientPlayerNetworkEvent.LoggingOut e){snapshot=new CableNetwork.Snapshot("",List.of());}
+    @SubscribeEvent public static void logout(ClientPlayerNetworkEvent.LoggingOut e){snapshot=new CableNetwork.Snapshot("",List.of());meshes=Map.of();preview=List.of();previewTime=Long.MIN_VALUE;}
     private static long previewTime=Long.MIN_VALUE;private static List<Vec3> preview=List.of();private static boolean previewValid;
     @SubscribeEvent public static void render(RenderLevelStageEvent e){
         if(e.getStage()!=RenderLevelStageEvent.Stage.AFTER_BLOCK_ENTITIES)return;
         var mc=Minecraft.getInstance();if(mc.level==null||mc.player==null)return;
         renderedSegments=0;var stack=e.getPoseStack();Vec3 cam=e.getCamera().getPosition();stack.pushPose();stack.translate(-cam.x,-cam.y,-cam.z);
         var buffers=mc.renderBuffers().bufferSource();var out=buffers.getBuffer(TYPE);
-        if(snapshot.dimension().equals(mc.level.dimension().location().toString()))for(var link:snapshot.links())draw(stack,out,link.points(),false,true,mc);
+        if(snapshot.dimension().equals(mc.level.dimension().location().toString()))for(var mesh:meshes.values())
+            if(mesh.bounds.distanceToSqr(cam)<112*112&&e.getFrustum().isVisible(mesh.bounds))renderedSegments+=mesh.draw(stack,out,mc.level,cam);
         var item=mc.player.getMainHandItem().getItem() instanceof CableItem?mc.player.getMainHandItem():mc.player.getOffhandItem();var tag=item.getTag();
         if(item.getItem() instanceof CableItem&&tag!=null&&tag.contains("Start")&&tag.getString("Dimension").equals(mc.level.dimension().location().toString())&&mc.hitResult instanceof BlockHitResult hit){
             BlockPos a=BlockPos.of(tag.getLong("Start")),b=CableWorld.endpoint(mc.level,hit.getBlockPos());
             if(b!=null&&mc.level.hasChunkAt(a)&&CableWorld.endpoint(mc.level,a)!=null&&!a.equals(b)){
                 if(mc.level.getGameTime()!=previewTime&&mc.level.getGameTime()%3==0){
-                    previewTime=mc.level.getGameTime();Vec3 from=CableWorld.anchor(mc.level,a),to=CableWorld.anchor(mc.level,b);var terrain=CableWorld.terrain(mc.level,a,b);
+                    previewTime=mc.level.getGameTime();Vec3 from=CableWorld.anchor(mc.level,a),to=CableWorld.anchor(mc.level,b);
                     preview=CableWorld.plan(mc.level,a,b,tag.getBoolean("Floor"));previewValid=!preview.isEmpty();if(!previewValid)preview=List.of(from,to);
                 }draw(stack,out,preview,true,previewValid,mc);
             }
