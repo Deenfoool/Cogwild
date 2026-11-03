@@ -1,0 +1,382 @@
+{
+  "status": "design_spec_not_implemented",
+  "structure": {
+    "size": [
+      3,
+      3,
+      3
+    ],
+    "air": [
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    "parts": [
+      {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          0,
+          0,
+          1
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          0,
+          0,
+          2
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          0,
+          1,
+          0
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          0,
+          1,
+          1
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          0,
+          1,
+          2
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          0,
+          2,
+          0
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          0,
+          2,
+          1
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          0,
+          2,
+          2
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          1,
+          0,
+          0
+        ],
+        "block": "suitcaseglider:coke_oven_output"
+      },
+      {
+        "position": [
+          1,
+          0,
+          1
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          1,
+          0,
+          2
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          1,
+          1,
+          0
+        ],
+        "block": "suitcaseglider:coke_oven_controller"
+      },
+      {
+        "position": [
+          1,
+          1,
+          2
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          1,
+          2,
+          0
+        ],
+        "block": "suitcaseglider:coke_oven_input"
+      },
+      {
+        "position": [
+          1,
+          2,
+          1
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          1,
+          2,
+          2
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          2,
+          0,
+          0
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          2,
+          0,
+          1
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          2,
+          0,
+          2
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          2,
+          1,
+          0
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          2,
+          1,
+          1
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          2,
+          1,
+          2
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          2,
+          2,
+          0
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          2,
+          2,
+          1
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      },
+      {
+        "position": [
+          2,
+          2,
+          2
+        ],
+        "block": "suitcaseglider:refractory_bricks"
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "id": "unfired_refractory_brick",
+      "type": "crafting_shapeless",
+      "inputs": {
+        "minecraft:clay_ball": 4,
+        "#minecraft:sand": 4,
+        "minecraft:gravel": 1
+      },
+      "output": {
+        "item": "suitcaseglider:unfired_refractory_brick",
+        "count": 8
+      }
+    },
+    {
+      "id": "refractory_brick",
+      "type": "smelting",
+      "inputs": {
+        "suitcaseglider:unfired_refractory_brick": 1
+      },
+      "output": {
+        "item": "suitcaseglider:refractory_brick",
+        "count": 1
+      },
+      "duration_ticks": 200,
+      "experience": 0.1
+    },
+    {
+      "id": "refractory_bricks",
+      "type": "crafting_shaped",
+      "inputs": {
+        "suitcaseglider:refractory_brick": 4
+      },
+      "output": {
+        "item": "suitcaseglider:refractory_bricks",
+        "count": 1
+      },
+      "pattern": [
+        "BB",
+        "BB"
+      ],
+      "key": {
+        "B": "suitcaseglider:refractory_brick"
+      }
+    },
+    {
+      "id": "coke_oven_controller",
+      "type": "crafting_shaped",
+      "inputs": {
+        "minecraft:iron_ingot": 4,
+        "suitcaseglider:refractory_bricks": 1,
+        "minecraft:lever": 1
+      },
+      "output": {
+        "item": "suitcaseglider:coke_oven_controller",
+        "count": 1
+      },
+      "pattern": [
+        "I I",
+        " C ",
+        "IPI"
+      ],
+      "key": {
+        "I": "minecraft:iron_ingot",
+        "C": "suitcaseglider:refractory_bricks",
+        "P": "minecraft:lever"
+      }
+    },
+    {
+      "id": "coke_oven_input",
+      "type": "crafting_shaped",
+      "inputs": {
+        "minecraft:iron_ingot": 4,
+        "suitcaseglider:refractory_bricks": 1,
+        "minecraft:chest": 1
+      },
+      "output": {
+        "item": "suitcaseglider:coke_oven_input",
+        "count": 1
+      },
+      "pattern": [
+        "I I",
+        " C ",
+        "IPI"
+      ],
+      "key": {
+        "I": "minecraft:iron_ingot",
+        "C": "suitcaseglider:refractory_bricks",
+        "P": "minecraft:chest"
+      }
+    },
+    {
+      "id": "coke_oven_output",
+      "type": "crafting_shaped",
+      "inputs": {
+        "minecraft:iron_ingot": 4,
+        "suitcaseglider:refractory_bricks": 1,
+        "minecraft:hopper": 1
+      },
+      "output": {
+        "item": "suitcaseglider:coke_oven_output",
+        "count": 1
+      },
+      "pattern": [
+        "I I",
+        " C ",
+        "IPI"
+      ],
+      "key": {
+        "I": "minecraft:iron_ingot",
+        "C": "suitcaseglider:refractory_bricks",
+        "P": "minecraft:hopper"
+      }
+    },
+    {
+      "id": "coking_coal",
+      "type": "coke_oven",
+      "inputs": {
+        "minecraft:coal": 1
+      },
+      "output": {
+        "item": "suitcaseglider:coke",
+        "count": 1
+      },
+      "duration_ticks": 1200,
+      "fe_per_tick": 0
+    },
+    {
+      "id": "coking_coal_block",
+      "type": "coke_oven",
+      "inputs": {
+        "minecraft:coal_block": 1
+      },
+      "output": {
+        "item": "suitcaseglider:coke",
+        "count": 9
+      },
+      "duration_ticks": 10800,
+      "fe_per_tick": 0
+    }
+  ],
+  "coke_burn_ticks": 3200,
+  "cost": {
+    "refractory_casings_including_special_blocks": 26,
+    "refractory_bricks": 104,
+    "minecraft:clay_ball": 52,
+    "#minecraft:sand": 52,
+    "minecraft:gravel": 13,
+    "minecraft:iron_ingot": 17,
+    "minecraft:planks": 16,
+    "minecraft:stick": 1,
+    "minecraft:cobblestone": 1,
+    "smelting_fuel_separate": true
+  },
+  "source": "https://app.notion.com/p/39fb8e499d8b81478778f0770acfc3ae"
+}
