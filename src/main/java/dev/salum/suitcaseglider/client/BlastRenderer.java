@@ -20,7 +20,15 @@ public final class BlastRenderer implements BlockEntityRenderer<BlastBlockEntity
         // The controller sits inside the structure; use exposed light rather than its enclosed voxel.
         int exterior=net.minecraft.client.renderer.LevelRenderer.getLightColor(b.getLevel(),b.getBlockPos().above(5));
         light=net.minecraft.client.renderer.LightTexture.pack(Math.max(net.minecraft.client.renderer.LightTexture.block(light),net.minecraft.client.renderer.LightTexture.block(exterior)),Math.max(net.minecraft.client.renderer.LightTexture.sky(light),net.minecraft.client.renderer.LightTexture.sky(exterior)));
-        MachineRenderer.draw("blast_furnace","assembled_idle",0,false,stack,out,light,overlay);stack.popPose();
+        var rig=MachineRenderer.rig("blast_furnace");double seconds=b.getLevel()==null?0:(b.getLevel().getGameTime()+partial)/20;
+        var pose=rig.pose("processing",b.active()?seconds:0,"processing",0,1);double feeding=b.feedSeconds(partial);
+        var loading=feeding>=0&&feeding<3?rig.pose("loading",feeding,"loading",0,1):null;
+        for(int i=0;i<rig.bones.size();i++){
+            String name=rig.bones.get(i).name();
+            if(name.equals("heat_windows")&&!b.hot())pose.bones[i].scale(.001f);
+            if(loading!=null&&(name.equals("hopper_lid_left")||name.equals("hopper_lid_right")))pose.replaceSubtree(i,loading.bones[i]);
+        }
+        MachineRenderer.drawPose("blast_furnace",pose,b.hot(),stack,out,light,overlay);stack.popPose();
     }
     @Override public boolean shouldRenderOffScreen(BlastBlockEntity b){return true;}
     @Override public int getViewDistance(){return 128;}

@@ -17,11 +17,12 @@ import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.*;
 
 /** Invisible occupied cells of an assembled furnace. No item, inventory, or duplicate loot. */
-public final class BlastPartBlock extends BlastModuleBlock {
+public final class BlastPartBlock extends BlastModuleBlock implements EntityBlock {
     public static final IntegerProperty INDEX=IntegerProperty.create("cell",0,44);
     public BlastPartBlock(){super(moduleProperties().noOcclusion());registerDefaultState(defaultBlockState().setValue(INDEX,1));}
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState>b){super.createBlockStateDefinition(b);b.add(INDEX);}
     @Override public RenderShape getRenderShape(BlockState s){return RenderShape.INVISIBLE;}
+    @Override public net.minecraft.world.level.block.entity.BlockEntity newBlockEntity(BlockPos p,BlockState s){return BlastPortBlockEntity.port(s.getValue(INDEX))?new BlastPortBlockEntity(p,s):null;}
     @Override public int getLightBlock(BlockState s,BlockGetter l,BlockPos p){return 0;}
     @Override public boolean propagatesSkylightDown(BlockState s,BlockGetter l,BlockPos p){return true;}
     @Override public boolean useShapeForLightOcclusion(BlockState s){return true;}

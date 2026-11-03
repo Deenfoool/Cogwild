@@ -2,6 +2,7 @@ package dev.salum.suitcaseglider.cable;
 
 import dev.salum.suitcaseglider.SuitcaseGlider;
 import dev.salum.suitcaseglider.machine.*;
+import dev.salum.suitcaseglider.blast.*;
 import java.util.*;
 import net.minecraft.core.*;
 import net.minecraft.nbt.*;
@@ -27,10 +28,13 @@ public final class CableWorld extends SavedData {
     public static BlockPos endpoint(Level level,BlockPos p){
         var s=level.getBlockState(p);
         if(s.getBlock() instanceof MachineBlock)return MachineBlock.base(p,s);
+        if(s.is(BlastContent.CONTROLLER.get())&&s.getValue(BlastControllerBlock.FORMED))return p.immutable();
+        if(s.is(BlastContent.PART.get())){var owner=BlastPartBlock.owner(s,level,p);if(owner!=null&&owner.formed())return owner.getBlockPos();}
         return s.getBlock() instanceof EnergyNodeBlock?p.immutable():null;
     }
     public static Vec3 anchor(Level level,BlockPos p){
         var s=level.getBlockState(p);
+        if(level.getBlockEntity(p)instanceof BlastBlockEntity b){var d=b.facing().getClockWise();return b.powerSocket().add(d.getStepX()*.23,0,d.getStepZ()*.23);}
         if(s.getBlock() instanceof MachineBlock machine){
             var port=machine.spec().power();double x=port[0],y=port[1],z=port[2];
             double r=Math.toRadians(180-s.getValue(MachineBlock.FACING).toYRot());
@@ -43,6 +47,7 @@ public final class CableWorld extends SavedData {
     public static CableRoutes.Terrain terrain(Level l,BlockPos a,BlockPos b){
         Set<BlockPos> ignore=new HashSet<>(List.of(a,b));
         for(BlockPos p:List.of(a,b)){var s=l.getBlockState(p);if(s.getBlock() instanceof MachineBlock machine)ignore.addAll(machine.cells(MachineBlock.base(p,s),s));}
+        for(BlockPos p:List.of(a,b))if(l.getBlockEntity(p)instanceof BlastBlockEntity furnace)for(int i=0;i<BlastBlueprint.CELLS;i++)ignore.add(BlastBlueprint.at(p,furnace.facing(),i));
         return new CableRoutes.Terrain(){
             public CableRoutes.Surface surface(int x,int z,double nearY){
                 for(int y=(int)Math.floor(nearY);y>=Math.floor(nearY)-8;y--){
@@ -63,6 +68,11 @@ public final class CableWorld extends SavedData {
                     if(!l.hasChunkAt(pos)||!l.isInWorldBounds(pos))return false;
                     if(ignore.contains(pos)){
                         if(l.getBlockState(pos).getBlock() instanceof MachineBlock)continue;
+                        if(l.getBlockState(pos).is(BlastContent.PART.get())||l.getBlockState(pos).is(BlastContent.CONTROLLER.get())){
+                            // Only the short socket stub may enter the multiblock. Floor routes must go around its base.
+                            Vec3 sa=socket(l,a),sb=socket(l,b);
+                            if(point.distanceToSqr(sa)<.35*.35||point.distanceToSqr(sb)<.35*.35)continue;
+                        }
                         var block=l.getBlockState(pos).getBlock();
                         if(block instanceof EnergyNodeBlock node&&!node.generator)continue;
                         if(point.distanceToSqr(anchor(l,a))<.25*.25||point.distanceToSqr(anchor(l,b))<.25*.25)continue;
@@ -81,6 +91,7 @@ public final class CableWorld extends SavedData {
     }
     private static Vec3 socket(Level l,BlockPos p){
         var s=l.getBlockState(p);Vec3 port=anchor(l,p);
+        if(l.getBlockEntity(p)instanceof BlastBlockEntity b)return b.powerSocket();
         if(s.getBlock() instanceof MachineBlock m){Direction back=s.getValue(MachineBlock.FACING).getOpposite();double inset=m.kind.equals("lathe")?.1475:.10375;return port.add(-back.getStepX()*inset,0,-back.getStepZ()*inset);}
         return port;
     }
@@ -117,12 +128,12 @@ public final class CableWorld extends SavedData {
         for(BlockPos root:adjacency.keySet()){
             if(!visited.add(root))continue;var component=new ArrayList<BlockPos>();var queue=new ArrayDeque<BlockPos>();queue.add(root);
             while(!queue.isEmpty()){BlockPos p=queue.remove();component.add(p);for(BlockPos q:adjacency.getOrDefault(p,Set.of()))if(visited.add(q))queue.add(q);}
-            var sources=new ArrayList<EnergyNodeEntity>();var machines=new ArrayList<MachineBlockEntity>();
-            for(BlockPos p:component){BlockEntity be=l.getBlockEntity(p);if(be instanceof EnergyNodeEntity node)sources.add(node);else if(be instanceof MachineBlockEntity machine)machines.add(machine);}
+            var sources=new ArrayList<EnergyNodeEntity>();var machines=new ArrayList<IEnergyStorage>();
+            for(BlockPos p:component){BlockEntity be=l.getBlockEntity(p);if(be instanceof EnergyNodeEntity node)sources.add(node);else if(be!=null)be.getCapability(ForgeCapabilities.ENERGY).ifPresent(cap->{if(cap.canReceive()&&!cap.canExtract())machines.add(cap);});}
             // Rotate the first receiver to prevent a low-power network starving the same machine every tick.
             if(!machines.isEmpty())Collections.rotate(machines,(int)(l.getGameTime()%machines.size()));
             int budget=256;
-            for(var machine:machines)for(var source:sources){int wanted=Math.min(budget,machine.receiveCableEnergy(source.extractEnergy(budget,true),true));if(wanted>0){int moved=source.extractEnergy(wanted,false);machine.receiveCableEnergy(moved,false);budget-=moved;}}
+            for(var machine:machines)for(var source:sources){int wanted=Math.min(budget,machine.receiveEnergy(source.extractEnergy(budget,true),true));if(wanted>0){int moved=source.extractEnergy(wanted,false);machine.receiveEnergy(moved,false);budget-=moved;}}
             // Relays buffer power at the far end for adjacent Forge Energy consumers.
             for(var sink:sources)for(var source:sources)if(source!=sink&&source.stored>sink.stored+1&&budget>0){int n=Math.min(budget,(source.stored-sink.stored)/2);n=sink.receiveEnergy(n,true);sink.receiveEnergy(source.extractEnergy(n,false),false);budget-=n;}
         }

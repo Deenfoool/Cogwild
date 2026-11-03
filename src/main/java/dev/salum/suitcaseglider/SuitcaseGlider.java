@@ -53,7 +53,7 @@ public final class SuitcaseGlider {
         dev.salum.suitcaseglider.advancement.IndustrialProgress.register(bus);
         dev.salum.suitcaseglider.resource.ResourceContent.init();
         dev.salum.suitcaseglider.kiln.KilnContent.register(bus);
-        dev.salum.suitcaseglider.blast.BlastContent.init();
+        dev.salum.suitcaseglider.blast.BlastContent.register(bus);
         ITEMS.register(bus); ENCHANTMENTS.register(bus); TABS.register(bus);
         GliderNetwork.register();
         dev.salum.suitcaseglider.mech.MechNetwork.register();

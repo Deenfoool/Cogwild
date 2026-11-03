@@ -55,8 +55,9 @@ for kind in list(names)[:7]:
     write(A/'models/block'/f'{kind}.json',{'parent':'minecraft:block/cube_all','textures':{'all':f'suitcaseglider:block/{kind}'}})
     variants={f'facing={f}'+(',formed=false'if kind=='blast_controller'else''):{'model':f'suitcaseglider:block/{kind}','y':a}for f,a in [('north',0),('east',90),('south',180),('west',270)]}
     if kind=='blast_controller':
+        variants={k+',lit='+lit:v for k,v in variants.items() for lit in ['false','true']}
         write(A/'models/block/blast_invisible.json',{'parent':'minecraft:block/block','textures':{'particle':'suitcaseglider:block/blast_shaft'}})
-        variants.update({f'facing={f},formed=true':{'model':'suitcaseglider:block/blast_invisible'}for f in ['north','east','south','west']})
+        variants.update({f'facing={f},formed=true,lit={lit}':{'model':'suitcaseglider:block/blast_invisible'}for f in ['north','east','south','west']for lit in ['false','true']})
     write(A/'blockstates'/f'{kind}.json',{'variants':variants})
     write(A/'models/item'/f'{kind}.json',{'parent':f'suitcaseglider:block/{kind}'})
     write(D/'loot_tables/blocks'/f'{kind}.json',{'type':'minecraft:block','pools':[{'rolls':1,'conditions':[{'condition':'minecraft:survives_explosion'}],'entries':[{'type':'minecraft:item','name':f'suitcaseglider:{kind}'}]}]})
@@ -92,7 +93,7 @@ shaped('blast_controller',['ICI','RLR','III'],{'I':'minecraft:iron_ingot','C':'c
 extra={
 'message.suitcaseglider.blast.need_key':('Use the Guild Assembly Key on the front-left controller.','Используйте монтажный ключ на переднем левом контроллере.'),
 'message.suitcaseglider.blast.formed':('Blast furnace assembled.','Доменная печь сформирована.'),
-'message.suitcaseglider.blast.assembled':('Construction complete. Metallurgy is not available yet. Sneak + assembly key to dismantle.','Конструкция собрана. Выплавка пока не реализована. Shift + монтажный ключ — разобрать.'),
+'message.suitcaseglider.blast.assembled':('Right-click to open; sneak + assembly key to dismantle.','ПКМ — открыть; Shift + монтажный ключ — разобрать.'),
 'message.suitcaseglider.blast.unloaded':('Load the entire construction before assembly.','Перед сборкой загрузите всю конструкцию.'),
 'message.suitcaseglider.blast.mismatch':('At %s, %s, %s: expected %s (empty containers only).','В точке %s, %s, %s ожидается %s. Контейнеры должны быть пустыми.')}
 for p in (A/'lang').glob('*.json'):

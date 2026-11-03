@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "suitcaseglider:block/pig_iron_block"
+  }
+}

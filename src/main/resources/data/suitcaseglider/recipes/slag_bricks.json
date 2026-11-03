@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "suitcaseglider:blast_slag"
+    },
+    {
+      "item": "suitcaseglider:blast_slag"
+    },
+    {
+      "item": "suitcaseglider:blast_slag"
+    },
+    {
+      "item": "suitcaseglider:blast_slag"
+    }
+  ],
+  "result": {
+    "item": "suitcaseglider:slag_bricks",
+    "count": 4
+  }
+}

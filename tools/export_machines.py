@@ -37,7 +37,7 @@ def convert(kind,filename,names,clips,rig_only=False):
         if length<1e-10:return
         parent=b;emissive=m['textures'][int(texture)].get('render_mode')=='emissive'
         while parent>=0:
-            emissive|=bones[parent]['name'].startswith('lamp_');parent=bones[parent]['parent']
+            emissive|=bones[parent]['name'].startswith('lamp_') or (kind=='blast_furnace' and bones[parent]['name']=='heat_windows');parent=bones[parent]['parent']
         faces.append(dict(bone=b,v=vs,uv=uv,n=[x/length for x in n],emissive=emissive,texture=int(texture)))
 
     def element(e,b):

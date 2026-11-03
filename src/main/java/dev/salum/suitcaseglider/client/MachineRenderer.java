@@ -39,8 +39,11 @@ public final class MachineRenderer implements BlockEntityRenderer<MachineBlockEn
         stack.popPose();
     }
     public static void draw(String kind,String clip,double time,boolean powered,PoseStack stack,MultiBufferSource buffers,int light,int overlay){
+        var rig=rig(kind);drawPose(kind,rig.pose(clip,time,clip,0,1),powered,stack,buffers,light,overlay);
+    }
+    public static void drawPose(String kind,MechRig.Pose pose,boolean powered,PoseStack stack,MultiBufferSource buffers,int light,int overlay){
         var rig=rig(kind);var images=IMAGES.computeIfAbsent(kind,k->rig.textures.stream().map(t->new ResourceLocation(t.resource())).toArray(ResourceLocation[]::new));
-        var pose=rig.pose(clip,time,clip,0,1);Matrix4f[] matrices=new Matrix4f[pose.bones.length];Matrix3f[] normals=new Matrix3f[matrices.length];
+        Matrix4f[] matrices=new Matrix4f[pose.bones.length];Matrix3f[] normals=new Matrix3f[matrices.length];
         for(int i=0;i<matrices.length;i++){matrices[i]=new Matrix4f(stack.last().pose()).mul(pose.bones[i]);if(Math.abs(matrices[i].determinant())>1e-8)normals[i]=new Matrix3f(matrices[i]).invert().transpose();}
         for(var face:rig.faces){if(normals[face.bone()]==null)continue;var texture=rig.textures.get(face.texture());ResourceLocation resource=images[face.texture()];
             VertexConsumer out=buffers.getBuffer(texture.translucent()?RenderType.entityTranslucent(resource):RenderType.entityCutoutNoCull(resource));

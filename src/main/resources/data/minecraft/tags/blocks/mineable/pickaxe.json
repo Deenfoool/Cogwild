@@ -13,6 +13,9 @@
     "suitcaseglider:blast_blower",
     "suitcaseglider:blast_hopper",
     "suitcaseglider:blast_controller",
-    "suitcaseglider:blast_formed_part"
+    "suitcaseglider:blast_formed_part",
+    "suitcaseglider:limestone",
+    "suitcaseglider:slag_bricks",
+    "suitcaseglider:pig_iron_block"
   ]
 }

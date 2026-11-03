@@ -1,0 +1,26 @@
+{
+  "type": "suitcaseglider:blast_smelting",
+  "ore": [
+    {
+      "tag": "forge:ores/iron"
+    },
+    {
+      "tag": "forge:raw_materials/iron"
+    }
+  ],
+  "coke": {
+    "item": "suitcaseglider:coke"
+  },
+  "flux": {
+    "item": "suitcaseglider:limestone_flux"
+  },
+  "result": {
+    "item": "suitcaseglider:pig_iron_ingot"
+  },
+  "slag": {
+    "item": "suitcaseglider:blast_slag"
+  },
+  "duration": 1200,
+  "temperature": 1200,
+  "energy": 32
+}

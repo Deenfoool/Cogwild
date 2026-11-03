@@ -1,0 +1,44 @@
+{
+  "boundsUnits": {
+    "min": [
+      0.07,
+      0.0,
+      0.07
+    ],
+    "max": [
+      47.93,
+      72.0,
+      47.93
+    ]
+  },
+  "faces": 3412,
+  "bones": 17,
+  "sourceElements": 154,
+  "anchors": [
+    "feed",
+    "power",
+    "slag_out",
+    "blower",
+    "controller"
+  ],
+  "clips": [
+    "assembled_idle",
+    "processing",
+    "loading"
+  ],
+  "uvsValid": true,
+  "textureBytesMatch": true,
+  "version": "0.10.0",
+  "productionImplemented": true,
+  "nativeAuthorModelUnchanged": true,
+  "nativeModelSHA256": "a22fc66b85007b9538cb91cc5f1b7dc37ce00e36b31549a4bb6c36807c6c684e",
+  "junitTests": 32,
+  "serverChecks": {
+    "blast-runtime": 133,
+    "blast-persistence": 4,
+    "blast-smoke": 795,
+    "cable-smoke": 26,
+    "creosote-smoke": 40
+  },
+  "client": "BLAST_CLIENT_OK: synchronized automatic GUI, hot furnace, actual power cable; screenshots reviewed"
+}

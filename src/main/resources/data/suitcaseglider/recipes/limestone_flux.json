@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "suitcaseglider:limestone"
+    }
+  ],
+  "result": {
+    "item": "suitcaseglider:limestone_flux",
+    "count": 4
+  }
+}

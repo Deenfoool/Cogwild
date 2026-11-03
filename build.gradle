@@ -313,3 +313,11 @@ if(project.hasProperty('blastQa')) {
     minecraft.runs.client.workingDirectory project.file('run-machine-client')
     minecraft.runs.client.args '--username','BlastChecks','--width','1280','--height','800'
 }
+if(project.hasProperty('blastRuntime')) {
+    minecraft.runs.server.property 'cogwild.blastRuntime','true'
+    minecraft.runs.server.workingDirectory project.file('run-resource-smoke')
+}
+if(project.hasProperty('blastPersistence')) {
+    minecraft.runs.server.property 'cogwild.blastPersistence','true'
+    minecraft.runs.server.workingDirectory project.file('run-resource-smoke')
+}
