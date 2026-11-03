@@ -6,6 +6,9 @@
     },
     {
       "tag": "forge:raw_materials/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "coke": {
@@ -15,7 +18,7 @@
     "item": "suitcaseglider:limestone_flux"
   },
   "result": {
-    "item": "suitcaseglider:pig_iron_ingot"
+    "item": "suitcaseglider:steel_ingot"
   },
   "slag": {
     "item": "suitcaseglider:blast_slag"

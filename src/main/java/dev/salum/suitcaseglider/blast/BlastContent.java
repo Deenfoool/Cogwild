@@ -26,6 +26,8 @@ public final class BlastContent {
     public static final RegistryObject<Block> LIMESTONE=block("limestone",()->new Block(Block.Properties.of().strength(1.5f,6).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> SLAG_BRICKS=block("slag_bricks",()->new Block(Block.Properties.of().strength(3,6).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> PIG_IRON_BLOCK=block("pig_iron_block",()->new Block(Block.Properties.of().strength(5,6).sound(SoundType.METAL).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Item> STEEL=item("steel_ingot");
+    public static final RegistryObject<Block> STEEL_BLOCK=block("steel_block",()->new Block(Block.Properties.of().strength(5,6).sound(SoundType.METAL).requiresCorrectToolForDrops()));
     public static final RegistryObject<BlockEntityType<BlastPortBlockEntity>> PORT_TYPE=MachineContent.ENTITIES.register("blast_port",()->BlockEntityType.Builder.of(BlastPortBlockEntity::new,PART.get()).build(null));
     private static final DeferredRegister<MenuType<?>> MENUS=DeferredRegister.create(ForgeRegistries.MENU_TYPES,SuitcaseGlider.ID);
     private static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS=DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS,SuitcaseGlider.ID);
@@ -37,5 +39,5 @@ public final class BlastContent {
     private static RegistryObject<Block> module(String id){return block(id,BlastModuleBlock::new);}
     private static RegistryObject<Block> block(String id,java.util.function.Supplier<Block> supplier){var r=MachineContent.BLOCKS.register(id,supplier);BLOCKS.put(id,r);ITEMS.add(SuitcaseGlider.ITEMS.register(id,()->new BlockItem(r.get(),new Item.Properties())));return r;}
     public static void init(){}
-    public static void register(IEventBus bus){MENUS.register(bus);SERIALIZERS.register(bus);TYPES.register(bus);}
+    public static void register(IEventBus bus){ITEMS.removeIf(r->r.getId().getPath().startsWith("pig_iron"));MENUS.register(bus);SERIALIZERS.register(bus);TYPES.register(bus);}
 }

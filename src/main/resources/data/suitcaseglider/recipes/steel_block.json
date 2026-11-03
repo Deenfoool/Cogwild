@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "suitcaseglider:steel_ingot"
+    }
+  },
+  "result": {
+    "item": "suitcaseglider:steel_block"
+  }
+}

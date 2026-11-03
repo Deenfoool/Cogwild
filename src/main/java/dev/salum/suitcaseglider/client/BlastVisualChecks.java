@@ -55,6 +55,7 @@ public final class BlastVisualChecks {
                     // Load a hot saved fixture; real warmup is covered by dedicated-server tests.
                     var fixture=b.saveWithoutMetadata();fixture.putInt("Temperature",1200);b.load(fixture);b.receiveEnergy(32,false);b.tick();
                     fixture=b.saveWithoutMetadata();fixture.putInt("Progress",210);b.load(fixture);b.receiveEnergy(32,false);b.tick();
+                    b.inventory.setStackInSlot(3,new ItemStack(BlastContent.STEEL.get()));b.inventory.setStackInSlot(4,new ItemStack(BlastContent.SLAG.get()));
                     var gen=new BlockPos(12,80,2);l.setBlockAndUpdate(gen,dev.salum.suitcaseglider.cable.CableContent.GENERATOR.get().defaultBlockState().setValue(dev.salum.suitcaseglider.cable.EnergyNodeBlock.FACING,Direction.WEST));
                     var source=(dev.salum.suitcaseglider.cable.EnergyNodeEntity)l.getBlockEntity(gen);source.stored=32000;source.fuelTicks=32000;
                     var cables=dev.salum.suitcaseglider.cable.CableWorld.get(l);for(var link:java.util.List.copyOf(cables.links))if(link.a().equals(gen)||link.b().equals(gen)||link.a().equals(b.getBlockPos())||link.b().equals(b.getBlockPos()))cables.remove(l,link,false);

@@ -158,8 +158,11 @@ public final class BlastBlockEntity extends BlockEntity implements MenuProvider,
         var list=t.getList("Construction",10);for(int i=0;i<originals.length;i++)originals[i]=i<list.size()?NbtUtils.readBlockState(net.minecraft.core.registries.BuiltInRegistries.BLOCK.asLookup(),list.getCompound(i)):null;
         loadInventory=true;try{var inv=t.getCompound("Inventory").copy();inv.putInt("Size",5);inventory.deserializeNBT(inv);}finally{loadInventory=false;}
         var charge=t.getList("Charge",10);for(int i=0;i<3;i++)reserved[i]=i<charge.size()?ItemStack.of(charge.getCompound(i)):ItemStack.EMPTY;
-        pendingIron=ItemStack.of(t.getCompound("PendingIron"));pendingSlag=ItemStack.of(t.getCompound("PendingSlag"));allLoaded=false;
+        pendingIron=upgradeMetal(ItemStack.of(t.getCompound("PendingIron")));pendingSlag=ItemStack.of(t.getCompound("PendingSlag"));allLoaded=false;
+        inventory.setStackInSlot(3,upgradeMetal(inventory.getStackInSlot(3)));
     }
+    /** Upgrade 0.10.0 work in progress and stored output without restarting or duplicating a charge. */
+    private static ItemStack upgradeMetal(ItemStack s){if(!s.is(BlastContent.PIG_IRON.get()))return s;var steel=new ItemStack(BlastContent.STEEL.get(),s.getCount());if(s.hasTag())steel.setTag(s.getTag().copy());return steel;}
     @Override public CompoundTag getUpdateTag(){var t=new CompoundTag();t.putBoolean("VisualOnly",true);writeVisual(t);return t;}
     @Override public ClientboundBlockEntityDataPacket getUpdatePacket(){return ClientboundBlockEntityDataPacket.create(this);}
     @Override public AABB getRenderBoundingBox(){var other=BlastBlueprint.at(worldPosition,facing(),44);return new AABB(worldPosition,other.offset(1,1,1)).inflate(3);}

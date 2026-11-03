@@ -1,0 +1,11 @@
+{
+  "version": "0.10.1",
+  "output": "steel + slag",
+  "acceptsIronIngots": true,
+  "runtimeChecks": 137,
+  "junitTests": 32,
+  "client": "BLAST_CLIENT_OK, steel and slag shown in output slots",
+  "legacyPendingAndStoredOutputMigrationTested": true,
+  "nativeAuthorModelUnchanged": true,
+  "nativeModelSHA256": "a22fc66b85007b9538cb91cc5f1b7dc37ce00e36b31549a4bb6c36807c6c684e"
+}

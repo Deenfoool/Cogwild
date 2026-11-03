@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "suitcaseglider:pig_iron_block"
+      "item": "suitcaseglider:steel_block"
     }
   ],
   "result": {
-    "item": "suitcaseglider:pig_iron_ingot",
+    "item": "suitcaseglider:steel_ingot",
     "count": 9
   }
 }

@@ -45,7 +45,7 @@ public final class BlastRuntimeDevelopment {
             Files.write(Path.of("blast-persistence-report.txt"),report);SuitcaseGlider.LOG.info("BLAST_PERSISTENCE_OK {} checks",report.size());stop=server;countdown=5;return;
         }
         check(l.getRecipeManager().getAllRecipesFor(BlastContent.RECIPE_TYPE.get()).size()==1,"blast recipe data loaded");
-        for(var iron:new Item[]{Items.IRON_ORE,Items.DEEPSLATE_IRON_ORE,Items.RAW_IRON}){
+        for(var iron:new Item[]{Items.IRON_ORE,Items.DEEPSLATE_IRON_ORE,Items.RAW_IRON,Items.IRON_INGOT}){
             var test=new SimpleContainer(new ItemStack(iron),new ItemStack(ResourceContent.COKE.get()),new ItemStack(BlastContent.FLUX.get()));check(l.getRecipeManager().getRecipeFor(BlastContent.RECIPE_TYPE.get(),test,l).isPresent(),"iron-bearing ingredient accepted "+iron);
         }
         for(var f:Direction.Plane.HORIZONTAL){
@@ -54,16 +54,16 @@ public final class BlastRuntimeDevelopment {
             var feedAt=BlastBlueprint.at(at,f,40);var feed=l.getBlockEntity(feedAt).getCapability(ForgeCapabilities.ITEM_HANDLER,Direction.UP).orElseThrow(()->new IllegalStateException("Missing feed port"));
             check(feed.getSlots()==3&&feed.extractItem(0,1,false).isEmpty()&&!feed.insertItem(0,new ItemStack(Items.DIRT),false).isEmpty(),"feed direction and filter enforced "+f);
             var outputAt=BlastBlueprint.at(at,f,1);var out=l.getBlockEntity(outputAt).getCapability(ForgeCapabilities.ITEM_HANDLER,Direction.DOWN).orElseThrow(()->new IllegalStateException("Missing output port"));
-            check(out.getSlots()==2&&!out.insertItem(0,new ItemStack(BlastContent.PIG_IRON.get()),false).isEmpty(),"output rejects incoming items "+f);
+            check(out.getSlots()==2&&!out.insertItem(0,new ItemStack(BlastContent.STEEL.get()),false).isEmpty(),"output rejects incoming items "+f);
             var blowerAt=BlastBlueprint.at(at,f,5);check(l.getBlockEntity(blowerAt).getCapability(ForgeCapabilities.ENERGY,f.getClockWise()).isPresent()&&!l.getBlockEntity(blowerAt).getCapability(ForgeCapabilities.ENERGY,f.getOpposite()).isPresent(),"blower exposes power on socket side "+f);
             poweredTick(b);check(b.hasJob()&&b.temperature()==22&&b.data.get(0)==0&&b.inventory.getStackInSlot(0).getCount()==1,"cold charge heats before smelting and reserves exactly once "+f);
             for(int i=0;i<589;i++)poweredTick(b);check(b.temperature()==1200&&b.data.get(0)==0,"cold warmup takes 590 powered ticks "+f);
             for(int i=0;i<51;i++)poweredTick(b);int progress=b.data.get(0),energy=b.energy();b.tick();check(b.state()==BlastBlockEntity.NO_POWER&&b.data.get(0)==progress&&b.energy()==energy,"power loss freezes progress "+f);
-            b.inventory.setStackInSlot(3,new ItemStack(BlastContent.PIG_IRON.get(),64));b.receiveEnergy(1000,false);energy=b.energy();b.tick();check(b.state()==BlastBlockEntity.BLOCKED&&b.data.get(0)==progress&&b.energy()==energy,"blocked iron output spends no power or charge "+f);
+            b.inventory.setStackInSlot(3,new ItemStack(BlastContent.STEEL.get(),64));b.receiveEnergy(1000,false);energy=b.energy();b.tick();check(b.state()==BlastBlockEntity.BLOCKED&&b.data.get(0)==progress&&b.energy()==energy,"blocked iron output spends no power or charge "+f);
             b.inventory.setStackInSlot(3,ItemStack.EMPTY);b.inventory.setStackInSlot(4,new ItemStack(BlastContent.SLAG.get(),64));b.tick();check(b.state()==BlastBlockEntity.BLOCKED&&b.data.get(0)==progress,"slag capacity also gates processing "+f);b.inventory.setStackInSlot(4,ItemStack.EMPTY);
             int savedTemperature=b.temperature();var copy=new BlastBlockEntity(at,b.getBlockState());copy.load(b.saveWithoutMetadata());l.setBlockEntity(copy);b=copy;check(b.hasJob()&&b.data.get(0)==progress&&b.temperature()==savedTemperature,"NBT keeps active charge and heat "+f);
             b.restore(null);check(!b.formed()&&b.hasJob()&&b.receiveEnergy(32,false)==0,"dismantle retains pending charge and disables energy "+f);check(b.form(p),"charged controller reforms "+f);finish(b);
-            check(b.inventory.getStackInSlot(3).getCount()==1&&b.inventory.getStackInSlot(4).getCount()==1&&b.inventory.getStackInSlot(0).getCount()==1,"one charge creates one iron and slag "+f);
+            check(b.inventory.getStackInSlot(3).is(BlastContent.STEEL.get())&&b.inventory.getStackInSlot(3).getCount()==1&&b.inventory.getStackInSlot(4).getCount()==1&&b.inventory.getStackInSlot(0).getCount()==1,"one charge creates one steel and slag "+f);
             check(out.extractItem(0,64,false).getCount()==1&&out.extractItem(1,64,false).getCount()==1,"old port capability resolves the current owner after re-form "+f);
             var menu=new BlastMenu(20,p.getInventory(),b);p.getInventory().clearContent();p.getInventory().setItem(9,new ItemStack(Items.RAW_IRON,5));menu.quickMoveStack(p,5);check(b.inventory.getStackInSlot(0).getCount()==6&&p.getInventory().getItem(9).isEmpty(),"shift transfer conserves input "+f);
             check(!menu.slots.get(3).mayPlace(new ItemStack(Items.RAW_IRON)),"menu result slot rejects items "+f);
@@ -86,8 +86,13 @@ public final class BlastRuntimeDevelopment {
             // Start a fresh pending job, then break the controller: originals and all charge return once.
             for(int i=0;i<5;i++)b.inventory.setStackInSlot(i,ItemStack.EMPTY);charge(b,5);poweredTick(b);clear(l,at);l.destroyBlock(at,true);
             check(count(l,at,Items.RAW_IRON)==5&&count(l,at,ResourceContent.COKE.get())==5&&count(l,at,BlastContent.FLUX.get())==5,"controller mining refunds stored and pending charge once "+f);
-            check(count(l,at,BlastContent.PIG_IRON.get())==0&&count(l,at,BlastContent.SLAG.get())==0,"mining pending job grants no premature output "+f);b.dropContents();check(count(l,at,Items.RAW_IRON)==5,"repeated cleanup cannot duplicate charge "+f);
+            check(count(l,at,BlastContent.STEEL.get())==0&&count(l,at,BlastContent.SLAG.get())==0,"mining pending job grants no premature output "+f);b.dropContents();check(count(l,at,Items.RAW_IRON)==5,"repeated cleanup cannot duplicate charge "+f);
         }
+        var legacyAt=new BlockPos(96,80,160);var legacy=BlastDevelopment.build(l,legacyAt,Direction.NORTH);legacy.form(p);charge(legacy,2);poweredTick(legacy);
+        var saved=legacy.saveWithoutMetadata();saved.put("PendingIron",new ItemStack(BlastContent.PIG_IRON.get()).save(new net.minecraft.nbt.CompoundTag()));
+        legacy.inventory.setStackInSlot(3,new ItemStack(BlastContent.PIG_IRON.get(),3));saved.put("Inventory",legacy.inventory.serializeNBT());legacy.load(saved);
+        check(legacy.inventory.getStackInSlot(3).is(BlastContent.STEEL.get())&&legacy.inventory.getStackInSlot(3).getCount()==3,"legacy stored output upgrades one for one");
+        finish(legacy);check(legacy.inventory.getStackInSlot(3).is(BlastContent.STEEL.get())&&legacy.inventory.getStackInSlot(3).getCount()==4,"legacy active charge finishes as steel without duplication");
         var fixture=BlastDevelopment.build(l,new BlockPos(80,80,160),Direction.NORTH);fixture.form(p);charge(fixture,5);while(fixture.data.get(0)<137)poweredTick(fixture);check(fixture.temperature()==1200&&fixture.hasJob(),"real-restart fixture prepared");
         Files.write(Path.of("blast-runtime-report.txt"),report);SuitcaseGlider.LOG.info("BLAST_RUNTIME_OK {} checks",report.size());stop=server;countdown=5;
     }

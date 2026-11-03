@@ -31,7 +31,8 @@ public final class BlastDevelopment {
     public static BlastBlockEntity build(ServerLevel l,BlockPos root,Direction front){
         var old=l.getBlockEntity(root);if(old instanceof BlastBlockEntity b)b.restore(null);
         for(int i=0;i<BlastBlueprint.CELLS;i++)l.setBlock(BlastBlueprint.at(root,front,i),BlastBlueprint.expected(i,front),3);
-        return (BlastBlockEntity)l.getBlockEntity(root);
+        // Test fixtures must start clean even when reusing a previously saved controller.
+        var fresh=new BlastBlockEntity(root,l.getBlockState(root));l.setBlockEntity(fresh);return fresh;
     }
     private static int dropped(ServerLevel l,BlockPos root){return l.getEntitiesOfClass(ItemEntity.class,new AABB(root).inflate(8)).stream().mapToInt(e->e.getItem().getCount()).sum();}
     private static void clearDrops(ServerLevel l,BlockPos root){for(var e:l.getEntitiesOfClass(ItemEntity.class,new AABB(root).inflate(8)))e.discard();}

@@ -159,10 +159,10 @@
   "message.suitcaseglider.blast.mismatch": "В точке %s, %s, %s ожидается %s. Контейнеры должны быть пустыми.",
   "block.suitcaseglider.limestone": "Известняк",
   "item.suitcaseglider.limestone_flux": "Известняковый флюс",
-  "item.suitcaseglider.pig_iron_ingot": "Чугунный слиток",
+  "item.suitcaseglider.pig_iron_ingot": "Чугунный слиток (старая версия)",
   "item.suitcaseglider.blast_slag": "Доменный шлак",
   "block.suitcaseglider.slag_bricks": "Шлаковый кирпич",
-  "block.suitcaseglider.pig_iron_block": "Чугунный блок",
+  "block.suitcaseglider.pig_iron_block": "Чугунный блок (старая версия)",
   "container.suitcaseglider.blast_furnace": "Доменная печь",
   "gui.suitcaseglider.blast.temperature": "Температура: %s / %s °C",
   "gui.suitcaseglider.blast.energy": "Энергия: %s / %s FE; нагнетатель: %s FE/т",
@@ -173,9 +173,11 @@
   "gui.suitcaseglider.blast.state.4": "Нет питания",
   "gui.suitcaseglider.blast.state.5": "Выход заполнен",
   "gui.suitcaseglider.blast.state.6": "Часть конструкции не загружена",
-  "gui.suitcaseglider.blast.slot.ore": "Железная руда или сырое железо",
+  "gui.suitcaseglider.blast.slot.ore": "Железный слиток, руда или сырое железо",
   "gui.suitcaseglider.blast.slot.coke": "Кокс",
   "gui.suitcaseglider.blast.slot.flux": "Известняковый флюс",
-  "gui.suitcaseglider.blast.slot.iron": "Выход чугуна",
-  "gui.suitcaseglider.blast.slot.slag": "Выход шлака"
+  "gui.suitcaseglider.blast.slot.iron": "Выход стали",
+  "gui.suitcaseglider.blast.slot.slag": "Выход шлака",
+  "item.suitcaseglider.steel_ingot": "Стальной слиток",
+  "block.suitcaseglider.steel_block": "Стальной блок"
 }

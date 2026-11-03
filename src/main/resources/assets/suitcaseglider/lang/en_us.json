@@ -159,10 +159,10 @@
   "message.suitcaseglider.blast.mismatch": "At %s, %s, %s: expected %s (empty containers only).",
   "block.suitcaseglider.limestone": "Limestone",
   "item.suitcaseglider.limestone_flux": "Limestone Flux",
-  "item.suitcaseglider.pig_iron_ingot": "Pig Iron Ingot",
+  "item.suitcaseglider.pig_iron_ingot": "Legacy Pig Iron Ingot",
   "item.suitcaseglider.blast_slag": "Blast Furnace Slag",
   "block.suitcaseglider.slag_bricks": "Slag Bricks",
-  "block.suitcaseglider.pig_iron_block": "Block of Pig Iron",
+  "block.suitcaseglider.pig_iron_block": "Legacy Block of Pig Iron",
   "container.suitcaseglider.blast_furnace": "Blast Furnace",
   "gui.suitcaseglider.blast.temperature": "Temperature: %s / %s °C",
   "gui.suitcaseglider.blast.energy": "Energy: %s / %s FE; blower: %s FE/t",
@@ -173,9 +173,11 @@
   "gui.suitcaseglider.blast.state.4": "No power",
   "gui.suitcaseglider.blast.state.5": "Output full",
   "gui.suitcaseglider.blast.state.6": "Chunks unloaded",
-  "gui.suitcaseglider.blast.slot.ore": "Iron ore or raw iron",
+  "gui.suitcaseglider.blast.slot.ore": "Iron ingot, iron ore or raw iron",
   "gui.suitcaseglider.blast.slot.coke": "Coke",
   "gui.suitcaseglider.blast.slot.flux": "Limestone flux",
-  "gui.suitcaseglider.blast.slot.iron": "Pig iron output",
-  "gui.suitcaseglider.blast.slot.slag": "Slag output"
+  "gui.suitcaseglider.blast.slot.iron": "Steel output",
+  "gui.suitcaseglider.blast.slot.slag": "Slag output",
+  "item.suitcaseglider.steel_ingot": "Steel Ingot",
+  "block.suitcaseglider.steel_block": "Block of Steel"
 }
