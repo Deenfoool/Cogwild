@@ -20,14 +20,9 @@ for kind,base in [('limestone',(185,180,153)),('slag_bricks',(77,77,70)),('pig_i
     write(A/'models/item'/f'{kind}.json',{'parent':f'suitcaseglider:block/{kind}'})
     write(A/'blockstates'/f'{kind}.json',{'variants':{'':{'model':f'suitcaseglider:block/{kind}'}}})
     write(D/'suitcaseglider/loot_tables/blocks'/f'{kind}.json',{'type':'minecraft:block','pools':[{'rolls':1,'conditions':[{'condition':'minecraft:survives_explosion'}],'entries':[{'type':'minecraft:item','name':f'suitcaseglider:{kind}'}]}]})
+from item_icons import export_icons
+export_icons(['limestone_flux','pig_iron_ingot','steel_ingot','blast_slag'])
 for kind in ['limestone_flux','pig_iron_ingot','steel_ingot','blast_slag']:
-    im=Image.new('RGBA',(32,32));d=ImageDraw.Draw(im)
-    if kind in ['pig_iron_ingot','steel_ingot']:
-        d.polygon([(3,18),(11,9),(26,10),(30,18),(23,24),(5,24)],fill='#4f5961',outline='#28323a');d.polygon([(4,17),(12,10),(25,11),(28,17),(20,21)],fill='#b9c8d1' if kind=='steel_ingot' else '#a2a6a3');d.line((6,23,23,23),fill='#727c80')
-    else:
-        base='#c5bfa1'if kind=='limestone_flux'else'#4b4d44';light='#e2dcc0'if kind=='limestone_flux'else'#81816b'
-        for x,y,r in [(8,21,5),(16,17,7),(24,22,5),(13,25,6)]:d.polygon([(x-r,y+2),(x-1,y-r),(x+r,y),(x+r-1,y+4),(x-3,y+5)],fill=base,outline='#494b42');d.line((x-r+1,y+1,x-1,y-r+1,x+r-1,y),fill=light,width=2)
-    p=A/'textures/item'/f'{kind}.png';p.parent.mkdir(parents=True,exist_ok=True);im.save(p)
     write(A/'models/item'/f'{kind}.json',{'parent':'minecraft:item/generated','textures':{'layer0':f'suitcaseglider:item/{kind}'}})
 def shapeless(name,ingredients,result,count=1):write(D/'suitcaseglider/recipes'/f'{name}.json',{'type':'minecraft:crafting_shapeless','ingredients':[{'item':i if ':' in i else 'suitcaseglider:'+i}for i in ingredients],'result':{'item':'suitcaseglider:'+result,'count':count}})
 shapeless('limestone',['minecraft:calcite'],'limestone')

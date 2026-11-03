@@ -37,6 +37,12 @@ public final class BlastVisualChecks {
                 BlastDevelopment.build(l,new BlockPos(0,80,0),Direction.NORTH);
                 var b=BlastDevelopment.build(l,new BlockPos(6,80,0),Direction.NORTH);if(!b.form(p))throw new IllegalStateException("Furnace QA formation failed");
                 p.teleportTo(l,11,82,-11,27,6);p.setNoGravity(true);
+                if(Boolean.getBoolean("cogwild.itemIconsQa")){
+                    p.getInventory().clearContent();
+                    var art=java.util.List.of(BlastContent.STEEL.get(),dev.salum.suitcaseglider.resource.ResourceContent.REFRACTORY_BRICK.get(),dev.salum.suitcaseglider.resource.ResourceContent.UNFIRED_BRICK.get(),dev.salum.suitcaseglider.resource.ResourceContent.COKE.get(),BlastContent.FLUX.get(),BlastContent.SLAG.get(),BlastContent.WIRE.get(),BlastContent.COIL.get(),BlastContent.MAGNET.get(),BlastContent.HOUSING.get(),BlastContent.MOTOR.get(),dev.salum.suitcaseglider.kiln.KilnContent.KEY.get(),dev.salum.suitcaseglider.cable.CableContent.CABLE.get(),dev.salum.suitcaseglider.kiln.KilnFluids.BUCKET.get(),SuitcaseGlider.GLIDER.get(),net.minecraft.world.item.Items.IRON_INGOT,net.minecraft.world.item.Items.BRICK,net.minecraft.world.item.Items.COAL,net.minecraft.world.item.Items.GUNPOWDER,net.minecraft.world.item.Items.WATER_BUCKET);
+                    for(int i=0;i<art.size();i++)p.getInventory().setItem(9+i,new ItemStack(art.get(i)));
+                    var dyed=new ItemStack(SuitcaseGlider.GLIDER.get());((net.minecraft.world.item.DyeableLeatherItem)dyed.getItem()).setColor(dyed,0x3bb5c4);p.getInventory().setItem(29,dyed);p.inventoryMenu.broadcastChanges();
+                }
             }catch(Exception ex){failure=ex.toString();}
         });}
         if(ticks==140){
@@ -71,6 +77,7 @@ public final class BlastVisualChecks {
             if(!(mc.screen instanceof BlastScreen)||!(mc.player.containerMenu instanceof BlastMenu m)||m.furnace.data.get(3)<1200||m.furnace.data.get(0)<=0)throw new IllegalStateException("Blast menu or live data sync failed");
             if(mc.screen.children().stream().anyMatch(w->w instanceof net.minecraft.client.gui.components.Button))throw new IllegalStateException("Unexpected manual start button");
             Screenshot.grab(mc.gameDirectory,"blast-furnace-gui.png",mc.getMainRenderTarget(),c->{});
+            if(Boolean.getBoolean("cogwild.itemIconsQa"))Screenshot.grab(mc.gameDirectory,"item-icons-inventory.png",mc.getMainRenderTarget(),c->{});
             try{Files.writeString(mc.gameDirectory.toPath().resolve("blast-client-report.txt"),"BLAST_CLIENT_OK\nAll "+BlastContent.ITEMS.size()+" component/material item models loaded; live heat, progress and energy synchronized; processing animation and compact automatic GUI captured.\n");}catch(Exception ex){throw new RuntimeException(ex);}
             done=true;SuitcaseGlider.LOG.info("BLAST_CLIENT_OK");mc.level.disconnect();mc.clearLevel(new TitleScreen());mc.stop();
         }

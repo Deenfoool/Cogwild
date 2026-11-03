@@ -1,0 +1,150 @@
+{
+  "version": "0.10.2",
+  "reference": "Minecraft Java 1.20.1 vanilla item sprites",
+  "grid": [
+    16,
+    16
+  ],
+  "binaryAlpha": true,
+  "client": "BLAST_CLIENT_OK; actual inventory reviewed with vanilla comparison items and both glider colours",
+  "recipesAndNativeModelsUnchanged": true,
+  "textures": {
+    "blast_slag.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 7,
+      "sha256": "acece87e18cb759c43c389f3b659c05b7c6927f1f847389a92149532c59372b4"
+    },
+    "coke.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 8,
+      "sha256": "bb19af546f59d439af52330c428d8ab8d4541dd2c0c03f972f50ae5ba83932ef"
+    },
+    "copper_coil.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 9,
+      "sha256": "3362d1bdc1e2b25c12ad182f661e25fc2664456a05bdcb2de74cb4ba06e2990c"
+    },
+    "copper_wire.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 4,
+      "sha256": "fe7ad8a49b2ce3ab24b437610e7878ce209e6e1a97487f23f32e5dd3130269ac"
+    },
+    "creosote_bucket.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 14,
+      "sha256": "b6d5d2660cbc71c9c2cb1b26a41c8bbcf36fd19932663bde134162c9dd6aa580"
+    },
+    "electric_motor.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 11,
+      "sha256": "9256e29c6e990650593e163c7710de0d34d019c32be377bce5ed4fc6c2deb425"
+    },
+    "glider_fabric.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 6,
+      "sha256": "39cc3762c9f5999aba321bf3e7e607834d36050de5a7b767dbfe69565f1738ec"
+    },
+    "glider_frame.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 13,
+      "sha256": "83560bde7e9c16082e06773ff1beca48b43d9772379002aa23ff445abf9bbf52"
+    },
+    "guild_assembly_key.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 8,
+      "sha256": "544e17528459727769d08a127a2d4ba0092a8055f04bf96a15b8a85f56b55774"
+    },
+    "limestone_flux.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 7,
+      "sha256": "585f7f8a475d9e8f6b947d087affa72627cd9a2341534cb08ebb2f6b4a163962"
+    },
+    "magnet.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 11,
+      "sha256": "43f46cc669f9a81b14d60cb3cff432f0e20aad345f46afb281412770b0ef8050"
+    },
+    "motor_housing.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 6,
+      "sha256": "787f4b6384e786ba78837cced3f13995e11d368e131d28471e6a61a65c586c1c"
+    },
+    "pig_iron_ingot.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 7,
+      "sha256": "59ed6095f08d7e7b7f45bdc7b6c0339fe7f01067832bbf71c818de37625627d0"
+    },
+    "power_cable.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 6,
+      "sha256": "c5c5de735ae5543cf92fe435984f8f18645cb863d315d4227744bb28a3c2fb65"
+    },
+    "refractory_brick.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 7,
+      "sha256": "bd1714f223836a845c141ff6313f27fc40de9aa10ec68d81690f46b4a21682d6"
+    },
+    "steel_ingot.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 7,
+      "sha256": "8ea8647063fca77f5dd28cb4481a9ece9fe674925be9b4ee53f6204e62d56a2a"
+    },
+    "unfired_refractory_brick.png": {
+      "size": [
+        16,
+        16
+      ],
+      "colors": 7,
+      "sha256": "a9f91dbbe5202b3e881334fd38a9b72ec3a8582f747e86600ec2b53b1302a1d8"
+    }
+  },
+  "junitTests": 32
+}

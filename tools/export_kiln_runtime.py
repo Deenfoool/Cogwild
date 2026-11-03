@@ -5,14 +5,8 @@ from PIL import Image,ImageDraw
 ROOT=Path(__file__).resolve().parents[1]
 RES=ROOT/'src/main/resources';ASSETS=RES/'assets/suitcaseglider'
 def write(p,j):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(j,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-im=Image.new('RGBA',(32,32));d=ImageDraw.Draw(im)
-d.polygon([(3,3),(8,1),(13,3),(12,7),(9,5),(7,7),(9,10),(13,9),(16,5),(19,8),(18,14),(14,17),(12,17),(7,29),(3,30),(1,26),(9,14),(5,12),(2,8)],fill='#26313a')
-d.polygon([(4,3),(8,2),(11,3),(10,5),(7,4),(5,7),(9,12),(14,11),(17,7),(18,9),(17,13),(13,16),(10,15),(4,27),(2,26),(10,13),(6,11),(3,7)],fill='#a2adb0')
-d.line([(4,4),(4,7),(7,11)],fill='#d9dcce',width=1)
-d.polygon([(9,15),(12,17),(7,27),(3,26)],fill='#6e5140')
-for y in [19,22,25]:d.line([(6-(y-19)//3,y),(9-(y-19)//3,y+1)],fill='#aa8660')
-d.rectangle((10,10,13,12),fill='#bc923e');d.line((10,10,13,10),fill='#edd184')
-im.save(ASSETS/'textures/item/guild_assembly_key.png')
+from item_icons import export_icons
+export_icons(['guild_assembly_key'])
 write(ASSETS/'models/item/guild_assembly_key.json',{'parent':'minecraft:item/handheld','textures':{'layer0':'suitcaseglider:item/guild_assembly_key'}})
 write(RES/'data/suitcaseglider/recipes/guild_assembly_key.json',{'type':'minecraft:crafting_shaped','pattern':[' II','CCI',' L '],'key':{'I':{'item':'minecraft:iron_ingot'},'C':{'item':'minecraft:copper_ingot'},'L':{'item':'minecraft:leather'}},'result':{'item':'suitcaseglider:guild_assembly_key'}})
 write(RES/'data/suitcaseglider/advancements/recipes/guild_assembly_key.json',{'parent':'minecraft:recipes/root','criteria':{'iron':{'trigger':'minecraft:inventory_changed','conditions':{'items':[{'items':['minecraft:iron_ingot']} ]}}},'rewards':{'recipes':['suitcaseglider:guild_assembly_key']}})

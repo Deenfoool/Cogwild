@@ -321,3 +321,9 @@ if(project.hasProperty('blastPersistence')) {
     minecraft.runs.server.property 'cogwild.blastPersistence','true'
     minecraft.runs.server.workingDirectory project.file('run-resource-smoke')
 }
+if(project.hasProperty('itemIconsQa')) {
+    minecraft.runs.client.property 'cogwild.blastQa','true'
+    minecraft.runs.client.property 'cogwild.itemIconsQa','true'
+    minecraft.runs.client.workingDirectory project.file('run-machine-client')
+    minecraft.runs.client.args '--username','ItemArtChecks','--width','1280','--height','800'
+}

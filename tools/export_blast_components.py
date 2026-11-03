@@ -62,21 +62,11 @@ for kind in list(names)[:7]:
     write(A/'models/item'/f'{kind}.json',{'parent':f'suitcaseglider:block/{kind}'})
     write(D/'loot_tables/blocks'/f'{kind}.json',{'type':'minecraft:block','pools':[{'rolls':1,'conditions':[{'condition':'minecraft:survives_explosion'}],'entries':[{'type':'minecraft:item','name':f'suitcaseglider:{kind}'}]}]})
 write(A/'blockstates/blast_formed_part.json',{'variants':{'':{'model':'suitcaseglider:block/blast_invisible'}}})
+from item_icons import export_icons
+export_icons(list(names)[7:])
 for kind in list(names)[7:]:
-    im=Image.new('RGBA',(32,32));d=ImageDraw.Draw(im)
-    if kind=='copper_wire':
-        d.arc((3,3,27,27),20,330,fill='#ba7944',width=4);d.arc((7,7,23,23),10,320,fill='#df995a',width=3)
-    elif kind=='copper_coil':
-        d.rectangle((9,3,22,28),fill='#626c72');
-        for y in range(7,26,4):d.rectangle((4,y,27,y+2),fill='#c5844a');d.line((5,y,25,y),fill='#e6a767')
-    elif kind=='magnet':
-        d.arc((5,2,26,28),0,180,fill='#949ca0',width=6);d.rectangle((5,4,10,16),fill='#a94131');d.rectangle((21,4,26,16),fill='#496e96')
-    else:
-        d.polygon([(3,9),(10,4),(26,7),(29,23),(21,28),(4,24)],fill='#535f66',outline='#a3a9a7')
-        for x in range(7,24,4):d.line((x,10,x+1,23),fill='#89969d',width=2)
-        if kind=='electric_motor':d.rectangle((26,13,31,18),fill='#b3a16c');d.rectangle((10,2,20,7),fill='#46535d')
-    p=A/'textures/item'/f'{kind}.png';p.parent.mkdir(parents=True,exist_ok=True);im.save(p)
     write(A/'models/item'/f'{kind}.json',{'parent':'minecraft:item/generated','textures':{'layer0':f'suitcaseglider:item/{kind}'}})
+
 def shaped(id,pattern,key,count=1):write(D/'recipes'/f'{id}.json',{'type':'minecraft:crafting_shaped','pattern':pattern,'key':{k:item(v)for k,v in key.items()},'result':{'item':'suitcaseglider:'+id,'count':count}})
 shaped('copper_wire',['CCC'],{'C':'minecraft:copper_ingot'},6)
 shaped('copper_coil',['WWW','WIW','WWW'],{'W':'copper_wire','I':'minecraft:iron_ingot'})
