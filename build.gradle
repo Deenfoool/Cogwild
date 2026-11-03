@@ -287,3 +287,13 @@ if(project.hasProperty('kilnQa')) {
     minecraft.runs.client.workingDirectory project.file('run-machine-client')
     minecraft.runs.client.args '--username','KilnChecks','--width','1280','--height','800'
 }
+
+if(project.hasProperty('kilnSmoke')) {
+    minecraft.runs.server.property 'cogwild.kilnSmoke','true'
+    minecraft.runs.server.workingDirectory project.file('run-resource-smoke')
+}
+
+if(project.hasProperty('kilnPersistence')) {
+    minecraft.runs.server.property 'cogwild.kilnPersistence','true'
+    minecraft.runs.server.workingDirectory project.file('run-resource-smoke')
+}

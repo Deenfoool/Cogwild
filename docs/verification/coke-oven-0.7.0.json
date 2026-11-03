@@ -1,0 +1,14 @@
+{
+  "version": "0.7.0",
+  "minecraft": "1.20.1",
+  "forge": "47.4.28",
+  "unit_tests": 32,
+  "unit_failures": 0,
+  "server_checks": 143,
+  "restart_checks": 5,
+  "client": "KILN_CLIENT_OK\nReal oven formed; menu opened with held key; start/stop packets and progress/status synchronization verified.",
+  "formation_tool": "suitcaseglider:guild_assembly_key",
+  "redstone_control": false,
+  "door_animation_implemented": false,
+  "sha256": "6ad475104d77f771bb00977f19b6983fef6613c8ae9b6402a03130fc91b1c3f5"
+}

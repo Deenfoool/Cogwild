@@ -1,0 +1,1536 @@
+{
+  "parent": "minecraft:block/block",
+  "ambientocclusion": true,
+  "textures": {
+    "particle": "suitcaseglider:block/refractory_bricks",
+    "brick": "suitcaseglider:block/refractory_bricks",
+    "steel": "suitcaseglider:block/kiln_steel",
+    "edge": "suitcaseglider:block/kiln_edge",
+    "dark": "suitcaseglider:block/kiln_dark",
+    "brass": "suitcaseglider:block/kiln_brass",
+    "red": "suitcaseglider:block/kiln_red",
+    "dial": "suitcaseglider:block/kiln_temperature_dial",
+    "markings": "suitcaseglider:block/kiln_markings",
+    "heat": "suitcaseglider:block/kiln_heat"
+  },
+  "elements": [
+    {
+      "name": "Brick body",
+      "from": [
+        0,
+        0,
+        2
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            14,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "west": {
+          "uv": [
+            2,
+            0,
+            16,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "up": {
+          "uv": [
+            0,
+            2,
+            16,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            14
+          ],
+          "texture": "#brick"
+        }
+      }
+    },
+    {
+      "name": "Continuous brick surround",
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        2,
+        16,
+        2
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            14,
+            0,
+            16,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            2,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "east": {
+          "uv": [
+            14,
+            0,
+            16,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "texture": "#brick"
+        },
+        "down": {
+          "uv": [
+            0,
+            14,
+            2,
+            16
+          ],
+          "texture": "#brick"
+        }
+      }
+    },
+    {
+      "name": "Continuous brick surround",
+      "from": [
+        14,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        2
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            2,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "south": {
+          "uv": [
+            14,
+            0,
+            16,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "east": {
+          "uv": [
+            14,
+            0,
+            16,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "up": {
+          "uv": [
+            14,
+            0,
+            16,
+            2
+          ],
+          "texture": "#brick"
+        },
+        "down": {
+          "uv": [
+            14,
+            14,
+            16,
+            16
+          ],
+          "texture": "#brick"
+        }
+      }
+    },
+    {
+      "name": "Continuous brick surround",
+      "from": [
+        2,
+        0,
+        0
+      ],
+      "to": [
+        14,
+        2,
+        2
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            14,
+            14,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "south": {
+          "uv": [
+            2,
+            14,
+            14,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "east": {
+          "uv": [
+            14,
+            14,
+            16,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "west": {
+          "uv": [
+            0,
+            14,
+            2,
+            16
+          ],
+          "texture": "#brick"
+        },
+        "up": {
+          "uv": [
+            2,
+            0,
+            14,
+            2
+          ],
+          "texture": "#brick"
+        },
+        "down": {
+          "uv": [
+            2,
+            14,
+            14,
+            16
+          ],
+          "texture": "#brick"
+        }
+      }
+    },
+    {
+      "name": "Continuous brick surround",
+      "from": [
+        2,
+        14,
+        0
+      ],
+      "to": [
+        14,
+        16,
+        2
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            0,
+            14,
+            2
+          ],
+          "texture": "#brick"
+        },
+        "south": {
+          "uv": [
+            2,
+            0,
+            14,
+            2
+          ],
+          "texture": "#brick"
+        },
+        "east": {
+          "uv": [
+            14,
+            0,
+            16,
+            2
+          ],
+          "texture": "#brick"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "texture": "#brick"
+        },
+        "up": {
+          "uv": [
+            2,
+            0,
+            14,
+            2
+          ],
+          "texture": "#brick"
+        },
+        "down": {
+          "uv": [
+            2,
+            14,
+            14,
+            16
+          ],
+          "texture": "#brick"
+        }
+      }
+    },
+    {
+      "name": "Recessed steel cover",
+      "from": [
+        2,
+        2,
+        0.5
+      ],
+      "to": [
+        14,
+        14,
+        2
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#steel"
+        },
+        "south": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#steel"
+        },
+        "east": {
+          "uv": [
+            14,
+            2,
+            15.5,
+            14
+          ],
+          "texture": "#steel"
+        },
+        "west": {
+          "uv": [
+            0.5,
+            2,
+            2,
+            14
+          ],
+          "texture": "#steel"
+        },
+        "up": {
+          "uv": [
+            2,
+            0.5,
+            14,
+            2
+          ],
+          "texture": "#steel"
+        },
+        "down": {
+          "uv": [
+            2,
+            14,
+            14,
+            15.5
+          ],
+          "texture": "#steel"
+        }
+      }
+    },
+    {
+      "name": "Cast steel frame",
+      "from": [
+        1.4,
+        1.4,
+        0.25
+      ],
+      "to": [
+        2.2,
+        14.6,
+        1.9
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            13.8,
+            1.4000000000000004,
+            14.6,
+            14.6
+          ],
+          "texture": "#edge"
+        },
+        "south": {
+          "uv": [
+            1.4,
+            1.4000000000000004,
+            2.2,
+            14.6
+          ],
+          "texture": "#edge"
+        },
+        "east": {
+          "uv": [
+            14.1,
+            1.4000000000000004,
+            15.75,
+            14.6
+          ],
+          "texture": "#edge"
+        },
+        "west": {
+          "uv": [
+            0.25,
+            1.4000000000000004,
+            1.9,
+            14.6
+          ],
+          "texture": "#edge"
+        },
+        "up": {
+          "uv": [
+            1.4,
+            0.25,
+            2.2,
+            1.9
+          ],
+          "texture": "#edge"
+        },
+        "down": {
+          "uv": [
+            1.4,
+            14.1,
+            2.2,
+            15.75
+          ],
+          "texture": "#edge"
+        }
+      }
+    },
+    {
+      "name": "Cast steel frame",
+      "from": [
+        13.8,
+        1.4,
+        0.25
+      ],
+      "to": [
+        14.6,
+        14.6,
+        1.9
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1.4000000000000004,
+            1.4000000000000004,
+            2.1999999999999993,
+            14.6
+          ],
+          "texture": "#edge"
+        },
+        "south": {
+          "uv": [
+            13.8,
+            1.4000000000000004,
+            14.6,
+            14.6
+          ],
+          "texture": "#edge"
+        },
+        "east": {
+          "uv": [
+            14.1,
+            1.4000000000000004,
+            15.75,
+            14.6
+          ],
+          "texture": "#edge"
+        },
+        "west": {
+          "uv": [
+            0.25,
+            1.4000000000000004,
+            1.9,
+            14.6
+          ],
+          "texture": "#edge"
+        },
+        "up": {
+          "uv": [
+            13.8,
+            0.25,
+            14.6,
+            1.9
+          ],
+          "texture": "#edge"
+        },
+        "down": {
+          "uv": [
+            13.8,
+            14.1,
+            14.6,
+            15.75
+          ],
+          "texture": "#edge"
+        }
+      }
+    },
+    {
+      "name": "Cast steel frame",
+      "from": [
+        2.2,
+        1.4,
+        0.25
+      ],
+      "to": [
+        13.8,
+        2.2,
+        1.9
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2.1999999999999993,
+            13.8,
+            13.8,
+            14.6
+          ],
+          "texture": "#edge"
+        },
+        "south": {
+          "uv": [
+            2.2,
+            13.8,
+            13.8,
+            14.6
+          ],
+          "texture": "#edge"
+        },
+        "east": {
+          "uv": [
+            14.1,
+            13.8,
+            15.75,
+            14.6
+          ],
+          "texture": "#edge"
+        },
+        "west": {
+          "uv": [
+            0.25,
+            13.8,
+            1.9,
+            14.6
+          ],
+          "texture": "#edge"
+        },
+        "up": {
+          "uv": [
+            2.2,
+            0.25,
+            13.8,
+            1.9
+          ],
+          "texture": "#edge"
+        },
+        "down": {
+          "uv": [
+            2.2,
+            14.1,
+            13.8,
+            15.75
+          ],
+          "texture": "#edge"
+        }
+      }
+    },
+    {
+      "name": "Cast steel frame",
+      "from": [
+        2.2,
+        13.8,
+        0.25
+      ],
+      "to": [
+        13.8,
+        14.6,
+        1.9
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2.1999999999999993,
+            1.4000000000000004,
+            13.8,
+            2.1999999999999993
+          ],
+          "texture": "#edge"
+        },
+        "south": {
+          "uv": [
+            2.2,
+            1.4000000000000004,
+            13.8,
+            2.1999999999999993
+          ],
+          "texture": "#edge"
+        },
+        "east": {
+          "uv": [
+            14.1,
+            1.4000000000000004,
+            15.75,
+            2.1999999999999993
+          ],
+          "texture": "#edge"
+        },
+        "west": {
+          "uv": [
+            0.25,
+            1.4000000000000004,
+            1.9,
+            2.1999999999999993
+          ],
+          "texture": "#edge"
+        },
+        "up": {
+          "uv": [
+            2.2,
+            0.25,
+            13.8,
+            1.9
+          ],
+          "texture": "#edge"
+        },
+        "down": {
+          "uv": [
+            2.2,
+            14.1,
+            13.8,
+            15.75
+          ],
+          "texture": "#edge"
+        }
+      }
+    },
+    {
+      "name": "Frame captive bolt",
+      "from": [
+        1.48,
+        1.48,
+        0.1
+      ],
+      "to": [
+        1.92,
+        1.92,
+        0.25
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            14.08,
+            14.08,
+            14.52,
+            14.52
+          ],
+          "texture": "#dark"
+        },
+        "south": {
+          "uv": [
+            1.48,
+            14.08,
+            1.92,
+            14.52
+          ],
+          "texture": "#dark"
+        },
+        "east": {
+          "uv": [
+            15.75,
+            14.08,
+            15.9,
+            14.52
+          ],
+          "texture": "#dark"
+        },
+        "west": {
+          "uv": [
+            0.1,
+            14.08,
+            0.25,
+            14.52
+          ],
+          "texture": "#dark"
+        },
+        "up": {
+          "uv": [
+            1.48,
+            0.1,
+            1.92,
+            0.25
+          ],
+          "texture": "#dark"
+        },
+        "down": {
+          "uv": [
+            1.48,
+            15.75,
+            1.92,
+            15.9
+          ],
+          "texture": "#dark"
+        }
+      }
+    },
+    {
+      "name": "Frame captive bolt",
+      "from": [
+        1.48,
+        13.879999999999999,
+        0.1
+      ],
+      "to": [
+        1.92,
+        14.32,
+        0.25
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            14.08,
+            1.6799999999999997,
+            14.52,
+            2.120000000000001
+          ],
+          "texture": "#dark"
+        },
+        "south": {
+          "uv": [
+            1.48,
+            1.6799999999999997,
+            1.92,
+            2.120000000000001
+          ],
+          "texture": "#dark"
+        },
+        "east": {
+          "uv": [
+            15.75,
+            1.6799999999999997,
+            15.9,
+            2.120000000000001
+          ],
+          "texture": "#dark"
+        },
+        "west": {
+          "uv": [
+            0.1,
+            1.6799999999999997,
+            0.25,
+            2.120000000000001
+          ],
+          "texture": "#dark"
+        },
+        "up": {
+          "uv": [
+            1.48,
+            0.1,
+            1.92,
+            0.25
+          ],
+          "texture": "#dark"
+        },
+        "down": {
+          "uv": [
+            1.48,
+            15.75,
+            1.92,
+            15.9
+          ],
+          "texture": "#dark"
+        }
+      }
+    },
+    {
+      "name": "Frame captive bolt",
+      "from": [
+        13.879999999999999,
+        1.48,
+        0.1
+      ],
+      "to": [
+        14.32,
+        1.92,
+        0.25
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1.6799999999999997,
+            14.08,
+            2.120000000000001,
+            14.52
+          ],
+          "texture": "#dark"
+        },
+        "south": {
+          "uv": [
+            13.879999999999999,
+            14.08,
+            14.32,
+            14.52
+          ],
+          "texture": "#dark"
+        },
+        "east": {
+          "uv": [
+            15.75,
+            14.08,
+            15.9,
+            14.52
+          ],
+          "texture": "#dark"
+        },
+        "west": {
+          "uv": [
+            0.1,
+            14.08,
+            0.25,
+            14.52
+          ],
+          "texture": "#dark"
+        },
+        "up": {
+          "uv": [
+            13.879999999999999,
+            0.1,
+            14.32,
+            0.25
+          ],
+          "texture": "#dark"
+        },
+        "down": {
+          "uv": [
+            13.879999999999999,
+            15.75,
+            14.32,
+            15.9
+          ],
+          "texture": "#dark"
+        }
+      }
+    },
+    {
+      "name": "Frame captive bolt",
+      "from": [
+        13.879999999999999,
+        13.879999999999999,
+        0.1
+      ],
+      "to": [
+        14.32,
+        14.32,
+        0.25
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1.6799999999999997,
+            1.6799999999999997,
+            2.120000000000001,
+            2.120000000000001
+          ],
+          "texture": "#dark"
+        },
+        "south": {
+          "uv": [
+            13.879999999999999,
+            1.6799999999999997,
+            14.32,
+            2.120000000000001
+          ],
+          "texture": "#dark"
+        },
+        "east": {
+          "uv": [
+            15.75,
+            1.6799999999999997,
+            15.9,
+            2.120000000000001
+          ],
+          "texture": "#dark"
+        },
+        "west": {
+          "uv": [
+            0.1,
+            1.6799999999999997,
+            0.25,
+            2.120000000000001
+          ],
+          "texture": "#dark"
+        },
+        "up": {
+          "uv": [
+            13.879999999999999,
+            0.1,
+            14.32,
+            0.25
+          ],
+          "texture": "#dark"
+        },
+        "down": {
+          "uv": [
+            13.879999999999999,
+            15.75,
+            14.32,
+            15.9
+          ],
+          "texture": "#dark"
+        }
+      }
+    },
+    {
+      "name": "Inset instrument mount",
+      "from": [
+        8.3,
+        8.1,
+        0.26
+      ],
+      "to": [
+        12.9,
+        12.7,
+        0.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3.0999999999999996,
+            3.3000000000000007,
+            7.699999999999999,
+            7.9
+          ],
+          "texture": "#edge"
+        },
+        "south": {
+          "uv": [
+            8.3,
+            3.3000000000000007,
+            12.9,
+            7.9
+          ],
+          "texture": "#edge"
+        },
+        "east": {
+          "uv": [
+            15.5,
+            3.3000000000000007,
+            15.74,
+            7.9
+          ],
+          "texture": "#edge"
+        },
+        "west": {
+          "uv": [
+            0.26,
+            3.3000000000000007,
+            0.5,
+            7.9
+          ],
+          "texture": "#edge"
+        },
+        "up": {
+          "uv": [
+            8.3,
+            0.26,
+            12.9,
+            0.5
+          ],
+          "texture": "#edge"
+        },
+        "down": {
+          "uv": [
+            8.3,
+            15.5,
+            12.9,
+            15.74
+          ],
+          "texture": "#edge"
+        }
+      }
+    },
+    {
+      "name": "Round temperature dial",
+      "from": [
+        8.5,
+        8.3,
+        0.2
+      ],
+      "to": [
+        12.7,
+        12.5,
+        0.26
+      ],
+      "faces": {
+        "north": {
+          "texture": "#dial",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "uv": [
+            8.5,
+            3.5,
+            12.7,
+            7.699999999999999
+          ],
+          "texture": "#steel"
+        },
+        "east": {
+          "uv": [
+            15.74,
+            3.5,
+            15.8,
+            7.699999999999999
+          ],
+          "texture": "#steel"
+        },
+        "west": {
+          "uv": [
+            0.2,
+            3.5,
+            0.26,
+            7.699999999999999
+          ],
+          "texture": "#steel"
+        },
+        "up": {
+          "uv": [
+            8.5,
+            0.2,
+            12.7,
+            0.26
+          ],
+          "texture": "#steel"
+        },
+        "down": {
+          "uv": [
+            8.5,
+            15.74,
+            12.7,
+            15.8
+          ],
+          "texture": "#steel"
+        }
+      }
+    },
+    {
+      "name": "Operating lever base",
+      "from": [
+        3.1,
+        6.0,
+        0.27
+      ],
+      "to": [
+        6,
+        9,
+        0.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10,
+            7,
+            12.9,
+            10.0
+          ],
+          "texture": "#dark"
+        },
+        "south": {
+          "uv": [
+            3.1,
+            7,
+            6,
+            10.0
+          ],
+          "texture": "#dark"
+        },
+        "east": {
+          "uv": [
+            15.5,
+            7,
+            15.73,
+            10.0
+          ],
+          "texture": "#dark"
+        },
+        "west": {
+          "uv": [
+            0.27,
+            7,
+            0.5,
+            10.0
+          ],
+          "texture": "#dark"
+        },
+        "up": {
+          "uv": [
+            3.1,
+            0.27,
+            6,
+            0.5
+          ],
+          "texture": "#dark"
+        },
+        "down": {
+          "uv": [
+            3.1,
+            15.5,
+            6,
+            15.73
+          ],
+          "texture": "#dark"
+        }
+      }
+    },
+    {
+      "name": "Lever pivot",
+      "from": [
+        4,
+        7,
+        0.1
+      ],
+      "to": [
+        5.2,
+        8,
+        0.27
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10.8,
+            8,
+            12,
+            9
+          ],
+          "texture": "#brass"
+        },
+        "south": {
+          "uv": [
+            4,
+            8,
+            5.2,
+            9
+          ],
+          "texture": "#brass"
+        },
+        "east": {
+          "uv": [
+            15.73,
+            8,
+            15.9,
+            9
+          ],
+          "texture": "#brass"
+        },
+        "west": {
+          "uv": [
+            0.1,
+            8,
+            0.27,
+            9
+          ],
+          "texture": "#brass"
+        },
+        "up": {
+          "uv": [
+            4,
+            0.1,
+            5.2,
+            0.27
+          ],
+          "texture": "#brass"
+        },
+        "down": {
+          "uv": [
+            4,
+            15.73,
+            5.2,
+            15.9
+          ],
+          "texture": "#brass"
+        }
+      }
+    },
+    {
+      "name": "Mechanical lever",
+      "from": [
+        4.35,
+        4.6,
+        0.02
+      ],
+      "to": [
+        4.85,
+        7.5,
+        0.1
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            11.15,
+            8.5,
+            11.65,
+            11.4
+          ],
+          "texture": "#edge"
+        },
+        "south": {
+          "uv": [
+            4.35,
+            8.5,
+            4.85,
+            11.4
+          ],
+          "texture": "#edge"
+        },
+        "east": {
+          "uv": [
+            15.9,
+            8.5,
+            15.98,
+            11.4
+          ],
+          "texture": "#edge"
+        },
+        "west": {
+          "uv": [
+            0.02,
+            8.5,
+            0.1,
+            11.4
+          ],
+          "texture": "#edge"
+        },
+        "up": {
+          "uv": [
+            4.35,
+            0.02,
+            4.85,
+            0.1
+          ],
+          "texture": "#edge"
+        },
+        "down": {
+          "uv": [
+            4.35,
+            15.9,
+            4.85,
+            15.98
+          ],
+          "texture": "#edge"
+        }
+      }
+    },
+    {
+      "name": "Red lever grip",
+      "from": [
+        4.0,
+        4.2,
+        0
+      ],
+      "to": [
+        5.2,
+        5.0,
+        0.1
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10.8,
+            11.0,
+            12.0,
+            11.8
+          ],
+          "texture": "#red"
+        },
+        "south": {
+          "uv": [
+            4.0,
+            11.0,
+            5.2,
+            11.8
+          ],
+          "texture": "#red"
+        },
+        "east": {
+          "uv": [
+            15.9,
+            11.0,
+            16,
+            11.8
+          ],
+          "texture": "#red"
+        },
+        "west": {
+          "uv": [
+            0,
+            11.0,
+            0.1,
+            11.8
+          ],
+          "texture": "#red"
+        },
+        "up": {
+          "uv": [
+            4.0,
+            0,
+            5.2,
+            0.1
+          ],
+          "texture": "#red"
+        },
+        "down": {
+          "uv": [
+            4.0,
+            15.9,
+            5.2,
+            16
+          ],
+          "texture": "#red"
+        }
+      }
+    },
+    {
+      "name": "Factory plate",
+      "from": [
+        7,
+        4,
+        0.35
+      ],
+      "to": [
+        12.7,
+        5.7,
+        0.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#markings",
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "uv": [
+            7,
+            10.3,
+            12.7,
+            12
+          ],
+          "texture": "#edge"
+        },
+        "east": {
+          "uv": [
+            15.5,
+            10.3,
+            15.65,
+            12
+          ],
+          "texture": "#edge"
+        },
+        "west": {
+          "uv": [
+            0.35,
+            10.3,
+            0.5,
+            12
+          ],
+          "texture": "#edge"
+        },
+        "up": {
+          "uv": [
+            7,
+            0.35,
+            12.7,
+            0.5
+          ],
+          "texture": "#edge"
+        },
+        "down": {
+          "uv": [
+            7,
+            15.5,
+            12.7,
+            15.65
+          ],
+          "texture": "#edge"
+        }
+      }
+    },
+    {
+      "name": "Controller nameplate",
+      "from": [
+        3,
+        10.4,
+        0.35
+      ],
+      "to": [
+        7.6,
+        12.6,
+        0.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#markings",
+          "uv": [
+            0,
+            0,
+            16,
+            4
+          ]
+        },
+        "south": {
+          "uv": [
+            3,
+            3.4000000000000004,
+            7.6,
+            5.6
+          ],
+          "texture": "#edge"
+        },
+        "east": {
+          "uv": [
+            15.5,
+            3.4000000000000004,
+            15.65,
+            5.6
+          ],
+          "texture": "#edge"
+        },
+        "west": {
+          "uv": [
+            0.35,
+            3.4000000000000004,
+            0.5,
+            5.6
+          ],
+          "texture": "#edge"
+        },
+        "up": {
+          "uv": [
+            3,
+            0.35,
+            7.6,
+            0.5
+          ],
+          "texture": "#edge"
+        },
+        "down": {
+          "uv": [
+            3,
+            15.5,
+            7.6,
+            15.65
+          ],
+          "texture": "#edge"
+        }
+      }
+    }
+  ]
+}

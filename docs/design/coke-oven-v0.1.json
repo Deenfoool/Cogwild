@@ -1,5 +1,5 @@
 {
-  "status": "design_spec_partially_implemented",
+  "status": "core_gameplay_implemented",
   "structure": {
     "size": [
       3,
@@ -380,7 +380,7 @@
   },
   "source": "https://app.notion.com/p/39fb8e499d8b81478778f0770acfc3ae",
   "implementation": {
-    "version": "0.6.3",
+    "version": "0.7.0",
     "items": [
       "unfired_refractory_brick",
       "refractory_brick",
@@ -394,13 +394,17 @@
       "coke_oven_input",
       "coke_oven_output"
     ],
-    "coking_process_implemented": false,
-    "multiblock_implemented": false,
+    "coking_process_implemented": true,
+    "multiblock_implemented": true,
     "blocks": [
       "refractory_bricks",
       "coke_oven_controller",
       "coke_oven_input",
       "coke_oven_output"
-    ]
+    ],
+    "formation_tool": "suitcaseglider:guild_assembly_key",
+    "redstone_control": false,
+    "manual_start_stop": true,
+    "door_animation_implemented": false
   }
 }

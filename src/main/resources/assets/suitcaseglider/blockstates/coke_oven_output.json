@@ -1,19 +1,35 @@
 {
   "variants": {
-    "facing=north": {
+    "facing=north,lit=false": {
       "model": "suitcaseglider:block/coke_oven_output",
       "y": 0
     },
-    "facing=east": {
+    "facing=north,lit=true": {
+      "model": "suitcaseglider:block/coke_oven_output_lit",
+      "y": 0
+    },
+    "facing=east,lit=false": {
       "model": "suitcaseglider:block/coke_oven_output",
       "y": 90
     },
-    "facing=south": {
+    "facing=east,lit=true": {
+      "model": "suitcaseglider:block/coke_oven_output_lit",
+      "y": 90
+    },
+    "facing=south,lit=false": {
       "model": "suitcaseglider:block/coke_oven_output",
       "y": 180
     },
-    "facing=west": {
+    "facing=south,lit=true": {
+      "model": "suitcaseglider:block/coke_oven_output_lit",
+      "y": 180
+    },
+    "facing=west,lit=false": {
       "model": "suitcaseglider:block/coke_oven_output",
+      "y": 270
+    },
+    "facing=west,lit=true": {
+      "model": "suitcaseglider:block/coke_oven_output_lit",
       "y": 270
     }
   }
