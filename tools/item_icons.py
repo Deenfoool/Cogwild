@@ -85,15 +85,8 @@ def motor(complete):
     return im
 
 def key():
-    im,d=canvas()
-    d.polygon([(1,13),(7,7),(8,8),(10,7),(12,8),(5,15),(2,15)],fill=IRON[0])
-    d.line([(3,13),(9,7)],fill=IRON[3],width=2)
-    d.line([(2,13),(5,10)],fill='#9b6235',width=3);d.line([(2,12),(4,10)],fill='#d09b58')
-    d.polygon([(7,3),(10,0),(13,0),(11,3),(11,5),(13,5),(15,3),(15,6),(12,9),(9,9),(6,6)],fill=IRON[0])
-    d.polygon([(8,3),(10,1),(11,1),(9,3),(10,6),(13,6),(14,5),(14,6),(11,8),(9,8),(7,6)],fill=IRON[3])
-    d.line([(8,3),(9,2),(10,1)],fill=IRON[5]);d.line([(7,5),(8,7),(10,8)],fill=IRON[4])
-    d.line((7,8,8,9),fill=COPPER[4])
-    return im
+    # Author-provided wrench: keep its ring, handle and jaw instead of regenerating it.
+    return Image.open(ROOT/'art_source/item_icons/guild_assembly_key.png').convert('RGBA')
 
 def bucket():
     im=vanilla('water_bucket')
@@ -108,17 +101,10 @@ def bucket():
     return im
 
 def suitcase():
-    frame,d=canvas();cloth,c=canvas()
-    d.polygon([(1,6),(4,4),(13,4),(15,6),(15,12),(12,15),(2,15),(0,13),(0,8)],fill='#3c281d')
-    d.rectangle((1,7,12,13),fill='#8b562e');d.line((2,14,11,14),fill='#593822')
-    d.polygon([(13,7),(14,6),(14,11),(13,13)],fill='#5e3c25')
-    d.polygon([(2,6),(5,5),(12,5),(13,6),(12,7),(2,7)],fill='#c28a4b')
-    d.rectangle((5,2,10,4),fill='#332c25');d.line((6,2,9,2),fill=IRON[3]);d.rectangle((6,3,9,4),fill=(0,0,0,0))
-    d.line((1,8,1,12),fill='#b47b41');d.line((12,8,12,12),fill='#613b24')
-    for x in [3,10]:d.rectangle((x,8,x+1,9),fill=IRON[0]);d.point((x,8),fill=IRON[4]);d.point((x+1,9),fill=IRON[2])
-    c.rectangle((2,8,11,12),fill='#c8c8c8');c.line((2,8,11,8),fill='#f0f0f0');c.line((2,9,2,11),fill='#dedede');c.line((3,12,11,12),fill='#949494');c.line((11,9,11,11),fill='#b0b0b0')
-    for x in [3,10]:c.rectangle((x,8,x+1,9),fill=(0,0,0,0))
-    return frame,cloth
+    # Preserve the approved original layers, including their original alpha values.
+    return tuple(Image.open(ROOT/'art_source/item_icons'/(name+'.png')).convert('RGBA')
+                 for name in ('glider_frame', 'glider_fabric'))
+
 
 def icons():
     brick=['#5f442e','#8d6844','#b38e5d','#d0b17b','#e1cb99','#efe0b6']
@@ -140,7 +126,9 @@ def icons():
 def export_icons(names=None):
     all_icons=icons();selected=NAMES if names is None else names;DEST.mkdir(parents=True,exist_ok=True)
     for name in selected:
-        im=all_icons[name];assert im.size==(16,16);assert set(pixels(im.getchannel('A')))<={0,255}
+        im=all_icons[name];original=name in ('glider_frame','glider_fabric')
+        assert im.size==((32,32) if original or name=='guild_assembly_key' else (16,16))
+        if not original:assert set(pixels(im.getchannel('A')))<={0,255}
         im.save(DEST/(name+'.png'))
     return all_icons
 
@@ -149,8 +137,8 @@ def preview(path):
     # Show both the actual default colour and a dyed variant, using the same grayscale layer.
     def dressed(color):
         result=f.copy();tint=cloth.copy()
-        for y in range(16):
-            for x in range(16):
+        for y in range(tint.height):
+            for x in range(tint.width):
                 r,g,b,a=tint.getpixel((x,y));tint.putpixel((x,y),(r*color[0]//255,g*color[1]//255,b*color[2]//255,a))
         result.alpha_composite(tint);return result
     ims['glider']=dressed((220,214,190));ims['glider_dyed']=dressed((59,181,196))
@@ -169,4 +157,4 @@ def preview(path):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--preview');args=p.parse_args();export_icons()
     if args.preview:preview(args.preview)
-    print('Exported 17 native 16x16 item layers (15 visible items + one compatibility item).')
+    print('Exported item layers: 16 px materials, the author-provided 32 px assembly key and original suitcase layers.')
