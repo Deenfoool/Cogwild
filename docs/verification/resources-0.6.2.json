@@ -1,0 +1,18 @@
+{
+  "version": "0.6.2",
+  "unit_tests": 32,
+  "test_failures": 0,
+  "server_checks": 12,
+  "item_icons": {
+    "count": 3,
+    "size": [
+      32,
+      32
+    ],
+    "alpha_and_model_paths_verified": true
+  },
+  "client_gameplay_tested": false,
+  "coke_survival_recipe": false,
+  "coke_burn_ticks": 3200,
+  "sha256": "4656032ea055b65f6055fe1fc8c3c89e4955060bf88fc6a408e8e6c738824954"
+}

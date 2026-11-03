@@ -102,5 +102,11 @@
   "block.suitcaseglider.industrial_press": "Industrial Press",
   "block.suitcaseglider.diesel_generator": "Diesel Generator",
   "block.suitcaseglider.fermenter": "Fermenter",
-  "block.suitcaseglider.universal_mixer": "Universal Mixer"
+  "block.suitcaseglider.universal_mixer": "Universal Mixer",
+  "item.suitcaseglider.unfired_refractory_brick": "Unfired Refractory Brick",
+  "tooltip.suitcaseglider.unfired_refractory_brick": "Fire in a furnace to harden.",
+  "item.suitcaseglider.refractory_brick": "Refractory Brick",
+  "tooltip.suitcaseglider.refractory_brick": "Heat-resistant material for furnace construction.",
+  "item.suitcaseglider.coke": "Coke",
+  "tooltip.suitcaseglider.coke": "Long-burning fuel and a future metallurgy ingredient."
 }

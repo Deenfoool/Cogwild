@@ -33,6 +33,7 @@ public final class SuitcaseGlider {
             .title(Component.translatable("itemGroup.suitcaseglider")).icon(() -> new ItemStack(GLIDER.get()))
             .displayItems((parameters, output) -> {
                 output.accept(GLIDER.get());
+                dev.salum.suitcaseglider.resource.ResourceContent.ALL.forEach(item -> output.accept(item.get()));
                 output.accept(dev.salum.suitcaseglider.mech.MechContent.EGG.get());
                 dev.salum.suitcaseglider.machine.MachineContent.MACHINE_ITEMS.values().forEach(item -> output.accept(item.get()));
                 output.accept(dev.salum.suitcaseglider.cable.CableContent.CABLE.get());
@@ -46,6 +47,7 @@ public final class SuitcaseGlider {
         dev.salum.suitcaseglider.machine.MachineContent.register(bus);
         dev.salum.suitcaseglider.cable.CableContent.init();
         dev.salum.suitcaseglider.advancement.IndustrialProgress.register(bus);
+        dev.salum.suitcaseglider.resource.ResourceContent.init();
         ITEMS.register(bus); ENCHANTMENTS.register(bus); TABS.register(bus);
         GliderNetwork.register();
         dev.salum.suitcaseglider.mech.MechNetwork.register();

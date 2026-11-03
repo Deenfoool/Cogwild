@@ -102,5 +102,11 @@
   "block.suitcaseglider.industrial_press": "Промышленный пресс",
   "block.suitcaseglider.diesel_generator": "Дизельный генератор",
   "block.suitcaseglider.fermenter": "Ферментер",
-  "block.suitcaseglider.universal_mixer": "Универсальный смеситель"
+  "block.suitcaseglider.universal_mixer": "Универсальный смеситель",
+  "item.suitcaseglider.unfired_refractory_brick": "Необожжённый огнеупорный кирпич",
+  "tooltip.suitcaseglider.unfired_refractory_brick": "Обожгите в печи для придания прочности.",
+  "item.suitcaseglider.refractory_brick": "Огнеупорный кирпич",
+  "tooltip.suitcaseglider.refractory_brick": "Жаростойкий материал для строительства печей.",
+  "item.suitcaseglider.coke": "Кокс",
+  "tooltip.suitcaseglider.coke": "Долгогорящее топливо и сырьё для будущей металлургии."
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "suitcaseglider:item/unfired_refractory_brick"
+  }
+}

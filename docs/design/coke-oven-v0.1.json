@@ -1,5 +1,5 @@
 {
-  "status": "design_spec_not_implemented",
+  "status": "design_spec_partially_implemented",
   "structure": {
     "size": [
       3,
@@ -378,5 +378,19 @@
     "minecraft:cobblestone": 1,
     "smelting_fuel_separate": true
   },
-  "source": "https://app.notion.com/p/39fb8e499d8b81478778f0770acfc3ae"
+  "source": "https://app.notion.com/p/39fb8e499d8b81478778f0770acfc3ae",
+  "implementation": {
+    "version": "0.6.2",
+    "items": [
+      "unfired_refractory_brick",
+      "refractory_brick",
+      "coke"
+    ],
+    "recipes": [
+      "unfired_refractory_brick",
+      "refractory_brick"
+    ],
+    "coking_process_implemented": false,
+    "multiblock_implemented": false
+  }
 }
