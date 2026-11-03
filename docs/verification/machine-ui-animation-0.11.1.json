@@ -1,0 +1,15 @@
+{
+  "version": "0.11.1",
+  "tests": 36,
+  "failures": 0,
+  "client_marker": "MACHINE_GUI_CLIENT_OK",
+  "motion_checks": [
+    "crusher: animated, freezes without power and with full output, resumes",
+    "air_separator: animated, freezes without power and with full output, resumes"
+  ],
+  "changed_icon_pixels_between_client_frames": {
+    "crusher": 1206,
+    "air_separator": 1692
+  },
+  "scope": "Only GUI icon animations and their clocks/assets; server processing, recipes, inventories and models unchanged."
+}

@@ -34,3 +34,9 @@ The root entity exposes ITEM_HANDLER: insert inputs, extract outputs; GUI player
 `tools/export_machine_gui.py` deterministically draws native pixel textures; `MachineUiSpec` supplies the matching Java slot positions. Existing machinery models, item icons and previous rendering optimizations are preserved.
 
 `./gradlew build runServer -PmachineGuiSmoke --offline` checks all machine placements plus storage, transfer, protected outputs, energy accounting, pausing, two-output atomicity, NBT, old-save compatibility and secondary break drops. `./gradlew runClient -PmachineGuiQa --offline` opens all ten screens via secondary-segment use in a separate test world, checks layout/data, and captures each screen. Both profiles are opt-in and do not run in a normal game.
+
+## Animated mechanism icons — 0.11.1
+
+Crusher GUI rollers counter-rotate; the air separator fan rotates. Each uses a 24-frame native 32x32 atlas. The screen renders one extra quad, with a reusable tick-based clock and partial-tick interpolation. Atlas geometry is prepared offline by the existing GUI exporter. No model rendering, runtime pixel generation or texture uploads are added.
+
+The clock advances only when the synchronized processing state is RUNNING. Empty input, unsupported recipes, missing FE and blocked outputs freeze the last displayed frame; normal processing resumes the clock. Server processing and recipes are unchanged. The client GUI walkthrough captures two motion phases and explicitly tests no-power freeze, blocked-output freeze and resumed motion for both machines. Unit tests exercise all frames, wrapping, idle and paused clocks.

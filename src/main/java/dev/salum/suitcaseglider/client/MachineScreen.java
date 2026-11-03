@@ -16,12 +16,22 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 @Mod.EventBusSubscriber(modid=SuitcaseGlider.ID,bus=Mod.EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
 public final class MachineScreen extends AbstractContainerScreen<MachineMenu> {
     private final ResourceLocation texture;
-    public MachineScreen(MachineMenu m,Inventory inv,Component title){super(m,inv,title);imageWidth=176;imageHeight=166;inventoryLabelY=73;titleLabelY=6;texture=SuitcaseGlider.id("textures/gui/machines/"+m.machine.kind()+".png");}
+    private final MachineIconAnimation iconClock;
+    private int displayedFrame;
+    private final ResourceLocation motionTexture;
+    @Override protected void containerTick(){super.containerTick();iconClock.tick(menu.machine.processing());}
+    int animationFrame(){return displayedFrame;}
+
+    public MachineScreen(MachineMenu m,Inventory inv,Component title){super(m,inv,title);imageWidth=176;imageHeight=166;inventoryLabelY=73;titleLabelY=6;texture=SuitcaseGlider.id("textures/gui/machines/"+m.machine.kind()+".png");
+        iconClock=new MachineIconAnimation(m.machine.kind().equals("air_separator"));
+        motionTexture=m.machine.kind().equals("crusher")||m.machine.kind().equals("air_separator")?SuitcaseGlider.id("textures/gui/machines/"+m.machine.kind()+"_motion.png"):null;
+    }
     @SubscribeEvent public static void setup(FMLClientSetupEvent event){event.enqueueWork(()->MenuScreens.register(MachineContent.MENU.get(),MachineScreen::new));}
     @Override protected void renderBg(GuiGraphics g,float partial,int mouseX,int mouseY){
         g.blit(texture,leftPos,topPos,0,0,176,166,176,166);
         int energy=menu.machine.data.get(3),h=44*Math.max(0,Math.min(MachineBlockEntity.CAPACITY,energy))/MachineBlockEntity.CAPACITY;
         if(h>0){g.fill(leftPos+11,topPos+68-h,leftPos+18,topPos+68,0xffd89022);for(int y=topPos+68-h;y<topPos+68;y+=4)g.fill(leftPos+11,y,leftPos+18,Math.min(y+1,topPos+68),0xfff5ba39);}
+        if(motionTexture!=null){displayedFrame=iconClock.frame(menu.machine.processing(),partial);g.blit(motionTexture,leftPos+85,topPos+20,0,displayedFrame*32,32,32,32,32*MachineIconAnimation.FRAMES);}
         int state=menu.machine.data.get(2);g.fill(leftPos+158,topPos+7,leftPos+162,topPos+11,state==MachineBlockEntity.RUNNING?0xff7cdb36:state==MachineBlockEntity.BLOCKED||state==MachineBlockEntity.NO_RECIPE?0xffd69731:energy==0?0xff555b50:0xff75a84b);
         if(menu.layout.inputs()>0){int width=29*Math.max(0,menu.machine.data.get(0))/Math.max(1,menu.machine.data.get(1));if(width>0)g.fill(leftPos+86,topPos+54,leftPos+86+Math.min(width,29),topPos+57,0xffffdb48);}
         else{g.drawString(font,Component.translatable("gui.suitcaseglider.machine.buffer"),leftPos+34,topPos+29,0xff444749,false);g.drawString(font,energy+" / "+MachineBlockEntity.CAPACITY+" FE",leftPos+34,topPos+43,0xff444749,false);}

@@ -25,13 +25,8 @@ def generate(kind,inputs,outputs):
         for i in range(inputs):slot(d,44 if inputs==1 else 28+i*18,34)
         for i in range(outputs):slot(d,132,34 if outputs==1 else 24+i*26)
         d.rectangle((85,53,115,58),fill='#4c534e');d.rectangle((86,54,114,57),fill='#87877b');d.polygon([(115,51),(120,56),(115,61)],fill='#4c534e');d.polygon([(115,53),(118,56),(115,59)],fill='#b3a267')
-        if kind=='crusher':gear(d,93,35);gear(d,108,35)
+        if kind=='crusher':pass # Drawn from the runtime animation atlas.
         elif kind=='air_separator':
-            d.rounded_rectangle((86,22,114,50),radius=4,fill='#434d53');d.ellipse((89,25,111,47),fill='#27353e')
-            for a in range(0,360,90):
-                r=math.radians(a);cx,cy=100,36
-                d.polygon([(cx,cy),(round(cx+9*math.cos(r)),round(cy+9*math.sin(r))),(round(cx+7*math.cos(r+.65)),round(cy+7*math.sin(r+.65)))],fill='#a6b0b4')
-            d.ellipse((98,34,102,38),fill='#d5d6cf')
             d.line((119,36,124,36,124,31,128,31),fill='#b39231',width=2);d.line((124,36,124,56,128,56),fill='#b39231',width=2)
         elif kind=='rolling_mill':
             for y in (28,40):d.rounded_rectangle((88,y,113,y+8),radius=3,fill='#485156');d.line((91,y+1,110,y+1),fill='#c5c8c5')
@@ -48,6 +43,36 @@ def generate(kind,inputs,outputs):
         for x in range(9):slot(d,8+x*18,84+y*18)
     for x in range(9):slot(d,8+x*18,142)
     DEST.mkdir(parents=True,exist_ok=True);im.save(DEST/(kind+'.png'))
+def motion_atlases():
+    # Precomputed native pixels: runtime draws one quad, no vector rotation or texture uploads.
+    for kind in ('crusher','air_separator'):
+        sheet=Image.new('RGBA',(32,32*24),(0,0,0,0))
+        for frame in range(24):
+            tile=Image.new('RGBA',(32,32),(0,0,0,0));d=ImageDraw.Draw(tile)
+            if kind=='crusher':
+                d.rectangle((3,24,28,26),fill='#69757b');d.line((3,24,28,24),fill='#99a3a5')
+                for cx,sign,offset in ((8,1,0),(23,-1,math.pi/8)):
+                    angle=sign*frame*math.pi/4/24+offset;cy=15;points=[]
+                    for k in range(8):
+                        for step,radius in ((-.5,6),(-.3,8),(.3,8),(.5,6)):
+                            a=angle+(k+step)*math.pi/4;points.append((round(cx+radius*math.cos(a)),round(cy+radius*math.sin(a))))
+                    d.polygon(points,fill='#3d484e');d.ellipse((cx-5,cy-5,cx+5,cy+5),fill='#8e999f');d.arc((cx-5,cy-5,cx+5,cy+5),175,295,fill='#c6cece')
+                    for k in range(8):
+                        a=angle+k*math.pi/4;d.line((cx,cy,round(cx+4*math.cos(a)),round(cy+4*math.sin(a))),fill='#535e66')
+                    d.ellipse((cx-2,cy-2,cx+2,cy+2),fill='#b2babb');d.point((cx,cy),fill='#44515a')
+            else:
+                d.rounded_rectangle((1,2,29,30),radius=4,fill='#434d53');d.line((5,3,25,3),fill='#849198');d.ellipse((4,5,26,27),fill='#27353e')
+                for k in range(4):
+                    a=frame*math.pi/2/24+k*math.pi/2
+                    blade=[]
+                    for radius,delta in ((2,-.4),(8,-.32),(11,.04),(10,.48),(6,.62),(2,.3)):
+                        blade.append((round(15+radius*math.cos(a+delta)),round(16+radius*math.sin(a+delta))))
+                    d.polygon(blade,fill='#a6b0b4');d.line((round(15+4*math.cos(a-.3)),round(16+4*math.sin(a-.3)),round(15+9*math.cos(a)),round(16+9*math.sin(a))),fill='#cbd2d0')
+                d.ellipse((13,14,17,18),fill='#6d7f88');d.point((14,15),fill='#d5d6cf')
+            sheet.alpha_composite(tile,(0,frame*32))
+        DEST.mkdir(parents=True,exist_ok=True);sheet.save(DEST/(kind+'_motion.png'))
+
 if __name__=='__main__':
     for kind,(inputs,outputs) in PROFILES.items():generate(kind,inputs,outputs)
-    print('Exported 10 native 176x166 machine screens')
+    motion_atlases()
+    print('Exported 10 native 176x166 machine screens and two 24-frame motion atlases')
