@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BB",
+    "BB"
+  ],
+  "key": {
+    "B": {
+      "item": "suitcaseglider:refractory_brick"
+    }
+  },
+  "result": {
+    "item": "suitcaseglider:refractory_bricks",
+    "count": 1
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I I",
+    " C ",
+    "IPI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "suitcaseglider:refractory_bricks"
+    },
+    "P": {
+      "item": "minecraft:hopper"
+    }
+  },
+  "result": {
+    "item": "suitcaseglider:coke_oven_output",
+    "count": 1
+  }
+}

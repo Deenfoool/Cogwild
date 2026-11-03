@@ -380,7 +380,7 @@
   },
   "source": "https://app.notion.com/p/39fb8e499d8b81478778f0770acfc3ae",
   "implementation": {
-    "version": "0.6.2",
+    "version": "0.6.3",
     "items": [
       "unfired_refractory_brick",
       "refractory_brick",
@@ -388,9 +388,19 @@
     ],
     "recipes": [
       "unfired_refractory_brick",
-      "refractory_brick"
+      "refractory_brick",
+      "refractory_bricks",
+      "coke_oven_controller",
+      "coke_oven_input",
+      "coke_oven_output"
     ],
     "coking_process_implemented": false,
-    "multiblock_implemented": false
+    "multiblock_implemented": false,
+    "blocks": [
+      "refractory_bricks",
+      "coke_oven_controller",
+      "coke_oven_input",
+      "coke_oven_output"
+    ]
   }
 }

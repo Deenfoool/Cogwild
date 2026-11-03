@@ -1,0 +1,14 @@
+{
+  "version": "0.6.3",
+  "unit_tests": 32,
+  "unit_failures": 0,
+  "server_checks": 99,
+  "client": "KILN_CLIENT_OK\n7 item models and textures loaded; 4 construction blocks and hollow 3x3x3 visual assembly rendered.\nPreview only: no processing logic.",
+  "sources": {
+    "blockbench_projects": 5,
+    "embedded_textures_verified": true
+  },
+  "multiblock_processing_implemented": false,
+  "sha256": "b482022c478961f4f7b3586b49683a745cef3a2ca1b2c73fe39465b6c05eebd3",
+  "qa_note": "Minecraft logged a mailbox shutdown error after CLIENT_OK during automated client exit; the preview completed and Gradle exited successfully."
+}

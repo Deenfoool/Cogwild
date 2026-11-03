@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "suitcaseglider:refractory_bricks",
+    "suitcaseglider:coke_oven_controller",
+    "suitcaseglider:coke_oven_input",
+    "suitcaseglider:coke_oven_output"
+  ]
+}

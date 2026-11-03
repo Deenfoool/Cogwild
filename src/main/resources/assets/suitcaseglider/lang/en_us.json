@@ -108,5 +108,13 @@
   "item.suitcaseglider.refractory_brick": "Refractory Brick",
   "tooltip.suitcaseglider.refractory_brick": "Heat-resistant material for furnace construction.",
   "item.suitcaseglider.coke": "Coke",
-  "tooltip.suitcaseglider.coke": "Long-burning fuel and a future metallurgy ingredient."
+  "tooltip.suitcaseglider.coke": "Long-burning fuel and a future metallurgy ingredient.",
+  "block.suitcaseglider.refractory_bricks": "Refractory Masonry",
+  "tooltip.suitcaseglider.refractory_bricks": "Heat-resistant masonry for the coke oven shell.",
+  "block.suitcaseglider.coke_oven_controller": "Coke Oven Controller",
+  "tooltip.suitcaseglider.coke_oven_controller": "Construction part: front centre of the 3x3x3 oven.",
+  "block.suitcaseglider.coke_oven_input": "Coke Oven Charging Hatch",
+  "tooltip.suitcaseglider.coke_oven_input": "Construction part: above the controller.",
+  "block.suitcaseglider.coke_oven_output": "Coke Oven Discharge Hatch",
+  "tooltip.suitcaseglider.coke_oven_output": "Construction part: below the controller."
 }

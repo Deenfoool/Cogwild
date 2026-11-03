@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "suitcaseglider:block/coke_oven_input",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "suitcaseglider:block/coke_oven_input",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "suitcaseglider:block/coke_oven_input",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "suitcaseglider:block/coke_oven_input",
+      "y": 270
+    }
+  }
+}
