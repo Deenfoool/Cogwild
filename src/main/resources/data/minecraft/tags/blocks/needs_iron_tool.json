@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "suitcaseglider:blast_hearth",
+    "suitcaseglider:blast_shaft",
+    "suitcaseglider:blast_duct",
+    "suitcaseglider:blast_preheater",
+    "suitcaseglider:blast_blower",
+    "suitcaseglider:blast_hopper",
+    "suitcaseglider:blast_controller",
+    "suitcaseglider:blast_formed_part"
+  ]
+}

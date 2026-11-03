@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "IMD",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "M": {
+      "item": "suitcaseglider:electric_motor"
+    },
+    "D": {
+      "item": "suitcaseglider:blast_duct"
+    }
+  },
+  "result": {
+    "item": "suitcaseglider:blast_blower",
+    "count": 1
+  }
+}

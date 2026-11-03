@@ -28,3 +28,4 @@ run-*/
 *.log
 *.zip
 .codex/
+__pycache__/

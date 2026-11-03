@@ -20,6 +20,14 @@ public final class KilnContent {
     });
     public static final RegistryObject<Item> KEY=SuitcaseGlider.ITEMS.register("guild_assembly_key",()->new Item(new Item.Properties().stacksTo(1)){
         @Override public void appendHoverText(ItemStack s,Level l,List<Component> lines,TooltipFlag f){lines.add(Component.translatable("tooltip.suitcaseglider.guild_assembly_key").withStyle(net.minecraft.ChatFormatting.GRAY));}
+        @Override public net.minecraft.world.InteractionResult useOn(net.minecraft.world.item.context.UseOnContext c){
+            // Sneaking normally bypasses Block.use, so dismantling must also work on the item path.
+            var player=c.getPlayer();if(player==null||!player.isShiftKeyDown())return net.minecraft.world.InteractionResult.PASS;
+            var l=c.getLevel();var p=c.getClickedPos();var state=l.getBlockState(p);
+            var b=state.is(dev.salum.suitcaseglider.blast.BlastContent.PART.get())?dev.salum.suitcaseglider.blast.BlastPartBlock.owner(state,l,p):l.getBlockEntity(p) instanceof dev.salum.suitcaseglider.blast.BlastBlockEntity owner?owner:null;
+            if(b==null||!b.formed())return net.minecraft.world.InteractionResult.PASS;
+            if(!l.isClientSide)b.restore(null);return net.minecraft.world.InteractionResult.sidedSuccess(l.isClientSide);
+        }
     });
     public static final RegistryObject<BlockEntityType<KilnBlockEntity>> TYPE=MachineContent.ENTITIES.register("coke_oven",()->BlockEntityType.Builder.of(KilnBlockEntity::new,ResourceContent.CONTROLLER.get(),ResourceContent.INPUT.get(),ResourceContent.OUTPUT.get()).build(null));
     public static final DeferredRegister<MenuType<?>> MENUS=DeferredRegister.create(ForgeRegistries.MENU_TYPES,SuitcaseGlider.ID);

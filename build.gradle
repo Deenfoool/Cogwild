@@ -302,3 +302,14 @@ if(project.hasProperty('creosoteSmoke')) {
     minecraft.runs.server.property 'cogwild.creosoteSmoke','true'
     minecraft.runs.server.workingDirectory project.file('run-resource-smoke')
 }
+
+if(project.hasProperty('blastSmoke')) {
+    minecraft.runs.server.property 'cogwild.blastSmoke','true'
+    minecraft.runs.server.workingDirectory project.file('run-resource-smoke')
+}
+
+if(project.hasProperty('blastQa')) {
+    minecraft.runs.client.property 'cogwild.blastQa','true'
+    minecraft.runs.client.workingDirectory project.file('run-machine-client')
+    minecraft.runs.client.args '--username','BlastChecks','--width','1280','--height','800'
+}

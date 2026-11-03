@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "suitcaseglider:block/blast_hearth",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "suitcaseglider:block/blast_hearth",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "suitcaseglider:block/blast_hearth",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "suitcaseglider:block/blast_hearth",
+      "y": 270
+    }
+  }
+}

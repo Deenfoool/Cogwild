@@ -16,7 +16,7 @@ def rotate(v,r):
 
 CATALOG={}
 
-def convert(kind,filename,names,clips):
+def convert(kind,filename,names,clips,rig_only=False):
     m=json.loads((ROOT/'art_source/blockbench/blocks'/filename).read_text(encoding='utf-8'))
     groups={g['uuid']:g for g in m['groups']};elements={e['uuid']:e for e in m['elements']}
     bones=[dict(name='render_root',parent=-1,origin=[0,0,0],rotation=[0,0,0])];faces=[];ids={};anchors={}
@@ -104,6 +104,9 @@ def convert(kind,filename,names,clips):
     CATALOG[kind]=dict(width=width,depth=depth,height=round(hi[1]-lo[1],5),offset=offset,power=port,off=clips[0],on=clips[1],start=clips[2],stop=clips[3])
     data=dict(bones=bones,faces=faces,animations=animations,anchors=anchors,textures=textures)
     (OUT/'rigs'/f'{kind}.json').write_text(json.dumps(data,separators=(',',':')),encoding='utf-8')
+    if rig_only:
+        print(kind,'bones',len(bones),'faces',len(faces),'animations',list(animations))
+        return
     color=(100,112,50) if kind=='diesel_generator' else (70,96,116) if kind in ('quenching_bath','air_separator') else (112,119,123)
     raw=b''.join(b'\x00'+bytes(max(0,min(255,c+(y//4-2)*3)) for x in range(16) for c in color) for y in range(16))
     def chunk(tag,data):return struct.pack('>I',len(data))+tag+data+struct.pack('>I',zlib.crc32(tag+data)&0xffffffff)
@@ -131,15 +134,19 @@ MODELS=[
  ('universal_mixer','Universal-Mixer.bbmodel',('Universal Mixer','Универсальный смеситель'),('shutdown','processing','start','stop')),
  ('diesel_generator','Diesel-Generator.bbmodel',('Diesel Generator','Дизельный генератор'),('shutdown','running','starting','stopping')),
 ]
-for kind,filename,names,clips in MODELS:convert(kind,filename,names,clips)
-(OUT/'rigs/machines.json').write_text(json.dumps(CATALOG,indent=2),encoding='utf-8')
-for p in (OUT/'lang').glob('*.json'):
-    lang=json.loads(p.read_text(encoding='utf-8-sig'));ru=p.stem=='ru_ru'
-    for kind,_,names,_ in MODELS:lang['block.suitcaseglider.'+kind]=names[1 if ru else 0]
-    p.write_text(json.dumps(lang,ensure_ascii=False,indent=2),encoding='utf-8')
-for kind,_,_,_ in MODELS:
-    if kind in ('lathe','crusher'):continue
-    recipe={'type':'minecraft:crafting_shaped','pattern':['III','CRC','IPI'],'key':{'I':{'item':'minecraft:iron_ingot'},'C':{'item':'minecraft:copper_ingot'},'R':{'item':'minecraft:water_bucket' if kind=='quenching_bath' else 'minecraft:furnace' if kind=='diesel_generator' else 'minecraft:piston'},'P':{'item':'minecraft:redstone'}},'result':{'item':'suitcaseglider:'+kind}}
-    folder=ROOT/'src/main/resources/data/suitcaseglider/recipes';folder.mkdir(parents=True,exist_ok=True)
-    (folder/(kind+'.json')).write_text(json.dumps(recipe,indent=2),encoding='utf-8')
-print(json.dumps(CATALOG,indent=2))
+def main():
+    for kind,filename,names,clips in MODELS:convert(kind,filename,names,clips)
+    (OUT/'rigs/machines.json').write_text(json.dumps(CATALOG,indent=2),encoding='utf-8')
+    for p in (OUT/'lang').glob('*.json'):
+        lang=json.loads(p.read_text(encoding='utf-8-sig'));ru=p.stem=='ru_ru'
+        for kind,_,names,_ in MODELS:lang['block.suitcaseglider.'+kind]=names[1 if ru else 0]
+        p.write_text(json.dumps(lang,ensure_ascii=False,indent=2),encoding='utf-8')
+    for kind,_,_,_ in MODELS:
+        if kind in ('lathe','crusher'):continue
+        recipe={'type':'minecraft:crafting_shaped','pattern':['III','CRC','IPI'],'key':{'I':{'item':'minecraft:iron_ingot'},'C':{'item':'minecraft:copper_ingot'},'R':{'item':'minecraft:water_bucket' if kind=='quenching_bath' else 'minecraft:furnace' if kind=='diesel_generator' else 'minecraft:piston'},'P':{'item':'minecraft:redstone'}},'result':{'item':'suitcaseglider:'+kind}}
+        folder=ROOT/'src/main/resources/data/suitcaseglider/recipes';folder.mkdir(parents=True,exist_ok=True)
+        (folder/(kind+'.json')).write_text(json.dumps(recipe,indent=2),encoding='utf-8')
+    print(json.dumps(CATALOG,indent=2))
+
+if __name__=='__main__':
+    main()

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " C ",
+    "MHM",
+    " C "
+  ],
+  "key": {
+    "C": {
+      "item": "suitcaseglider:copper_coil"
+    },
+    "M": {
+      "item": "suitcaseglider:magnet"
+    },
+    "H": {
+      "item": "suitcaseglider:motor_housing"
+    }
+  },
+  "result": {
+    "item": "suitcaseglider:electric_motor",
+    "count": 1
+  }
+}

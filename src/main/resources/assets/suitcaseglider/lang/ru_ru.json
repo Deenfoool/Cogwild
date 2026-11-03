@@ -139,5 +139,22 @@
   "fluid_type.suitcaseglider.creosote": "Креозот",
   "item.suitcaseglider.creosote_bucket": "Ведро креозота",
   "gui.suitcaseglider.kiln.creosote": "Креозот: %s / %s мБ. Нажмите с пустым ведром на курсоре.",
-  "gui.suitcaseglider.kiln.state.7": "Недостаточно топлива на цикл"
+  "gui.suitcaseglider.kiln.state.7": "Недостаточно топлива на цикл",
+  "block.suitcaseglider.blast_hearth": "Горн доменной печи",
+  "block.suitcaseglider.blast_shaft": "Секция шахты доменной печи",
+  "block.suitcaseglider.blast_duct": "Фланцевый воздуховод",
+  "block.suitcaseglider.blast_preheater": "Секция воздухонагревателя",
+  "block.suitcaseglider.blast_blower": "Электрический нагнетатель",
+  "block.suitcaseglider.blast_hopper": "Закрытый загрузочный бункер",
+  "block.suitcaseglider.blast_controller": "Контроллер доменной печи",
+  "item.suitcaseglider.copper_wire": "Медная проволока",
+  "item.suitcaseglider.copper_coil": "Медная катушка",
+  "item.suitcaseglider.magnet": "Магнит",
+  "item.suitcaseglider.motor_housing": "Корпус электродвигателя",
+  "item.suitcaseglider.electric_motor": "Электродвигатель",
+  "message.suitcaseglider.blast.need_key": "Используйте монтажный ключ на переднем левом контроллере.",
+  "message.suitcaseglider.blast.formed": "Доменная печь сформирована.",
+  "message.suitcaseglider.blast.assembled": "Конструкция собрана. Выплавка пока не реализована. Shift + монтажный ключ — разобрать.",
+  "message.suitcaseglider.blast.unloaded": "Перед сборкой загрузите всю конструкцию.",
+  "message.suitcaseglider.blast.mismatch": "В точке %s, %s, %s ожидается %s. Контейнеры должны быть пустыми."
 }

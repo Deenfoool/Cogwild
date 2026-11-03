@@ -139,5 +139,22 @@
   "fluid_type.suitcaseglider.creosote": "Creosote",
   "item.suitcaseglider.creosote_bucket": "Creosote Bucket",
   "gui.suitcaseglider.kiln.creosote": "Creosote: %s / %s mB. Click with an empty bucket.",
-  "gui.suitcaseglider.kiln.state.7": "Not enough fuel for the cycle"
+  "gui.suitcaseglider.kiln.state.7": "Not enough fuel for the cycle",
+  "block.suitcaseglider.blast_hearth": "Blast Furnace Hearth",
+  "block.suitcaseglider.blast_shaft": "Blast Furnace Shaft",
+  "block.suitcaseglider.blast_duct": "Flanged Air Duct",
+  "block.suitcaseglider.blast_preheater": "Hot Blast Preheater",
+  "block.suitcaseglider.blast_blower": "Electric Blower",
+  "block.suitcaseglider.blast_hopper": "Sealed Loading Bunker",
+  "block.suitcaseglider.blast_controller": "Blast Furnace Controller",
+  "item.suitcaseglider.copper_wire": "Copper Wire",
+  "item.suitcaseglider.copper_coil": "Copper Coil",
+  "item.suitcaseglider.magnet": "Magnet",
+  "item.suitcaseglider.motor_housing": "Motor Housing",
+  "item.suitcaseglider.electric_motor": "Electric Motor",
+  "message.suitcaseglider.blast.need_key": "Use the Guild Assembly Key on the front-left controller.",
+  "message.suitcaseglider.blast.formed": "Blast furnace assembled.",
+  "message.suitcaseglider.blast.assembled": "Construction complete. Metallurgy is not available yet. Sneak + assembly key to dismantle.",
+  "message.suitcaseglider.blast.unloaded": "Load the entire construction before assembly.",
+  "message.suitcaseglider.blast.mismatch": "At %s, %s, %s: expected %s (empty containers only)."
 }

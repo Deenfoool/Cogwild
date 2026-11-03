@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ICI",
+    "RLR",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "suitcaseglider:copper_coil"
+    },
+    "R": {
+      "item": "suitcaseglider:refractory_bricks"
+    },
+    "L": {
+      "item": "minecraft:lever"
+    }
+  },
+  "result": {
+    "item": "suitcaseglider:blast_controller",
+    "count": 1
+  }
+}

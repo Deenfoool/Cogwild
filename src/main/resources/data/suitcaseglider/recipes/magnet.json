@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "IRI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "R": {
+      "item": "minecraft:raw_iron"
+    }
+  },
+  "result": {
+    "item": "suitcaseglider:magnet",
+    "count": 1
+  }
+}
